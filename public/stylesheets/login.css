@@ -1,0 +1,410 @@
+#loginPart {
+    width: 350px;
+    height: 300px;
+    background-color: white;
+    top: 50px;
+    position: fixed;
+    z-index: 3;
+    border-radius: 10px;
+    box-shadow: 0 5px 5px rgb(49 49 49 / 10%);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.logReg {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: 10px;
+    background-color: white;
+    width: 350px;
+    position: fixed;
+    z-index: 2;
+    top: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    box-shadow: 0px 2px 16px #b5b2b2;
+    border: 2px solid #b5b2b2;
+    box-sizing: border-box;
+}
+
+.logReg::before {
+    color: #e4d5d5;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    position: absolute;
+    top: -17px;
+    width: 100%;
+    display: block;
+    content: "点击任意处即可取消";
+}
+
+.logByAcc {
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logByAcc>div {
+    flex: 1;
+    position: relative;
+}
+
+.logByAcc>div>div {
+    height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.logByAcc>div>div>div {
+    width: 320px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.logByAcc>div>div>div>span {
+    display: block;
+    float: left;
+    height: 100%;
+    position: relative;
+}
+
+.logByAcc>div>div>div>span:nth-child(1) {
+    font-size: 20px;
+    text-align: right;
+    width: 60px;
+    line-height: 50px;
+    font-weight: bold;
+}
+
+.logByAcc>div>div>div>span:nth-child(2) {
+    width: 190px;
+}
+
+.logByAcc>div>div>div>a:nth-child(3) {
+    font-size: 12px;
+    font-weight: lighter;
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+}
+
+.logByAcc>div>div>div>span>div {
+    height: 40px;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.logByAcc>div>div>div>span>div>input {
+    height: 25px;
+    width: 97%;
+    position: absolute;
+    bottom: 1px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+.logReg>div:nth-child(2) {
+    min-height: 50px;
+    position: relative;
+}
+
+.logReg>div:nth-child(2)>div {
+    width: 290px;
+    height: 40px;
+    background-color: #03a9f4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    border-radius: 10px;
+    line-height: 40px;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logByEmail {
+    min-height: 200px;
+    display: flex;
+}
+
+.logByEmail>div {
+    display: flex;
+    width: 100%;
+    height: 170px;
+    margin: auto;
+    flex-direction: column;
+}
+
+.logByEmail>div>div {
+    flex: 1;
+    position: relative;
+}
+
+.logByEmail>div>div>div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 40px;
+    width: 290px;
+    margin: auto;
+}
+
+#yanzheng {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 35px;
+    width: 50%;
+    border-radius: 7px;
+    font-size: 18px;
+}
+
+.logByEmail>div>div:nth-child(2)>div>div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 253px;
+    height: 35px;
+    background-color: blue;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 5px;
+}
+
+
+.yanzheni>div {
+    float: left;
+}
+
+.yanzheni>div:nth-child(1) {
+    text-align: right;
+    line-height: 40px;
+    width: 70px;
+    font-weight: bold;
+}
+
+.yanzheni>div:nth-child(2) {
+    width: 180px;
+}
+
+.yanzheni>div:nth-child(2)>div {
+    position: relative;
+    top: 7px;
+    border-bottom: 1px solid #000;
+}
+
+.yanzheni>div:nth-child(2)>div>input {
+    height: 23px;
+    width: 100%;
+    font-size: 22px;
+}
+
+.emailNum>div {
+    float: left;
+    width: 20px;
+    height: 100%;
+}
+
+.emailNum>div:nth-child(1) {
+    text-align: right;
+    line-height: 40px;
+    width: 70px;
+    font-weight: bold;
+}
+
+.emailNum>div:nth-child(2) {
+    width: 180px;
+}
+
+.emailNum>div:nth-child(2)>div {
+    position: relative;
+    top: 6px;
+    border-bottom: 1px solid #000;
+}
+
+.emailNum>div:nth-child(2)>div>input {
+    height: 23px;
+    width: 100%;
+    font-size: 22px;
+}
+
+.register {
+    min-height: 200px;
+    display: flex;
+}
+
+.register>div {
+    display: flex;
+    width: 100%;
+    height: 170px;
+    margin: auto;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.register>div>div {
+    flex: 1;
+    position: relative;
+}
+
+.register>div>div>div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 40px;
+    width: 290px;
+    margin: auto;
+}
+
+#regyanzheng {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    height: 35px;
+    width: 50%;
+    border-radius: 7px;
+    font-size: 18px;
+}
+
+.register>div>div:nth-child(2)>div>div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 253px;
+    height: 35px;
+    background-color: blue;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 5px;
+}
+
+
+.regyanzheni>div {
+    float: left;
+}
+
+.regyanzheni>div:nth-child(1) {
+    text-align: right;
+    line-height: 40px;
+    width: 70px;
+}
+
+.regyanzheni>div:nth-child(2) {
+    width: 180px;
+}
+
+.regyanzheni>div:nth-child(2)>div {
+    position: relative;
+    top: 5px;
+    border-bottom: 1px solid #000;
+}
+
+.regyanzheni>div:nth-child(2)>div>input {
+    height: 23px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+.regemailNum>div {
+    float: left;
+    width: 20px;
+    height: 100%;
+}
+
+.regemailNum>div:nth-child(1) {
+    text-align: right;
+    line-height: 40px;
+    width: 70px;
+}
+
+.regemailNum>div:nth-child(2) {
+    width: 180px;
+}
+
+.regemailNum>div:nth-child(2)>div {
+    position: relative;
+    top: 5px;
+    border-bottom: 1px solid #000;
+}
+
+.regemailNum>div:nth-child(2)>div>input {
+    height: 23px;
+    font-size: 20px;
+    width: 100%;
+    font-weight: lighter;
+}
+
+.ChangeButton {
+    position: relative;
+    min-height: 30px;
+    border-top: 1px dotted black;
+}
+
+.ChangeButton>div {
+    width: 290px;
+    height: 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    font-size: 0;
+    display: flex;
+}
+
+.ChangeButton>div>span {
+    flex: 1;
+    line-height: 25px;
+    font-size: 12px;
+    display: inline-block;
+    text-align: center;
+    font-weight: bold;
+}
+
+.ChangeButton>div>span:nth-child(2) {
+    width: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}

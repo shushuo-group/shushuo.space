@@ -1,0 +1,765 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+menu,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    margin: auto !important;
+    display: block;
+    left: 0;
+    right: 0;
+    width: 50%;
+}
+
+/* logo字体文件 */
+@font-face {
+    font-family: 'webfont';
+    font-display: swap;
+    src: url('//at.alicdn.com/t/webfont_s5qiv8dpl7a.eot');
+    src: url('//at.alicdn.com/t/webfont_s5qiv8dpl7a.eot?#iefix') format('embedded-opentype'),
+        url('//at.alicdn.com/t/webfont_s5qiv8dpl7a.woff2') format('woff2'),
+        url('//at.alicdn.com/t/webfont_s5qiv8dpl7a.woff') format('woff'),
+        url('//at.alicdn.com/t/webfont_s5qiv8dpl7a.ttf') format('truetype'),
+        url('//at.alicdn.com/t/webfont_s5qiv8dpl7a.svg#站酷小薇体') format('svg');
+}
+
+.web-font {
+    font-family: "webfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 28px;
+    margin-left: 5px;
+}
+
+
+
+
+input {
+    outline: none;
+    border: 0;
+}
+
+.main {
+    background-color: #c5eef3;
+    width: 85%;
+    margin: 0 auto;
+}
+
+.top {
+    height: 50px;
+}
+
+.web-font>a {
+    text-decoration: none;
+    line-height: 50px;
+    color: green;
+}
+
+.mainTopUser {
+    height: 40PX;
+    display: flex;
+    padding-bottom: 5px;
+}
+
+.mainTopUserLeft {
+    flex: 1;
+    position: relative;
+    display: flex;
+}
+
+.mainTopUserLeft>div {
+    height: 35px;
+}
+
+.writeDraft,
+.submitButton {}
+
+.title {
+    flex: 1;
+}
+
+.writeDraft>button {
+    width: 100%;
+    height: 100%;
+    background: #29c3ff;
+    color: white;
+    font-weight: bold;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.submitButton>button {
+    width: 100%;
+    height: 100%;
+    background: #29c3ff;
+    color: white;
+    border: 1px solid black;
+    font-weight: bold;
+    margin-left: 1px;
+    cursor: pointer;
+}
+
+.titlePart {
+    font-size: 0px;
+    position: relative;
+    left: 5px;
+    height: 100%;
+    display: flex;
+    border: 2px solid black;
+    background-color: white;
+    flex-direction: row;
+    line-height: 31px;
+}
+
+.titlePart>span {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.titlePart>input {
+    flex: 1;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0;
+}
+
+.mainTopUserRight {
+    width: 50px;
+    position: relative;
+}
+
+.headImgPart {
+    width: 35px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    position: absolute;
+    bottom: 0;
+}
+
+.head {
+    border-radius: 50%;
+    width: 100% !important;
+}
+
+.writerFunctions {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    border-top: 1px solid black;
+    min-height: 30px;
+    background-color: #f5f5f5;
+    z-index: 5;
+}
+
+.writerInput {
+    width: 100%;
+    background-color: #c5eef3;
+    position: relative;
+}
+
+.writerInputPart {
+    width: 98%;
+    min-height: 719px;
+    margin: 0 auto;
+    margin-bottom: 4px;
+    position: relative;
+}
+
+.writerInputPart-part {
+    width: 98%;
+    height: 98%;
+    min-height: 716px;
+    margin: auto;
+    margin-top: 4px;
+    outline: none;
+    margin-bottom: 4px;
+}
+
+.mainBottom {
+    min-height: 50px;
+    background-color: gainsboro;
+}
+
+.writePart {
+    padding-bottom: 5px;
+}
+
+.writePart-select {
+    border-top: 1px solid #000;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.writePart-select-part {
+    width: 98%;
+    margin: 5px auto;
+}
+
+.subWays {
+    height: 35px;
+}
+
+.subWays>div {
+    width: 85%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.subWaysSelect {
+    flex: 8;
+    position: relative;
+}
+
+.subWaysSelect>div {
+    margin-left: 25px;
+    display: inline-block;
+    height: 80%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.time {
+    right: 0;
+}
+
+.subWaysSelect>div:nth-child(2) {
+    left: 80px;
+}
+
+.subWaysSelect>div:nth-child(1) {
+    margin-left: 0;
+}
+
+.subWaysSelect>div>input {
+    display: inline-block;
+    position: relative;
+    top: 4px;
+}
+
+.subWaysSelect>div>div {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.datingSelectPart {
+    height: 35px;
+}
+
+.datingSelectPart>div {
+    width: 85%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.subWays-part {
+    min-width: 97px;
+    flex: 2;
+    line-height: 35px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.datingSelect {
+    flex: 8;
+    position: relative;
+}
+
+.datingSelect>div {
+    margin-left: 25px;
+    display: inline-block;
+    height: 80%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.datingSelect>div:nth-child(1) {
+    margin-left: 0;
+}
+
+.datingSelect>div:nth-child(2) {
+    left: 108px;
+}
+
+.datingSelect>div>div {
+    position: relative;
+    top: 3px;
+    display: inline-block;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.datingSelect>div>select {
+    position: relative;
+    top: 2px;
+    left: 3px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    width: 60px;
+}
+
+.yingsiOr {
+    height: 35px;
+}
+
+.yingsiOr>div {
+    width: 85%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+}
+
+.yingsiOr-part {
+    flex: 2;
+    line-height: 35px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.yingsiOrSelect {
+    flex: 8;
+    position: relative;
+}
+
+.yingsiOrSelect>div {
+    margin-left: 25px;
+    display: inline-block;
+    height: 80%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.yingsiOrSelect>div:nth-child(2) {
+    left: 80px;
+}
+
+.yingsiOrSelect>div:nth-child(1) {
+    margin-left: 0;
+}
+
+.yingsiOrSelect>div>input {
+    display: inline-block;
+    position: relative;
+    top: 4px;
+}
+
+.yingsiOrSelect>div>div {
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    font-size: 15px;
+    left: 4px;
+    font-weight: 700;
+}
+
+
+
+@media screen and (max-width: 600px) {
+
+    html,
+    body,
+    div,
+    span,
+    applet,
+    object,
+    iframe,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    blockquote,
+    pre,
+    a,
+    abbr,
+    acronym,
+    address,
+    big,
+    cite,
+    code,
+    del,
+    dfn,
+    em,
+    img,
+    ins,
+    kbd,
+    q,
+    s,
+    samp,
+    small,
+    strike,
+    strong,
+    sub,
+    sup,
+    tt,
+    var,
+    b,
+    u,
+    i,
+    center,
+    dl,
+    dt,
+    dd,
+    menu,
+    ol,
+    ul,
+    li,
+    fieldset,
+    form,
+    label,
+    legend,
+    table,
+    caption,
+    tbody,
+    tfoot,
+    thead,
+    tr,
+    th,
+    td,
+    article,
+    aside,
+    canvas,
+    details,
+    embed,
+    figure,
+    figcaption,
+    footer,
+    header,
+    hgroup,
+    main,
+    menu,
+    nav,
+    output,
+    ruby,
+    section,
+    summary,
+    time,
+    mark,
+    audio,
+    video {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .top {
+        height: 20px;
+    }
+
+    .time {
+        display: none !important;
+    }
+
+    .web-font {
+        font-family: "webfont" !important;
+        font-size: 16px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -webkit-text-stroke-width: 0.2px;
+        -moz-osx-font-smoothing: grayscale;
+        font-size: 18px;
+        margin-left: 5px;
+    }
+
+    .web-font>a {
+        text-decoration: none;
+        line-height: 20px;
+        color: green;
+    }
+
+    input {
+        outline: none;
+        border: 0;
+    }
+
+    .main {
+        width: unset;
+    }
+
+    .mainTopUserLeft>div {
+        bottom: unset;
+        margin: auto;
+        flex: unset;
+    }
+
+    .writeDraft,
+    .submitButton {
+        max-width: unset;
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    .titlePart {
+        left: 2px;
+        width: 100%;
+        border: 1px solid black;
+    }
+
+    .titlePart>span {
+        padding-left: 2px;
+    }
+
+    .titlePart>input {
+        width: 110px;
+    }
+
+    .writePart-select-part {
+        width: 100%;
+    }
+
+    .writerInputPart {
+        width: 100%;
+    }
+
+    .subWays-part {
+        font-size: 16px;
+    }
+
+    .w-e-panel-container {
+        position: fixed !important;
+        top: 0 !important;
+        top: unset !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        right: 0 !important;
+        margin: auto !important;
+        width: 100% !important;
+        height: 50% !important;
+        height: auto !important;
+        border: 2px solid #29c3ff !important;
+    }
+
+}
+
+code {
+    background-color: #1e1e1e !important;
+    display: block;
+    color: #8cdcf1;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    overflow-x: scroll;
+    font-family: Source Code Pro, DejaVu Sans Mono, Ubuntu Mono, Anonymous Pro, Droid Sans Mono, Menlo, Monaco, Consolas, Inconsolata, Courier, monospace, PingFang SC, Microsoft YaHei, sans-serif;
+    font-size: 15px;
+    border-radius: 4px;
+}
+
+.code_repeat {
+    position: absolute;
+    right: 10px;
+    color: white;
+    top: 55px;
+    line-height: 0;
+}
+
+.wang-code-textarea {
+    resize: none;
+}
+
+.w-e-img-drag-mask {
+    display: none !important;
+}
+
+.w-e-tooltip.w-e-tooltip-down {
+    display: none !important;
+}
+
+.w-e-tooltip.w-e-tooltip-up {
+    display: none !important;
+}
+
+.w-e-text {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+
+
+
+/*内容加载模块*/
+:root {
+    --loading-grey: #ededed;
+}
+
+
+.card {
+    background-color: #fff;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid #d6d3d3;
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 0.12);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.loading_content {
+    padding: 2rem 1.8rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.loading_h4 {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+}
+
+.loading_description {
+    font-size: 1rem;
+    line-height: 1.4rem;
+}
+
+/*骨架样式 */
+.loading .image,
+.loading .loading_h4,
+.loading .loading_description {
+    background-color: var(--loading-grey);
+    /* 白色光效 */
+    background: linear-gradient(100deg,
+            rgb(255, 255, 255, 0) 40%,
+            rgb(255, 255, 255, 0.5) 50%,
+            rgb(255, 255, 255, 0) 60%) var(--loading-grey);
+    background-size: 200% 100%;
+    background-position-x: 180%;
+    -webkit-animation: 1s loading ease-in-out infinite;
+    animation: 1s loading ease-in-out infinite;
+}
+
+@-webkit-keyframes loading {
+    to {
+        background-position-x: -20%;
+    }
+}
+
+@keyframes loading {
+    to {
+        background-position-x: -20%;
+    }
+}
+
+.loading .loading_h4 {
+    flex: 2;
+    border-radius: 4px;
+}
+
+.loading .loading_description {
+    border-radius: 4px;
+    flex: 8;
+}
+
+/*内容加载模块*/

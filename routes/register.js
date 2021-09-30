@@ -1,0 +1,114 @@
+const express = require('express');
+const router = express.Router();
+//引入数据库操作模块
+const db = require('../mongodb/mongodb')
+const sendEmail = require('../middleware/emailSend')
+const random = require('string-random');
+const date = require("silly-datetime");
+const md5 = require("../middleware/md5");
+const jwt = require("jsonwebtoken");
+const write = require('../middleware/consolelog');
+router.post('/', async (req, res) => {
+    if (req.body.email == '') {
+        res.send({
+            isSend: false
+        })
+    } else {
+        var user = await db.user.findOne({
+            userEmail: req.body.email
+        })
+        if (user == null) { // 如果为null则向数据库内写入信息以及验证码
+            var number = random(6)
+            db.user.create({
+                userEmail: req.body.email,
+                RegNumber: number,
+                emailShow: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+            })
+            sendEmail(req.body.email, '验证码', number)
+            res.send({
+                isSendCheckEmail: true
+            })
+        } else {
+            if (user.isRegister == true) { // 如果有一组信息对 则判断 isRigster属性 true 则返回客户端该账户以及注册
+                res.send({
+                    haveReg: true
+                })
+            } else { // false则发送新验证码 并且修改数据库中的验证码
+                var number = random(6)
+                db.user.updateOne({
+                    userEmail: req.body.email
+                }, {
+                    RegNumber: number
+                }, function (err, docs) {
+                    if (err) {
+                        write.logerr(err)
+                    }
+                })
+                sendEmail(req.body.email, '验证码', number)
+            }
+        }
+
+    }
+})
+router.post('/registerCheck', async (req, res) => {
+    const user = await db.user.findOne({
+        userEmail: req.body.userEmail
+    })
+    
+    var str1 = user.RegNumber.toUpperCase()
+    var str2 = req.body.regYanZhen.toUpperCase()
+    
+    if (str1 !== str2) { //验证码匹配出错
+        res.send({
+            isReg: false
+        })
+    } else { //验证码匹配正确 注册成功
+        var tokenNum = jwt.sign({
+            Email: req.body.userEmail,
+            buidTime: Date.now(),
+            tokenKey: "i love cxy forever"
+        }, "www.shushuo.space is built by Mr.Ge")
+        db.user.updateMany({
+            userEmail: req.body.userEmail
+        }, {
+            $set: {
+                isRegister: true,
+                registerDate: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+                tokenTime: Date.now() + 1000 * 60 * 60 * 24 * 3, //设置过期天数为3天
+                token: tokenNum
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        // 注册的位次
+        var users = await db.user.find({
+            isRegister: true
+        })
+        var usersNumber = users.length
+        var usersAccount = users.length + 10000
+        var usersPassword = random(6)
+        db.user.updateOne({
+            userEmail: req.body.userEmail
+        }, {
+            $set: {
+                userNumber: usersNumber,
+                userName: `小树${usersNumber}号`,
+                userAccount: usersAccount,
+                userPassword: md5.md1(usersPassword)
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+        sendEmail(req.body.userEmail, '注册成功', '恭喜您注册成功,您的账号为' + usersAccount + ',初始密码为' + usersPassword + ',为了您的账户安全 请及时修改密码')
+        res.send({
+            token: tokenNum,
+            isReg: true
+        })
+    }
+})
+module.exports = router;

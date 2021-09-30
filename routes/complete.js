@@ -1,0 +1,926 @@
+const express = require('express');
+const db = require('../mongodb/mongodb');
+const router = express.Router();
+const random = require('string-random');
+const date = require("silly-datetime");
+const write = require('../middleware/consolelog');
+
+// like按钮的事件
+router.post('/like', async function (req, res, next) {
+    if (req.body.token == undefined) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    var user = await db.user.findOne({
+        token: req.body.token
+    }, {
+        likeArticles: 1,
+        unlikeArticles: 1,
+        userEmail: 1
+    })
+    if (user == null) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    //确定了操作对象后 进行对数据库的操作
+    if (user.unlikeArticles.find(item => item.articleId == req.body.articleId) !== undefined) {
+
+        //该文章正处于踩一踩状态
+        //取消踩一踩
+        var Time = user.unlikeArticles.find(item => item.articleId == req.body.articleId).time
+        db.user.updateOne({
+            token: req.body.token
+        }, {
+            $pull: {
+                unlikeArticles: {
+                    articleId: req.body.articleId,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+        db.article.updateOne({
+            '_id': req.body.articleId
+        }, {
+            $pull: {
+                unlikers: {
+                    name: user.userEmail,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        //点赞
+        var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+        db.user.updateOne({
+            token: req.body.token
+        }, {
+            $push: {
+                likeArticles: {
+                    articleId: req.body.articleId,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+        db.article.updateOne({
+            '_id': req.body.articleId
+        }, {
+            $push: {
+                likers: {
+                    name: user.userEmail,
+                    isCheck: false,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        res.send({
+            isunLike: false,
+            isLike: true,
+            isLogin: true,
+            isCommen: false
+        })
+    } else {
+        if (user.likeArticles.find(item => item.articleId == req.body.articleId) == undefined) {
+            //点赞
+            var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+            db.user.updateOne({
+                token: req.body.token
+            }, {
+                $push: {
+                    likeArticles: {
+                        articleId: req.body.articleId,
+                        time: Time
+                    }
+                }
+            }, (err, doc) => {
+                if (err) {
+                    write.logerr(err)
+                }
+            })
+            db.article.updateOne({
+                '_id': req.body.articleId
+            }, {
+                $push: {
+                    likers: {
+                        name: user.userEmail,
+                        isCheck: false,
+                        time: Time
+                    }
+                }
+            }, (err, doc) => {
+                if (err) {
+                    write.logerr(err)
+                }
+            })
+
+            var userInfor = await db.user.findOne({
+                userEmail: user.userEmail
+            }, {
+                likeArticles: 1
+            })
+            var likeArticles = []
+            for (let i = 0; i < userInfor.likeArticles.length; i++) {
+                likeArticles.push({
+                    articleId: userInfor.likeArticles[i].articleId
+                })
+            }
+            res.send({
+                isLike: true,
+                isLogin: true,
+                isCommen: true
+            })
+        } else {
+            //取消点赞
+            var Time = user.likeArticles.find(item => item.articleId == req.body.articleId).time
+            db.user.updateOne({
+                token: req.body.token
+            }, {
+                $pull: {
+                    likeArticles: {
+                        articleId: req.body.articleId,
+                        time: Time
+                    }
+                }
+            }, (err, doc) => {
+                if (err) {
+                    write.logerr(err)
+                }
+            })
+            db.article.updateOne({
+                '_id': req.body.articleId
+            }, {
+                $pull: {
+                    likers: {
+                        name: user.userEmail,
+                        time: Time
+                    }
+                }
+            }, (err, doc) => {
+                if (err) {
+                    write.logerr(err)
+                }
+            })
+
+            var userInfor = await db.user.findOne({
+                userEmail: user.userEmail
+            }, {
+                likeArticles: 1
+            })
+            var likeArticles = []
+            for (let i = 0; i < userInfor.likeArticles.length; i++) {
+                likeArticles.push({
+                    articleId: userInfor.likeArticles[i].articleId
+                })
+            }
+            res.send({
+                isLike: false,
+                isLogin: true,
+                isCommen: true
+            })
+        }
+    }
+});
+
+// unlike按钮的事件
+router.post('/unlike', async function (req, res, next) {
+    if (req.body.token == undefined) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    var user = await db.user.findOne({
+        token: req.body.token
+    }, {
+        unlikeArticles: 1,
+        likeArticles: 1,
+        userEmail: 1
+    })
+    if (user == null) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    //确定了操作对象后 进行对数据库的操作
+    if (user.likeArticles.find(item => item.articleId == req.body.articleId) !== undefined) {
+
+        //该文章正处于点赞状态
+        //取消点赞
+        var Time = user.likeArticles.find(item => item.articleId == req.body.articleId).time
+        db.user.updateOne({
+            token: req.body.token
+        }, {
+            $pull: {
+                likeArticles: {
+                    articleId: req.body.articleId,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+        db.article.updateOne({
+            '_id': req.body.articleId
+        }, {
+            $pull: {
+                likers: {
+                    name: user.userEmail,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        //踩
+        var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+        db.user.updateOne({
+            token: req.body.token
+        }, {
+            $push: {
+                unlikeArticles: {
+                    articleId: req.body.articleId,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+        db.article.updateOne({
+            '_id': req.body.articleId
+        }, {
+            $push: {
+                unlikers: {
+                    name: user.userEmail,
+                    isCheck: false,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        res.send({
+            isunLike: true,
+            isLike: false,
+            isLogin: true,
+            isCommen: false
+        })
+    } else {
+        if (user.unlikeArticles.find(item => item.articleId == req.body.articleId) == undefined) {
+
+            //踩
+            var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+            db.user.updateOne({
+                token: req.body.token
+            }, {
+                $push: {
+                    unlikeArticles: {
+                        articleId: req.body.articleId,
+                        time: Time
+                    }
+                }
+            }, (err, doc) => {
+                if (err) {
+                    write.logerr(err)
+                }
+            })
+            db.article.updateOne({
+                '_id': req.body.articleId
+            }, {
+                $push: {
+                    unlikers: {
+                        name: user.userEmail,
+                        isCheck: false,
+                        time: Time
+                    }
+                }
+            }, (err, doc) => {
+                if (err) {
+                    write.logerr(err)
+                }
+            })
+
+            res.send({
+                isunLike: true,
+                isLogin: true,
+                isCommen: true
+            })
+        } else {
+
+            //取消踩
+            var Time = user.unlikeArticles.find(item => item.articleId == req.body.articleId).time
+            db.user.updateOne({
+                token: req.body.token
+            }, {
+                $pull: {
+                    unlikeArticles: {
+                        articleId: req.body.articleId,
+                        time: Time
+                    }
+                }
+            }, (err, doc) => {
+                if (err) {
+                    write.logerr(err)
+                }
+            })
+            db.article.updateOne({
+                '_id': req.body.articleId
+            }, {
+                $pull: {
+                    unlikers: {
+                        name: user.userEmail,
+                        time: Time
+                    }
+                }
+            }, (err, doc) => {
+                if (err) {
+                    write.logerr(err)
+                }
+            })
+
+            res.send({
+                isunLike: false,
+                isLogin: true,
+                isCommen: true
+            })
+        }
+    }
+});
+
+// 收藏文章事件
+router.post('/collect', async function (req, res, next) {
+    if (req.body.token == undefined) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    var user = await db.user.findOne({
+        token: req.body.token
+    }, {
+        collectArticles: 1,
+        userEmail: 1
+    })
+    if (user == null) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+
+    //确定了操作对象后 进行对数据库的操作
+    if (user.collectArticles.find(item => item.articleId == req.body.articleId) == undefined) {
+        //内容还没有被作者收藏
+        var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+        db.article.updateOne({
+            '_id': req.body.articleId
+        }, {
+            $push: {
+                collectors: {
+                    name: user.userEmail,
+                    isCheck: false,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        db.user.updateOne({
+            token: req.body.token
+        }, {
+            $push: {
+                collectArticles: {
+                    articleId: req.body.articleId,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        res.send({
+            isCollect: true,
+            isLogin: true
+        })
+    } else {
+        //已经收藏了 接下来将进行取消收藏
+        var Time = user.collectArticles.find(item => item.articleId == req.body.articleId).time
+        db.article.updateOne({
+            '_id': req.body.articleId
+        }, {
+            $pull: {
+                collectors: {
+                    name: user.userEmail,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        db.user.updateOne({
+            token: req.body.token
+        }, {
+            $pull: {
+                collectArticles: {
+                    articleId: req.body.articleId,
+                    time: Time
+                }
+            }
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        res.send({
+            isCollect: false,
+            isLogin: true
+        })
+    }
+})
+
+//举报事件
+router.post('/report', async function (req, res, next) {
+    if (req.body.token == undefined) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    var user = await db.user.findOne({
+        token: req.body.token
+    }, {
+        userEmail: 1
+    })
+    if (user == null) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    //确定了操作对象后 进行对数据库的操作
+    // 把举报数据写入举报内容列表中
+    db.illegalArticle.create({
+        Name: req.body.articleName,
+        Callemail: user.userEmail,
+        articleID: req.body.articleId,
+        time: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+        reason: req.body.reason
+    })
+
+    res.send({
+        isReport: true
+    })
+
+})
+
+//查看评论区事件
+router.post('/commentGet', async function (req, res, next) {
+
+    //计划取消登陆状态查看评论区的设定
+    // if (req.body.token == undefined) {
+    //     res.send({
+    //         isLogin: false
+    //     })
+    //     return
+    // }
+    // var user = await db.user.findOne({
+    //     token: req.body.token
+    // })
+    // if (user == null) {
+    //     res.send({
+    //         isLogin: false
+    //     })
+    //     return
+    // }
+
+    //确定了操作对象后 进行对数据库的操作
+    var article = await db.article.findOne({
+        _id: req.body.articleId
+    }, {
+        comments: 1
+    })
+    var comments = article.comments
+    for (let i = 0; i < comments.length; i++) {
+
+        if (comments[i].isOK == false) {
+            comments[i].content = '<i><b><u>该评论已删除</u></b></i>'
+        }
+
+        var smallUser = await db.user.findOne({
+            userEmail: comments[i].comUser
+        }, {
+            headImg: 1,
+            userName: 1
+        })
+
+        comments[i].headimg = smallUser.headImg
+        comments[i].comUser = smallUser.userName
+        comments[i].comUserId = smallUser._id
+        if (comments[i].secComments) {
+            for (let j = 0; j < comments[i].secComments.length; j++) {
+
+                if (comments[i].secComments[j].isOK == false) {
+                    comments[i].secComments[j].content = '<i><b><u>该评论已删除</u></b></i>'
+                }
+
+                var smallUser = await db.user.findOne({
+                    userEmail: comments[i].secComments[j].comUserEmail
+                }, {
+                    headImg: 1,
+                    userName: 1
+                })
+
+                comments[i].secComments[j].comUserHead = smallUser.headImg
+                comments[i].secComments[j].comUserName = smallUser.userName
+                comments[i].secComments[j].comUserId = smallUser._id
+            }
+            comments[i].secComments_number = comments[i].secComments.length
+        }
+    }
+    res.send({
+        comment: comments
+    })
+})
+
+//上传评论功能
+router.post('/commentSub', async function (req, res, next) {
+    if (req.body.token == undefined) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    var user = await db.user.findOne({
+        token: req.body.token
+    }, {
+        userEmail: 1
+    })
+    if (user == null) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+
+    //确定了操作对象后 进行对数据库的操作
+    var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    var commentId = Date.now() + random(4)
+    db.article.updateOne({
+        _id: req.body.articleId
+    }, {
+        $push: {
+            comments: {
+                id: commentId,
+                content: req.body.content,
+                comUser: user.userEmail,
+                time: Time,
+                isOK: true
+            }
+        }
+    }, (err, doc) => {
+        if (err) {
+            write.logerr(err)
+        }
+    })
+
+    var article = await db.article.findOne({
+        _id: req.body.articleId
+    }, {
+        writerEmail: 1,
+        _id: 1
+    })
+
+    db.webUserComments.create({
+        myName: article.writerEmail,
+        articleId: article._id,
+        anotherName: user.userEmail,
+        isCheck: false,
+        date: Time
+    })
+
+    db.user.updateOne({
+        token: req.body.token
+    }, {
+        $push: {
+            commentArticles: {
+                articleId: req.body.articleId,
+                id: commentId,
+                content: req.body.content,
+                type: 'firstComment',
+                time: Time,
+                isOK: true
+            }
+        }
+    }, (err, doc) => {
+        if (err) {
+            write.logerr(err)
+        }
+    })
+    res.send({
+        isComment: true,
+        time: Time,
+        commentId
+    })
+})
+
+//层内评论功能
+router.post('/secCommentSub', async function (req, res, next) {
+    if (req.body.token == undefined) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    var user = await db.user.findOne({
+        token: req.body.token
+    }, {
+        userEmail: 1,
+        headImg: 1,
+        userName: 1
+    })
+    if (user == null) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+
+
+
+    //该层内 的评论的实时数量
+    var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    var commentId = Date.now() + random(4)
+
+    //就是这段代码实现了二次评论功能
+    db.article.updateOne({
+        'comments.id': req.body.floorCommentId
+    }, {
+        $push: {
+            'comments.$.secComments': {
+                id: commentId, //评论id
+                content: req.body.content, //评论内容
+                comUserEmail: user.userEmail, //评论者唯一标志 email
+                time: Time, //评论时间
+                isOK: true
+            }
+        }
+    }, (err, doc) => {
+        if (err) {
+            write.logerr(err)
+        }
+    })
+
+    var article = await db.article.findOne({
+        _id: req.body.articleId
+    }, {
+        comments: 1
+    })
+
+    var becomment = article.comments.find(item => item.id == req.body.floorCommentId)
+
+    db.webUserComments.create({
+        myName: becomment.comUser,
+        articleId: req.body.articleId,
+        anotherName: user.userEmail,
+        isCheck: false,
+        date: Time
+    })
+
+    //这里需要写什么还需要根据业务具体需求决定
+    db.user.updateOne({
+        token: req.body.token
+    }, {
+        $push: {
+            commentArticles: {
+                fatherid: req.body.floorCommentId, //父亲评论id
+                articleId: req.body.articleId,
+                id: commentId,
+                content: req.body.content,
+                type: 'secondComment',
+                time: Time,
+                isOK: true,
+                isSec: true
+            }
+        }
+    }, (err, doc) => {
+        if (err) {
+            write.logerr(err)
+        }
+    })
+
+    res.send({
+        isSuccess: true,
+        time: Time,
+        comUserHead: user.headImg,
+        id: commentId,
+        comUserName: user.userName
+    })
+})
+
+//添加小模块功能
+router.post('/addsmallM', async function (req, res, next) {
+    if (req.body.token == undefined) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+    var user = await db.user.findOne({
+        token: req.body.token
+    }, {
+        userEmail: 1
+    })
+    if (user == null) {
+        res.send({
+            isLogin: false
+        })
+        return
+    }
+
+    //确定了操作对象后 进行对数据库的操作
+    db.waitAddSmallModule.create({
+        smallMname: req.body.smallMName,
+        Callemail: user.userEmail,
+        bigMiD: req.body.bigMId,
+        time: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss'),
+        reason: req.body.reason
+    })
+
+    res.send({
+        isUpAdd: true
+    })
+})
+
+//主动刷新热榜模块
+router.post('/hotFlesh', async function (req, res, next) {
+
+    var articles = await db.article.find({
+        isPublic: true,
+        isOk: true
+    })
+    //清空所有热榜信息
+    await db.hotList.deleteMany({}, (err, doc) => {
+        if (err) {
+            write.logerr(err)
+        }
+    })
+    for (let i = 0; i < articles.length; i++) {
+        var commentsLength = articles[i].comments.length //总评论数 二级评论 ＋ 一级评论
+        for (let j = 0; j < articles[i].comments.length; j++) {
+            if (articles[i].comments[j].secComments !== undefined) {
+                commentsLength += articles[i].comments[j].secComments.length
+            }
+        }
+        var tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4 //当前分数  写到文章表里
+        await db.article.updateOne({
+            _id: articles[i]._id
+        }, {
+            scores: tempNow
+        }, function (err, docs) {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        //添加热榜的内容
+        var bigm = {
+            name: '树洞'
+        }
+        var smallm = {
+            name: ''
+        }
+        if (articles[i].smallmid !== 'shuDong') {
+            bigm = await db.largeModule.findOne({
+                _id: articles[i].bigmid
+            }, {
+                name: 1
+            })
+            smallm = await db.smallModule.findOne({
+                _id: articles[i].smallmid
+            }, {
+                name: 1
+            })
+        }
+
+        await db.hotList.create({
+            name: articles[i].name,
+            smallname: smallm.name,
+            bigmname: bigm.name,
+            id: articles[i]._id,
+            order: tempNow
+        })
+    }
+
+    var data = await db.hotList.find({}).sort({
+        'order': '-1'
+    }).limit(30)
+
+    res.send(data)
+})
+
+module.exports = router;
+
+setInterval(() => {
+    hot()
+}, 1000 * 60 * 5); //每隔五分钟进行一次热度计算
+
+//通过统计文章数据 进行分析热度排名
+async function hot() {
+    var articles = await db.article.find({
+        isPublic: true,
+        isOk: true
+    })
+    //清空所有热榜信息
+    db.hotList.deleteMany({}, (err, doc) => {
+        if (err) {
+            write.logerr(err)
+        }
+    })
+    for (let i = 0; i < articles.length; i++) {
+        var commentsLength = articles[i].comments.length //总评论数 二级评论 ＋ 一级评论
+        for (let j = 0; j < articles[i].comments.length; j++) {
+            if (articles[i].comments[j].secComments !== undefined) {
+                commentsLength += articles[i].comments[j].secComments.length
+            }
+        }
+        var tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4 //当前分数  写到文章表里
+        db.article.updateOne({
+            _id: articles[i]._id
+        }, {
+            scores: tempNow
+        }, function (err, docs) {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
+        //添加热榜的内容
+        var bigm = {
+            name: '树洞'
+        }
+        var smallm = {
+            name: ''
+        }
+        if (articles[i].smallmid !== 'shuDong') {
+            bigm = await db.largeModule.findOne({
+                _id: articles[i].bigmid
+            }, {
+                name: 1
+            })
+            smallm = await db.smallModule.findOne({
+                _id: articles[i].smallmid
+            }, {
+                name: 1
+            })
+        }
+
+        //目前没有进行热度冷却
+        var a = 0.5
+        db.hotList.create({
+            name: articles[i].name,
+            smallname: smallm.name,
+            bigmname: bigm.name,
+            id: articles[i]._id,
+            order: tempNow
+        })
+    }
+}

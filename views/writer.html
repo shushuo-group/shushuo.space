@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>创作中心</title>
+    <link rel="icon" href="/images/icon.ico">
+    <link rel="apple-touch-icon" href="/images/icon.ico">
+    <link rel="dns-prefetch" href="https://cdn.bootcss.com/">
+    <link rel="dns-prefetch" href="//at.alicdn.com/">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/">
+    <link rel="stylesheet" href="/stylesheets/writer.css?v=2021/5/29/16">
+    <link href="https://cdn.bootcss.com/highlight.js/8.0/styles/monokai_sublime.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
+
+</head>
+
+<body>
+    <div class="main">
+        <div class="mainTop">
+
+
+
+            <div class="top">
+                <span class="web-font">
+                    <a href="/">
+                        树说
+                    </a>
+                </span>
+
+
+            </div>
+            <div class="mainTopUser">
+                <div class="mainTopUserLeft">
+                    <div class="title">
+                        <div class="titlePart">
+                            <span>标题：</span>
+                            <input autocomplete="off" id="title" type="text" maxlength="30">
+                        </div>
+                    </div>
+                    <div class="writeDraft">
+                        <button id="writeDraft">存入草稿</button>
+                    </div>
+                    <div class="submitButton">
+                        <button id="submitButton">发表文章</button>
+                    </div>
+                </div>
+                <div class="mainTopUserRight">
+                    <div class="headImgPart">
+                        <svg id="loginButton" viewBox="0 0 1024 1024">
+                            <path
+                                d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z"
+                                fill="#707070"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <div class="writePart">
+                <div class="writePart-select">
+                    <div class="writePart-select-part">
+                        <div class="subWays">
+                            <div>
+                                <div class="subWays-part">发布路径 ：</div>
+                                <div class="subWaysSelect">
+                                    <div>
+                                        <input id="dating" type="radio" name="subway" value="1">
+                                        <div>大厅</div>
+                                    </div>
+                                    <div>
+                                        <input id="shudong" type="radio" name="subway" value="0">
+                                        <div>树洞</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="writerInput">
+                        
+                        <div class="writerInputPart">
+                            <div class="card loading">
+
+                                <div class="loading_content">
+                                    <h4 class="loading_h4"></h4>
+                                    <div class="loading_description">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/utils.js?v=2021/6/2/27"></script>
+    <script src="/javascripts/writer.js?v=2021/6/1/13"></script>
+    <script src="/javascripts/gif.js"></script>
+    
+    <script src="https://cdn.bootcss.com/highlight.js/8.0/highlight.min.js"></script>
+</body>
+
+</html>
