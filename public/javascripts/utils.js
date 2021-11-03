@@ -1,3 +1,8 @@
+/*
+ * @Author: Ge junjie
+ * @Description: All commen tools
+ */
+
 //增加小模块的申请模块
 function centerLeftTopButtonAdd(e) {
     if (!$('.toPerson>img')[0]) {
@@ -134,6 +139,7 @@ function bigPart(e) {
             $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
         }
     });
+    $(window).scrollTop('0px')
     window.event.stopPropagation()
 }
 
@@ -193,6 +199,7 @@ function smp(e) {
             $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
         }
     });
+    $(window).scrollTop('0px')
     window.event.stopPropagation()
 }
 // 前端处理传回的token的方法 将token存入window.localStorage

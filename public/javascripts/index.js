@@ -1057,7 +1057,7 @@ $(document).ready(async function () {
             //一定不进行懒加载事件
             return
         }
-        if ($(this).scrollTop() + $(this).height() >= $(document).height()) {
+        if ($(this).scrollTop() + $(this).height() + 1 >= $(document).height()) {
             //触底则进行懒加载事件
             switch ($('#square').attr('isactive')) {
                 case 'true':

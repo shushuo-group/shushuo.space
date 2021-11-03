@@ -67,32 +67,15 @@ $(document).ready(function () {
                 </div>
             </div>
                 `);
+
                 $.ajax({
                     type: "post",
                     url: "/person/sendToken_travel",
                     data: {
-                        token: window.localStorage.token,
                         userId: window.location.search.split('=')[1]
                     },
                     success: function (response) {
-                        if (response.isLogin == false) {
-                            location.href = 'https://www.shushuo.space/'
-                            return
-                        }
-                        $('.userid').html(`${xssFilter(response.user.userName)}`);
-                        $('.headpicSvg').attr('viewBox', "0 0 70 70");
-                        $('.headpicSvg>path').remove();
-                        $('.headpicSvg').css({
-                            'display': 'none',
-                            'position': 'relative',
-                            'z-index': '5',
-                            'background-color': 'rgba(0,0,0,.5)'
-                        });
-                        if (response.user.headImg == 'NaN.png') {
-                            $('.headpic').append('<img onerror=\'picError(this)\' src="/head/staticIMG/' + response.user.headImg + '">');
-                            return
-                        }
-                        $('.headpic').append('<img onerror=\'picError(this)\' src="/head/' + response.user.headImg + '">');
+                        $('.headpic').append('<img onerror=\'picError(this)\' src="/head/' + response + '">');
                     }
                 });
 

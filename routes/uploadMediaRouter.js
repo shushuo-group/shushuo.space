@@ -11,7 +11,7 @@ const write = require('../middleware/consolelog');
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
         // 接收到文件后输出的保存路径（若不存在则需要创建）
-        cb(null, 'upload/head/');
+        cb(null, '/www/wwwroot/shushuo.space/upload/head/');
     },
     filename: async function (req, file, cb) {
         var fileName = file.originalname.substr(0, file.originalname.length - 4) //文件名携带了token
@@ -89,9 +89,9 @@ router.post('/sendHeadImg', upload.single('file'), async function (req, res, nex
 var picimgname
 var storage_article = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'upload/pic/');
+        cb(null, '/www/wwwroot/shushuo.space/upload/pic');
     },
-    filename: async function (req, file, cb) {
+    filename: function (req, file, cb) {
         var type = file.mimetype.split('/')[1]
 
         var datenow = Date.now()
@@ -106,7 +106,7 @@ var upload_articleimg = multer({
     storage: storage_article
 });
 
-router.post('/sendImg', upload_articleimg.single('file'), async function (req, res, next) {
+router.post('/sendImg', upload_articleimg.single('file'), function (req, res, next) {
     res.send({
         "errno": 0,
         "data": [{

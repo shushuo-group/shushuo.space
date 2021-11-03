@@ -39,6 +39,16 @@ router.post('/sendToken', async function (req, res, next) {
     }
 })
 
+router.post('/sendToken_travel', async function (req, res, next) {
+    var user = await db.user.findOne({
+        _id: req.body.userId,
+        isOk: true
+    },{
+        headImg: 1
+    })
+    res.send(user.headImg)
+})
+
 //查看个人信息
 router.post('/person', async function (req, res, next) {
     if (req.body.token == undefined) {
