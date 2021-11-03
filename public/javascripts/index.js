@@ -236,9 +236,7 @@ $(document).ready(async function () {
                 $('#outLogin').click(function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    window.localStorage.removeItem('name')
-                    window.localStorage.removeItem('token')
-                    window.localStorage.removeItem('search')
+                    localStorage.clear();
                     location.href = 'https://www.shushuo.space/'
                 });
 
@@ -564,9 +562,7 @@ $(document).ready(async function () {
                 $('.head-part').remove();
 
                 //自动清除本地缓存
-                window.localStorage.removeItem('token')
-                window.localStorage.removeItem('search')
-                window.localStorage.removeItem('name')
+                localStorage.clear();
 
                 // 非登录状态下的搜索
                 $("#search_base_value").focus(function () {

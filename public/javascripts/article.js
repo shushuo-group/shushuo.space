@@ -165,9 +165,7 @@ $(document).ready(async function () {
                 <img onerror=\'picError(this)\' onclick="window.open('/person')" username="${response.userName}" src="/head/${response.userHeadimg == "NaN.png" ? "staticIMG/NaN.png" : response.userHeadimg}">
                 `);
             } else {
-                window.localStorage.removeItem('name')
-                window.localStorage.removeItem('token')
-                window.localStorage.removeItem('search')
+                localStorage.clear();
                 $('#loginButton').click(function () {
                     $('body').after('<div class="mask"></div>');
                     $('.mask').after('<div class="logReg"><div><div class="waitChange"><div class="logByAcc" name="账号登录？"><div><div><div><span>账号：</span><span><div><input type="text" id="userName"></div></span></div></div></div><div><div><div><span>密码：</span><span><div><input type="password" id="passWord"></div></span><a href="/findPassword">忘记密码？</a></div></div></div></div></div><div class="ChangeButton"><div><span>邮箱登录？</span><span>/</span><span>注册？</span></div></div></div><div><div id="logRegButton">登 录</div></div></div>');
@@ -241,9 +239,7 @@ $(document).ready(async function () {
                                         if (response.isLogin == true) {
                                             location.href = window.location.href
                                         } else {
-                                            window.localStorage.removeItem('name')
-                                            window.localStorage.removeItem('token')
-                                            window.localStorage.removeItem('search')
+                                            localStorage.clear();
                                             alert('请仔细验证登录信息')
                                         }
                                     }
@@ -262,9 +258,7 @@ $(document).ready(async function () {
                                         if (response.isLogin == true) {
                                             location.href = window.location.href
                                         } else {
-                                            window.localStorage.removeItem('name')
-                                            window.localStorage.removeItem('token')
-                                            window.localStorage.removeItem('search')
+                                            localStorage.clear();
                                             alert('请仔细验证登录信息')
                                         }
                                     }
@@ -283,9 +277,7 @@ $(document).ready(async function () {
                                         if (response.isLogin == true) {
                                             location.href = window.location.href
                                         } else {
-                                            window.localStorage.removeItem('name')
-                                            window.localStorage.removeItem('token')
-                                            window.localStorage.removeItem('search')
+                                            localStorage.clear();
                                             alert('请仔细验证登录信息')
                                         }
                                     }
