@@ -549,6 +549,11 @@ router.post('/slideFlush', async function (req, res, next) {
                 articleName: articles[i].name,
                 articleId: articles[i]._id,
                 articleTime: articles[i].time,
+
+                islike: false,
+                isunlike: false,
+                iscollect: false,
+
                 like: articles[i].likers.length,
                 unlike: articles[i].unlikers.length,
                 writerHead: articleWriter[0].headImg,
@@ -640,6 +645,11 @@ router.post('/slideFlush', async function (req, res, next) {
                 articleContent: articles[i].content,
                 articleName: articles[i].name,
                 articleId: articles[i]._id,
+
+                islike: false,
+                isunlike: false,
+                iscollect: false,
+
                 like: articles[i].likers.length,
                 unlike: articles[i].unlikers.length,
             })
