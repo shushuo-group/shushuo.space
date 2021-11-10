@@ -7,3 +7,5 @@ hello world
 
 merge test
 hello world
+
+hellohello world
