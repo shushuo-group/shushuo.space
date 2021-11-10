@@ -104,7 +104,7 @@ router.post('/smallModule', async function (req, res, next) {
             articleName: articles[i].name,
             articleId: articles[i]._id,
             articleTime: articles[i].time,
-            isCollect: false,
+            iscollect: false,
             islike: false,
             isunlike: false,
             like: articles[i].likers.length,
