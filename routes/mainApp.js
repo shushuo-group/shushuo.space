@@ -240,7 +240,7 @@ router.post('/toshuDong', async function (req, res, next) {
     var userSee = await db.user.findOne({
         token: req.body.token
     })
-    if (user !== null) {
+    if (userSee !== null) {
         var articles = await db.article.find({
             isShow: false,
             isOk: true,
