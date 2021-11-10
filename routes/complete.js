@@ -13,7 +13,7 @@ router.post('/like', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     }, {
         likeArticles: 1,
@@ -31,7 +31,7 @@ router.post('/like', async function (req, res, next) {
 
         //该文章正处于踩一踩状态
         //取消踩一踩
-        var Time = user.unlikeArticles.find(item => item.articleId == req.body.articleId).time
+        let Time = user.unlikeArticles.find(item => item.articleId == req.body.articleId).time
         db.user.updateOne({
             token: req.body.token
         }, {
@@ -62,7 +62,7 @@ router.post('/like', async function (req, res, next) {
         })
 
         //点赞
-        var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+        let Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
         db.user.updateOne({
             token: req.body.token
         }, {
@@ -102,7 +102,7 @@ router.post('/like', async function (req, res, next) {
     } else {
         if (user.likeArticles.find(item => item.articleId == req.body.articleId) == undefined) {
             //点赞
-            var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+            let Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
             db.user.updateOne({
                 token: req.body.token
             }, {
@@ -133,12 +133,12 @@ router.post('/like', async function (req, res, next) {
                 }
             })
 
-            var userInfor = await db.user.findOne({
+            let userInfor = await db.user.findOne({
                 userEmail: user.userEmail
             }, {
                 likeArticles: 1
             })
-            var likeArticles = []
+            let likeArticles = []
             for (let i = 0; i < userInfor.likeArticles.length; i++) {
                 likeArticles.push({
                     articleId: userInfor.likeArticles[i].articleId
@@ -151,7 +151,7 @@ router.post('/like', async function (req, res, next) {
             })
         } else {
             //取消点赞
-            var Time = user.likeArticles.find(item => item.articleId == req.body.articleId).time
+            let Time = user.likeArticles.find(item => item.articleId == req.body.articleId).time
             db.user.updateOne({
                 token: req.body.token
             }, {
@@ -181,12 +181,12 @@ router.post('/like', async function (req, res, next) {
                 }
             })
 
-            var userInfor = await db.user.findOne({
+            let userInfor = await db.user.findOne({
                 userEmail: user.userEmail
             }, {
                 likeArticles: 1
             })
-            var likeArticles = []
+            let likeArticles = []
             for (let i = 0; i < userInfor.likeArticles.length; i++) {
                 likeArticles.push({
                     articleId: userInfor.likeArticles[i].articleId
@@ -209,7 +209,7 @@ router.post('/unlike', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     }, {
         unlikeArticles: 1,
@@ -227,7 +227,7 @@ router.post('/unlike', async function (req, res, next) {
 
         //该文章正处于点赞状态
         //取消点赞
-        var Time = user.likeArticles.find(item => item.articleId == req.body.articleId).time
+        let Time = user.likeArticles.find(item => item.articleId == req.body.articleId).time
         db.user.updateOne({
             token: req.body.token
         }, {
@@ -258,7 +258,7 @@ router.post('/unlike', async function (req, res, next) {
         })
 
         //踩
-        var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+        let Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
         db.user.updateOne({
             token: req.body.token
         }, {
@@ -299,7 +299,7 @@ router.post('/unlike', async function (req, res, next) {
         if (user.unlikeArticles.find(item => item.articleId == req.body.articleId) == undefined) {
 
             //踩
-            var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+            let Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
             db.user.updateOne({
                 token: req.body.token
             }, {
@@ -338,7 +338,7 @@ router.post('/unlike', async function (req, res, next) {
         } else {
 
             //取消踩
-            var Time = user.unlikeArticles.find(item => item.articleId == req.body.articleId).time
+            let Time = user.unlikeArticles.find(item => item.articleId == req.body.articleId).time
             db.user.updateOne({
                 token: req.body.token
             }, {
@@ -385,7 +385,7 @@ router.post('/collect', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     }, {
         collectArticles: 1,
@@ -401,7 +401,7 @@ router.post('/collect', async function (req, res, next) {
     //确定了操作对象后 进行对数据库的操作
     if (user.collectArticles.find(item => item.articleId == req.body.articleId) == undefined) {
         //内容还没有被作者收藏
-        var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+        let Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
         db.article.updateOne({
             '_id': req.body.articleId
         }, {
@@ -439,7 +439,7 @@ router.post('/collect', async function (req, res, next) {
         })
     } else {
         //已经收藏了 接下来将进行取消收藏
-        var Time = user.collectArticles.find(item => item.articleId == req.body.articleId).time
+        let Time = user.collectArticles.find(item => item.articleId == req.body.articleId).time
         db.article.updateOne({
             '_id': req.body.articleId
         }, {
@@ -485,7 +485,7 @@ router.post('/report', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     }, {
         userEmail: 1
@@ -522,7 +522,7 @@ router.post('/commentGet', async function (req, res, next) {
     //     })
     //     return
     // }
-    // var user = await db.user.findOne({
+    // let user = await db.user.findOne({
     //     token: req.body.token
     // })
     // if (user == null) {
@@ -533,19 +533,19 @@ router.post('/commentGet', async function (req, res, next) {
     // }
 
     //确定了操作对象后 进行对数据库的操作
-    var article = await db.article.findOne({
+    let article = await db.article.findOne({
         _id: req.body.articleId
     }, {
         comments: 1
     })
-    var comments = article.comments
+    let comments = article.comments
     for (let i = 0; i < comments.length; i++) {
 
         if (comments[i].isOK == false) {
             comments[i].content = '<i><b><u>该评论已删除</u></b></i>'
         }
 
-        var smallUser = await db.user.findOne({
+        let smallUser = await db.user.findOne({
             userEmail: comments[i].comUser
         }, {
             headImg: 1,
@@ -562,7 +562,7 @@ router.post('/commentGet', async function (req, res, next) {
                     comments[i].secComments[j].content = '<i><b><u>该评论已删除</u></b></i>'
                 }
 
-                var smallUser = await db.user.findOne({
+                let smallUser = await db.user.findOne({
                     userEmail: comments[i].secComments[j].comUserEmail
                 }, {
                     headImg: 1,
@@ -589,7 +589,7 @@ router.post('/commentSub', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     }, {
         userEmail: 1
@@ -602,8 +602,8 @@ router.post('/commentSub', async function (req, res, next) {
     }
 
     //确定了操作对象后 进行对数据库的操作
-    var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-    var commentId = Date.now() + random(4)
+    let Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    let commentId = Date.now() + random(4)
     db.article.updateOne({
         _id: req.body.articleId
     }, {
@@ -622,7 +622,7 @@ router.post('/commentSub', async function (req, res, next) {
         }
     })
 
-    var article = await db.article.findOne({
+    let article = await db.article.findOne({
         _id: req.body.articleId
     }, {
         writerEmail: 1,
@@ -670,7 +670,7 @@ router.post('/secCommentSub', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     }, {
         userEmail: 1,
@@ -687,8 +687,8 @@ router.post('/secCommentSub', async function (req, res, next) {
 
 
     //该层内 的评论的实时数量
-    var Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-    var commentId = Date.now() + random(4)
+    let Time = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
+    let commentId = Date.now() + random(4)
 
     //就是这段代码实现了二次评论功能
     db.article.updateOne({
@@ -709,13 +709,13 @@ router.post('/secCommentSub', async function (req, res, next) {
         }
     })
 
-    var article = await db.article.findOne({
+    let article = await db.article.findOne({
         _id: req.body.articleId
     }, {
         comments: 1
     })
 
-    var becomment = article.comments.find(item => item.id == req.body.floorCommentId)
+    let becomment = article.comments.find(item => item.id == req.body.floorCommentId)
 
     db.webUserComments.create({
         myName: becomment.comUser,
@@ -764,7 +764,7 @@ router.post('/addsmallM', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     }, {
         userEmail: 1
@@ -793,7 +793,7 @@ router.post('/addsmallM', async function (req, res, next) {
 //主动刷新热榜模块
 router.post('/hotFlesh', async function (req, res, next) {
 
-    var articles = await db.article.find({
+    let articles = await db.article.find({
         isPublic: true,
         isOk: true
     })
@@ -804,13 +804,13 @@ router.post('/hotFlesh', async function (req, res, next) {
         }
     })
     for (let i = 0; i < articles.length; i++) {
-        var commentsLength = articles[i].comments.length //总评论数 二级评论 ＋ 一级评论
+        let commentsLength = articles[i].comments.length //总评论数 二级评论 ＋ 一级评论
         for (let j = 0; j < articles[i].comments.length; j++) {
             if (articles[i].comments[j].secComments !== undefined) {
                 commentsLength += articles[i].comments[j].secComments.length
             }
         }
-        var tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4 //当前分数  写到文章表里
+        let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4 //当前分数  写到文章表里
         await db.article.updateOne({
             _id: articles[i]._id
         }, {
@@ -822,10 +822,10 @@ router.post('/hotFlesh', async function (req, res, next) {
         })
 
         //添加热榜的内容
-        var bigm = {
+        let bigm = {
             name: '树洞'
         }
-        var smallm = {
+        let smallm = {
             name: ''
         }
         if (articles[i].smallmid !== 'shuDong') {
@@ -850,7 +850,7 @@ router.post('/hotFlesh', async function (req, res, next) {
         })
     }
 
-    var data = await db.hotList.find({}).sort({
+    let data = await db.hotList.find({}).sort({
         'order': '-1'
     }).limit(30)
 
@@ -865,7 +865,7 @@ setInterval(() => {
 
 //通过统计文章数据 进行分析热度排名
 async function hot() {
-    var articles = await db.article.find({
+    let articles = await db.article.find({
         isPublic: true,
         isOk: true
     })
@@ -876,13 +876,13 @@ async function hot() {
         }
     })
     for (let i = 0; i < articles.length; i++) {
-        var commentsLength = articles[i].comments.length //总评论数 二级评论 ＋ 一级评论
+        let commentsLength = articles[i].comments.length //总评论数 二级评论 ＋ 一级评论
         for (let j = 0; j < articles[i].comments.length; j++) {
             if (articles[i].comments[j].secComments !== undefined) {
                 commentsLength += articles[i].comments[j].secComments.length
             }
         }
-        var tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4 //当前分数  写到文章表里
+        let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4 //当前分数  写到文章表里
         db.article.updateOne({
             _id: articles[i]._id
         }, {
@@ -894,10 +894,10 @@ async function hot() {
         })
 
         //添加热榜的内容
-        var bigm = {
+        let bigm = {
             name: '树洞'
         }
-        var smallm = {
+        let smallm = {
             name: ''
         }
         if (articles[i].smallmid !== 'shuDong') {
@@ -914,7 +914,7 @@ async function hot() {
         }
 
         //目前没有进行热度冷却
-        var a = 0.5
+        let a = 0.5
         db.hotList.create({
             name: articles[i].name,
             smallname: smallm.name,

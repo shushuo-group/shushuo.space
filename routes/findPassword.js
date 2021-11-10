@@ -50,7 +50,7 @@ router.post('/Check', async function (req, res, next) {
         })
     } else {
         if (req.body.Email == user.userEmail && req.body.CheckNum == user.RegNumber) {
-            var tokenNum = jwt.sign({
+            let tokenNum = jwt.sign({
                 Email: Emailget,
                 buidTime: Date.now(),
                 tokenKey: "i love cxy forever"

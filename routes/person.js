@@ -12,7 +12,7 @@ router.post('/sendToken', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token,
             isOk: true
         })
@@ -21,7 +21,7 @@ router.post('/sendToken', async function (req, res, next) {
                 isLogin: false
             })
         } else {
-            var userInfors = {
+            let userInfors = {
                 userName: user.userName,
                 userEmail: user.userEmail,
                 registerDate: user.registerDate,
@@ -40,7 +40,7 @@ router.post('/sendToken', async function (req, res, next) {
 })
 
 router.post('/sendToken_travel', async function (req, res, next) {
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         _id: req.body.userId,
         isOk: true
     },{
@@ -56,7 +56,7 @@ router.post('/person', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         }, {
             userName: 1,
@@ -87,7 +87,7 @@ router.post('/article_travel', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         _id: req.body.userId
     })
     if (user == null) {
@@ -96,8 +96,8 @@ router.post('/article_travel', async function (req, res, next) {
         })
         return
     }
-    var article = []
-    var articles = await db.article.find({
+    let article = []
+    let articles = await db.article.find({
         writerEmail: user.userEmail,
         isShow: true,
         isOk: true,
@@ -107,7 +107,7 @@ router.post('/article_travel', async function (req, res, next) {
     })
     for (let i = 0; i < articles.length; i++) {
 
-        var commentsNumber = articles[i].comments.length
+        let commentsNumber = articles[i].comments.length
         for (let j = 0; j < articles[i].comments.length; j++) {
             if (articles[i].comments[j].secComments) {
                 commentsNumber += articles[i].comments[j].secComments.length
@@ -129,7 +129,7 @@ router.post('/article_travel', async function (req, res, next) {
             })
         } else {
 
-            var smallM = await db.smallModule.findOne({
+            let smallM = await db.smallModule.findOne({
                 _id: articles[i].smallmid
             })
             article.push({
@@ -158,7 +158,7 @@ router.post('/comment_travel', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         _id: req.body.userId
     })
     if (user == null) {
@@ -167,7 +167,7 @@ router.post('/comment_travel', async function (req, res, next) {
         })
         return
     }
-    var article = []
+    let article = []
     for (let i = 0; i < user.commentArticles.length; i++) {
         articles = await db.article.findOne({
             _id: user.commentArticles[i].articleId,
@@ -204,7 +204,7 @@ router.post('/person', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -227,7 +227,7 @@ router.post('/like', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -235,7 +235,7 @@ router.post('/like', async function (req, res, next) {
                 isLogin: false
             })
         } else {
-            var article = []
+            let article = []
             for (let i = 0; i < user.likeArticles.length; i++) {
                 articles = await db.article.findOne({
                     _id: user.likeArticles[i].articleId,
@@ -259,7 +259,7 @@ router.post('/like', async function (req, res, next) {
                         articleWriter: Writer.userName
                     })
                 } else {
-                    var smallM = await db.smallModule.findOne({
+                    let smallM = await db.smallModule.findOne({
                         _id: articles.smallmid
                     })
                     article.push({
@@ -287,7 +287,7 @@ router.post('/collect', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -295,7 +295,7 @@ router.post('/collect', async function (req, res, next) {
                 isLogin: false
             })
         } else {
-            var article = []
+            let article = []
             for (let i = 0; i < user.collectArticles.length; i++) {
                 articles = await db.article.findOne({
                     _id: user.collectArticles[i].articleId,
@@ -319,7 +319,7 @@ router.post('/collect', async function (req, res, next) {
                         articleWriter: Writer.userName
                     })
                 } else {
-                    var smallM = await db.smallModule.findOne({
+                    let smallM = await db.smallModule.findOne({
                         _id: articles.smallmid
                     })
                     article.push({
@@ -346,7 +346,7 @@ router.post('/comment', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -354,7 +354,7 @@ router.post('/comment', async function (req, res, next) {
                 isLogin: false
             })
         } else {
-            var article = []
+            let article = []
             for (let i = 0; i < user.commentArticles.length; i++) {
                 articles = await db.article.findOne({
                     _id: user.commentArticles[i].articleId,
@@ -410,7 +410,7 @@ router.post('/comment', async function (req, res, next) {
                         fatherid = NaN
                     }
 
-                    var smallM = await db.smallModule.findOne({
+                    let smallM = await db.smallModule.findOne({
                         _id: articles.smallmid
                     })
                     article.push({
@@ -444,7 +444,7 @@ router.post('/article', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -453,8 +453,8 @@ router.post('/article', async function (req, res, next) {
             })
             return
         }
-        var article = []
-        var articles = await db.article.find({
+        let article = []
+        let articles = await db.article.find({
             writerEmail: user.userEmail,
             isOk: true,
             isPublic: true
@@ -463,7 +463,7 @@ router.post('/article', async function (req, res, next) {
         })
         for (let i = 0; i < articles.length; i++) {
 
-            var commentsNumber = articles[i].comments.length
+            let commentsNumber = articles[i].comments.length
             for (let j = 0; j < articles[i].comments.length; j++) {
                 if (articles[i].comments[j].secComments) {
                     commentsNumber += articles[i].comments[j].secComments.length
@@ -485,7 +485,7 @@ router.post('/article', async function (req, res, next) {
                 })
             } else {
 
-                var smallM = await db.smallModule.findOne({
+                let smallM = await db.smallModule.findOne({
                     _id: articles[i].smallmid
                 })
                 article.push({
@@ -515,7 +515,7 @@ router.post('/waitPublish', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -524,8 +524,8 @@ router.post('/waitPublish', async function (req, res, next) {
             })
             return
         }
-        var article = []
-        var articles = await db.article.find({
+        let article = []
+        let articles = await db.article.find({
             writerEmail: user.userEmail,
             isPublic: false,
             isOk: true
@@ -552,7 +552,7 @@ router.post('/haveDelete', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -561,8 +561,8 @@ router.post('/haveDelete', async function (req, res, next) {
             })
             return
         }
-        var article = []
-        var articles = await db.article.find({
+        let article = []
+        let articles = await db.article.find({
             writerEmail: user.userEmail,
             isOk: false,
             isPublic: true
@@ -586,7 +586,7 @@ router.post('/haveDelete', async function (req, res, next) {
                 })
             } else {
 
-                var smallM = await db.smallModule.findOne({
+                let smallM = await db.smallModule.findOne({
                     _id: articles[i].smallmid
                 })
                 article.push({
@@ -632,7 +632,7 @@ router.post('/personChange', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     })
     if (user == null) {
@@ -641,7 +641,7 @@ router.post('/personChange', async function (req, res, next) {
         })
         return
     }
-    var user02 = await db.user.findOne({
+    let user02 = await db.user.findOne({
         userName: req.body.nickName
     })
     if (user02 !== null) {
