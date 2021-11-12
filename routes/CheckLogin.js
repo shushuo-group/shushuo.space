@@ -3,13 +3,13 @@ const router = express.Router();
 const db = require('../mongodb/mongodb')
 
 router.post('/', async function (req, res, next) {
-    let token = req.body.token
+    var token = req.body.token
     if (token == undefined) {
         res.send({
             isLogin: false
         })
     } else {
-        let user = await db.user.findOne({
+        var user = await db.user.findOne({
             token: token,
             isOk: true
         })

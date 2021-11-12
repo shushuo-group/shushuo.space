@@ -7,14 +7,14 @@ router.get('/', async function (req, res, next) {
 })
 
 async function commentDelete(articleid, fatherid, seccommentid) {
-    let a = await db.article.findOne({
+    var a = await db.article.findOne({
         '_id': articleid //文章id
     }, {
         comments: 1
     })
-    let b = a.comments.find(ele => ele.id == fatherid).secComments
-    let c = a.comments.find(ele => ele.id == fatherid).secComments.find(ele => ele.id == seccommentid)
-    let index = b.indexOf(c)
+    var b = a.comments.find(ele => ele.id == fatherid).secComments
+    var c = a.comments.find(ele => ele.id == fatherid).secComments.find(ele => ele.id == seccommentid)
+    var index = b.indexOf(c)
     c.isOK = false
     b[index] = c
 
@@ -35,13 +35,13 @@ async function commentDelete(articleid, fatherid, seccommentid) {
 
 //获取文章信息
 router.post('/articleDetail', async function (req, res, next) {
-    let article = await db.article.findOne({
+    var article = await db.article.findOne({
         _id: req.body.articleId,
         isOk: true,
         isPublic: true
     })
     //作者信息
-    let user = await db.user.findOne({
+    var user = await db.user.findOne({
         userEmail: article.writerEmail
     }, {
         userAccount: 1,
@@ -51,17 +51,17 @@ router.post('/articleDetail', async function (req, res, next) {
         word: 1
     })
     //浏览者信息
-    let userWatch = await db.user.findOne({
+    var userWatch = await db.user.findOne({
         token: req.body.token,
         isRegister: true
     }, {
         token: 1,
         userEmail: 1
     })
-    let isLogin = false
-    let islike = false
-    let isunlike = false
-    let iscollect = false
+    var isLogin = false
+    var islike = false
+    var isunlike = false
+    var iscollect = false
     if (userWatch !== null) {
         if (req.body.token == userWatch.token) {
             isLogin = true
@@ -78,24 +78,24 @@ router.post('/articleDetail', async function (req, res, next) {
     }
     if (article.isShow === true) {
         //非树洞内的文章
-        let bigM = await db.largeModule.findOne({
+        var bigM = await db.largeModule.findOne({
             _id: article.bigmid
         }, {
             name: 1
         })
-        let smallM = await db.smallModule.findOne({
+        var smallM = await db.smallModule.findOne({
             _id: article.smallmid
         }, {
             name: 1
         })
-        let commentsHead = []
+        var commentsHead = []
         for (let i = 0; i < article.comments.length; i++) {
 
             if (article.comments[i].isOK == false) {
                 article.comments[i].content = '<i><b><u>该评论已删除</u></b></i>'
             }
 
-            let commentsuser = await db.user.findOne({
+            var commentsuser = await db.user.findOne({
                 userEmail: article.comments[i].comUser
             }, {
                 headImg: 1
@@ -104,8 +104,8 @@ router.post('/articleDetail', async function (req, res, next) {
                 headImg: commentsuser.headImg
             })
         }
-        let comments = article.comments
-        let commentsNumber = article.comments.length
+        var comments = article.comments
+        var commentsNumber = article.comments.length
         for (let i = 0; i < comments.length; i++) {
             if (comments[i].secComments) {
                 for (let j = 0; j < comments[i].secComments.length; j++) {
@@ -115,7 +115,7 @@ router.post('/articleDetail', async function (req, res, next) {
                     }
 
 
-                    let secUser = await db.user.findOne({
+                    var secUser = await db.user.findOne({
                         userEmail: comments[i].secComments[j].comUserEmail
                     }, {
                         userAccount: 1,
@@ -135,7 +135,7 @@ router.post('/articleDetail', async function (req, res, next) {
                 comments[i].secComments_number = comments[i].secComments.length
             }
 
-            let usercommen = await db.user.findOne({
+            var usercommen = await db.user.findOne({
                 userEmail: comments[i].comUser
             }, {
                 userName: 1,
@@ -147,7 +147,7 @@ router.post('/articleDetail', async function (req, res, next) {
 
         }
 
-        let articleSend = {
+        var articleSend = {
             content: article.content,
             title: article.name,
             time: article.time,
@@ -174,14 +174,14 @@ router.post('/articleDetail', async function (req, res, next) {
         })
     } else {
         // 树洞内的文章
-        let commentsHead = []
+        var commentsHead = []
         for (let i = 0; i < article.comments.length; i++) {
 
             if (article.comments[i].isOK == false) {
                 article.comments[i].content = '<i><b><u>该评论已删除</u></b></i>'
             }
 
-            let commentsuser = await db.user.findOne({
+            var commentsuser = await db.user.findOne({
                 userEmail: article.comments[i].comUser
             }, {
                 headImg: 1
@@ -190,7 +190,7 @@ router.post('/articleDetail', async function (req, res, next) {
                 headImg: commentsuser.headImg
             })
         }
-        let comments = article.comments
+        var comments = article.comments
         for (let i = 0; i < comments.length; i++) {
             if (comments[i].secComments) {
                 for (let j = 0; j < comments[i].secComments.length; j++) {
@@ -199,7 +199,7 @@ router.post('/articleDetail', async function (req, res, next) {
                         comments[i].secComments[j].content = '<i><b><u>该评论已删除</u></b></i>'
                     }
 
-                    let secUser = await db.user.findOne({
+                    var secUser = await db.user.findOne({
                         userEmail: comments[i].secComments[j].comUserEmail
                     }, {
                         userAccount: 1,
@@ -219,7 +219,7 @@ router.post('/articleDetail', async function (req, res, next) {
                 comments[i].secComments_number = comments[i].secComments.length
             }
 
-            let usercommen = await db.user.findOne({
+            var usercommen = await db.user.findOne({
                 userEmail: comments[i].comUser
             }, {
                 userName: 1,
@@ -230,7 +230,7 @@ router.post('/articleDetail', async function (req, res, next) {
             comments[i].user_id = usercommen._id
 
         }
-        let articleSend = {
+        var articleSend = {
             content: article.content,
             title: article.name,
             time: article.time,
@@ -260,7 +260,7 @@ router.post('/articleDelete', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        let user = await db.user.findOne({
+        var user = await db.user.findOne({
             token: req.body.token,
             isOk: true
         })
@@ -295,7 +295,7 @@ router.post('/draftBoxDelete', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        let user = await db.user.findOne({
+        var user = await db.user.findOne({
             token: req.body.token,
             isOk: true
         })
@@ -330,7 +330,7 @@ router.post('/articleBack', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        let user = await db.user.findOne({
+        var user = await db.user.findOne({
             token: req.body.token,
             isOk: true
         })
@@ -365,7 +365,7 @@ router.post('/commentDelete', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        let user = await db.user.findOne({
+        var user = await db.user.findOne({
             token: req.body.token,
             isOk: true
         })
@@ -435,7 +435,7 @@ router.post('/articleDetail02', async function (req, res, next) {
         })
         return
     }
-    let userMove = await db.user.findOne({
+    var userMove = await db.user.findOne({
         token: req.body.token
     }, {
         userEmail: 1
@@ -446,7 +446,7 @@ router.post('/articleDetail02', async function (req, res, next) {
         })
         return
     }
-    let article = await db.article.findOne({
+    var article = await db.article.findOne({
         _id: req.body.articleId,
         isPublic: false
     })
@@ -459,7 +459,7 @@ router.post('/articleDetail02', async function (req, res, next) {
     if (article.writerEmail !== userMove.userEmail) { //确认操作者不是本人
         return
     }
-    let data = {
+    var data = {
         id: article._id,
         title: article.name,
         conntent: article.content,
@@ -476,7 +476,7 @@ router.post('/articleDetail03', async function (req, res, next) {
         })
         return
     }
-    let userMove = await db.user.findOne({
+    var userMove = await db.user.findOne({
         token: req.body.token
     }, {
         userEmail: 1
@@ -487,7 +487,7 @@ router.post('/articleDetail03', async function (req, res, next) {
         })
         return
     }
-    let article = await db.article.findOne({
+    var article = await db.article.findOne({
         _id: req.body.articleId
     }, {
         writerEmail: 1,
@@ -504,7 +504,7 @@ router.post('/articleDetail03', async function (req, res, next) {
     if (article.writerEmail !== userMove.userEmail) { //确认操作者不是本人
         return
     }
-    let data = {
+    var data = {
         id: article._id,
         title: article.name,
         conntent: article.content

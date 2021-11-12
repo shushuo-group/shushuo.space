@@ -12,15 +12,15 @@ router.get('/', function (req, res, next) {
 
 // 接收前端请求获取与个人用户无关的资源
 router.post('/webIndexStatic', async function (req, res, next) {
-    let data1 = await db.hotList.find({}).sort({
+    var data1 = await db.hotList.find({}).sort({
         'order': '-1'
     }).limit(30);
-    let bigMs = await db.largeModule.find({
+    var bigMs = await db.largeModule.find({
         isShow: true
     });
-    let data2 = [];
+    var data2 = [];
     for (let i = 0; i < bigMs.length; i++) {
-        let smllM = await db.smallModule.find({
+        var smllM = await db.smallModule.find({
             isShow: true,
             father: bigMs[i].name
         });
@@ -37,14 +37,14 @@ router.post('/webIndexStatic', async function (req, res, next) {
         }
     }
 
-    let userNumber = await db.user.find({
+    var userNumber = await db.user.find({
         isRegister: true
     })
-    let articleNumber = await db.article.find({
+    var articleNumber = await db.article.find({
         isPublic: true,
         isOk: true
     })
-    let data = {
+    var data = {
         hotList: data1,
         largeModule: data2,
         usernumber: userNumber.length,
@@ -62,7 +62,7 @@ router.post('/isLogin', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        let user = await db.user.findOne({
+        var user = await db.user.findOne({
             token: req.body.token,
             isRegister: true,
             isOk: true
@@ -83,46 +83,46 @@ router.post('/isLogin', async function (req, res, next) {
             //进行token验证
             if (req.body.token == user.token) {
                 //验证成功 成功登录 双端同时更新token
-                let tokenNum = jwt.sign({
+                var tokenNum = jwt.sign({
                     Email: user.userEmail,
                     buidTime: Date.now(),
                     tokenKey: "i love cxy forever"
                 }, "www.shushuo.space is built by Mr.Ge")
 
                 //获取个人信息返回客户端
-                let userInfor = user
-                let myArticles = await db.article.find({
+                var userInfor = user
+                var myArticles = await db.article.find({
                     writerEmail: user.userEmail,
                     isPublic: true,
                     isOk: true
                 })
-                let likeArticles = []
+                var likeArticles = []
                 for (let i = 0; i < userInfor.likeArticles.length; i++) {
                     likeArticles.push({
                         articleId: userInfor.likeArticles[i].articleId
                     })
                 }
-                let unlikeArticles = []
+                var unlikeArticles = []
                 for (let i = 0; i < userInfor.unlikeArticles.length; i++) {
                     unlikeArticles.push({
                         articleId: userInfor.unlikeArticles[i].articleId
                     })
                 }
-                let collectArticles = []
+                var collectArticles = []
                 for (let i = 0; i < userInfor.collectArticles.length; i++) {
                     collectArticles.push({
                         articleId: userInfor.collectArticles[i].articleId
                     })
                 }
 
-                let number3 = 0
+                var number3 = 0
                 for (let i = 0; i < userInfor.commentArticles.length; i++) {
                     if (userInfor.commentArticles[i].isOK == true) {
                         number3 += 1
                     }
                 }
 
-                let userS_H = []
+                var userS_H = []
                 for (let i = 0; i < userInfor.search_history.length; i++) {
                     if (userInfor.search_history[i].isOk == true) {
                         userS_H.push({
@@ -133,7 +133,7 @@ router.post('/isLogin', async function (req, res, next) {
                 if (userInfor.FreeCss == undefined) {
                     userInfor.FreeCss = ''
                 }
-                let userInfors = {
+                var userInfors = {
                     FreeCss: userInfor.FreeCss,
                     headImg: userInfor.headImg,
                     userName: userInfor.userName,

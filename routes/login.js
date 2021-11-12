@@ -18,7 +18,7 @@ router.post('/loginAcc', async function (req, res, next) {
         })
     } else {
         //开始进行提取密码验证
-        let user = await db.user.findOne({
+        var user = await db.user.findOne({
             userAccount: req.body.userName,
             isRegister: true
         })
@@ -30,7 +30,7 @@ router.post('/loginAcc', async function (req, res, next) {
         } else { //存在该账户 进行密码验证
             if (user.userPassword == md5.md1(req.body.passWord)) { //密码匹配成功
                 //更新tokentime时间
-                let tokenNum = jwt.sign({
+                var tokenNum = jwt.sign({
                     Email: user.userEmail,
                     buidTime: Date.now(),
                     tokenKey: "i love cxy forever"
@@ -66,7 +66,7 @@ router.post('/loginAcc', async function (req, res, next) {
 
 // 邮箱登录
 router.post('/loginEmail', async function (req, res, next) {
-    let user = await db.user.findOne({
+    var user = await db.user.findOne({
         userEmail: req.body.userEmail,
         isRegister: true
     })
@@ -76,7 +76,7 @@ router.post('/loginEmail', async function (req, res, next) {
         })
     } else { //进行邮箱验证
         if (user.userEmail == req.body.userEmail) { //邮箱确认成功 开始发送登录验证码
-            let RegNumber = random(6)
+            var RegNumber = random(6)
             sendEmail(req.body.userEmail, '登录验证码', RegNumber)
             db.user.updateOne({
                 userEmail: user.userEmail,
@@ -99,7 +99,7 @@ router.post('/loginEmail', async function (req, res, next) {
     }
 })
 router.post('/loginEmailCheck', async function (req, res, next) {
-    let user = await db.user.findOne({
+    var user = await db.user.findOne({
         userEmail: req.body.userEmail,
         isRegister: true
     })
@@ -109,11 +109,11 @@ router.post('/loginEmailCheck', async function (req, res, next) {
         })
     } else {
         
-        let str1 = user.loginNumber.toUpperCase()
-        let str2 = req.body.logEmailNum.toUpperCase()
+        var str1 = user.loginNumber.toUpperCase()
+        var str2 = req.body.logEmailNum.toUpperCase()
         
         if (str1 == str2) { //验证成功 登录成功 双端生成token 数据库存储token过期时间
-            let tokenNum = jwt.sign({
+            var tokenNum = jwt.sign({
                 Email: req.body.userEmail,
                 buidTime: Date.now(),
                 tokenKey: "i love cxy forever"
