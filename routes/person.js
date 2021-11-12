@@ -6,13 +6,14 @@ const write = require('../middleware/consolelog');
 router.get('/', function (req, res, next) {
     res.render('person.html');
 });
+
 router.post('/sendToken', async function (req, res, next) {
     if (req.body.token == undefined) {
         res.send({
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token,
             isOk: true
         })
@@ -21,7 +22,7 @@ router.post('/sendToken', async function (req, res, next) {
                 isLogin: false
             })
         } else {
-            var userInfors = {
+            let userInfors = {
                 userName: user.userName,
                 userEmail: user.userEmail,
                 registerDate: user.registerDate,
@@ -40,10 +41,10 @@ router.post('/sendToken', async function (req, res, next) {
 })
 
 router.post('/sendToken_travel', async function (req, res, next) {
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         _id: req.body.userId,
         isOk: true
-    },{
+    }, {
         headImg: 1
     })
     res.send(user.headImg)
@@ -56,7 +57,7 @@ router.post('/person', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         }, {
             userName: 1,
@@ -69,7 +70,6 @@ router.post('/person', async function (req, res, next) {
                 isLogin: false
             })
         } else {
-            console.log(user);
             res.send({
                 userName: user.userName,
                 userEmail: user.userEmail,
@@ -79,6 +79,7 @@ router.post('/person', async function (req, res, next) {
         }
     }
 })
+
 //游客查看文章信息
 router.post('/article_travel', async function (req, res, next) {
     if (req.body.token == undefined) {
@@ -87,7 +88,7 @@ router.post('/article_travel', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         _id: req.body.userId
     })
     if (user == null) {
@@ -96,8 +97,8 @@ router.post('/article_travel', async function (req, res, next) {
         })
         return
     }
-    var article = []
-    var articles = await db.article.find({
+    let article = []
+    let articles = await db.article.find({
         writerEmail: user.userEmail,
         isShow: true,
         isOk: true,
@@ -106,14 +107,12 @@ router.post('/article_travel', async function (req, res, next) {
         _id: -1
     })
     for (let i = 0; i < articles.length; i++) {
-
-        var commentsNumber = articles[i].comments.length
+        let commentsNumber = articles[i].comments.length
         for (let j = 0; j < articles[i].comments.length; j++) {
             if (articles[i].comments[j].secComments) {
                 commentsNumber += articles[i].comments[j].secComments.length
             }
         }
-
         if (articles[i].smallmid == 'shuDong') {
             article.push({
                 _id: articles[i]._id,
@@ -128,8 +127,7 @@ router.post('/article_travel', async function (req, res, next) {
                 commentslength: commentsNumber
             })
         } else {
-
-            var smallM = await db.smallModule.findOne({
+            let smallM = await db.smallModule.findOne({
                 _id: articles[i].smallmid
             })
             article.push({
@@ -150,6 +148,7 @@ router.post('/article_travel', async function (req, res, next) {
         data: article
     })
 })
+
 //游客评论信息
 router.post('/comment_travel', async function (req, res, next) {
     if (req.body.token == undefined) {
@@ -158,7 +157,7 @@ router.post('/comment_travel', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         _id: req.body.userId
     })
     if (user == null) {
@@ -167,9 +166,9 @@ router.post('/comment_travel', async function (req, res, next) {
         })
         return
     }
-    var article = []
+    let article = []
     for (let i = 0; i < user.commentArticles.length; i++) {
-        articles = await db.article.findOne({
+        let articles = await db.article.findOne({
             _id: user.commentArticles[i].articleId,
             isOk: true,
             isPublic: true
@@ -177,7 +176,7 @@ router.post('/comment_travel', async function (req, res, next) {
         if (articles == null) {
             continue
         }
-        Writer = await db.user.findOne({
+        let Writer = await db.user.findOne({
             userEmail: articles.writerEmail
         })
         article.push({
@@ -196,7 +195,6 @@ router.post('/comment_travel', async function (req, res, next) {
     })
 })
 
-
 //查看个人信息
 router.post('/person', async function (req, res, next) {
     if (req.body.token == undefined) {
@@ -204,7 +202,7 @@ router.post('/person', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -220,6 +218,7 @@ router.post('/person', async function (req, res, next) {
         }
     }
 })
+
 //查看点赞信息
 router.post('/like', async function (req, res, next) {
     if (req.body.token == undefined) {
@@ -227,7 +226,7 @@ router.post('/like', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -235,9 +234,9 @@ router.post('/like', async function (req, res, next) {
                 isLogin: false
             })
         } else {
-            var article = []
+            let article = []
             for (let i = 0; i < user.likeArticles.length; i++) {
-                articles = await db.article.findOne({
+                let articles = await db.article.findOne({
                     _id: user.likeArticles[i].articleId,
                     isOk: true,
                     isPublic: true
@@ -245,7 +244,7 @@ router.post('/like', async function (req, res, next) {
                 if (articles == null) {
                     continue
                 }
-                Writer = await db.user.findOne({
+                let Writer = await db.user.findOne({
                     userEmail: articles.writerEmail
                 })
                 if (articles.smallmid == 'shuDong') {
@@ -259,7 +258,7 @@ router.post('/like', async function (req, res, next) {
                         articleWriter: Writer.userName
                     })
                 } else {
-                    var smallM = await db.smallModule.findOne({
+                    let smallM = await db.smallModule.findOne({
                         _id: articles.smallmid
                     })
                     article.push({
@@ -271,7 +270,6 @@ router.post('/like', async function (req, res, next) {
                         articleTime: articles.time,
                         articleWriter: Writer.userName
                     })
-
                 }
             }
             res.send({
@@ -280,6 +278,7 @@ router.post('/like', async function (req, res, next) {
         }
     }
 })
+
 //查看收藏信息
 router.post('/collect', async function (req, res, next) {
     if (req.body.token == undefined) {
@@ -287,7 +286,7 @@ router.post('/collect', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -295,9 +294,9 @@ router.post('/collect', async function (req, res, next) {
                 isLogin: false
             })
         } else {
-            var article = []
+            let article = []
             for (let i = 0; i < user.collectArticles.length; i++) {
-                articles = await db.article.findOne({
+                let articles = await db.article.findOne({
                     _id: user.collectArticles[i].articleId,
                     isOk: true,
                     isPublic: true
@@ -305,7 +304,7 @@ router.post('/collect', async function (req, res, next) {
                 if (articles == null) {
                     continue
                 }
-                Writer = await db.user.findOne({
+                let Writer = await db.user.findOne({
                     userEmail: articles.writerEmail
                 })
                 if (articles.smallmid == 'shuDong') {
@@ -319,7 +318,7 @@ router.post('/collect', async function (req, res, next) {
                         articleWriter: Writer.userName
                     })
                 } else {
-                    var smallM = await db.smallModule.findOne({
+                    let smallM = await db.smallModule.findOne({
                         _id: articles.smallmid
                     })
                     article.push({
@@ -339,6 +338,7 @@ router.post('/collect', async function (req, res, next) {
         }
     }
 })
+
 //查看评论信息
 router.post('/comment', async function (req, res, next) {
     if (req.body.token == undefined) {
@@ -346,7 +346,7 @@ router.post('/comment', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -354,9 +354,9 @@ router.post('/comment', async function (req, res, next) {
                 isLogin: false
             })
         } else {
-            var article = []
+            let article = []
             for (let i = 0; i < user.commentArticles.length; i++) {
-                articles = await db.article.findOne({
+                let articles = await db.article.findOne({
                     _id: user.commentArticles[i].articleId,
                     isOk: true,
                     isPublic: true
@@ -364,15 +364,13 @@ router.post('/comment', async function (req, res, next) {
                 if (articles == null) {
                     continue
                 }
-                Writer = await db.user.findOne({
+                let Writer = await db.user.findOne({
                     userEmail: articles.writerEmail
                 })
                 if (articles.smallmid == 'shuDong') {
-
                     if (user.commentArticles[i].isOK == false) {
                         continue
                     }
-
                     if (user.commentArticles[i].isSec == true) {
                         fatherid = user.commentArticles[i].fatherid
                         isSec = true
@@ -380,7 +378,6 @@ router.post('/comment', async function (req, res, next) {
                         isSec = false
                         fatherid = NaN
                     }
-
                     article.push({
                         fatherid: fatherid,
                         isSec: isSec,
@@ -396,12 +393,10 @@ router.post('/comment', async function (req, res, next) {
                         content: user.commentArticles[i].content,
                         contentType: user.commentArticles[i].type
                     })
-
                 } else {
                     if (user.commentArticles[i].isOK == false) {
                         continue
                     }
-
                     if (user.commentArticles[i].isSec == true) {
                         fatherid = user.commentArticles[i].fatherid
                         isSec = true
@@ -409,8 +404,7 @@ router.post('/comment', async function (req, res, next) {
                         isSec = false
                         fatherid = NaN
                     }
-
-                    var smallM = await db.smallModule.findOne({
+                    let smallM = await db.smallModule.findOne({
                         _id: articles.smallmid
                     })
                     article.push({
@@ -429,7 +423,6 @@ router.post('/comment', async function (req, res, next) {
                         contentType: user.commentArticles[i].type
                     })
                 }
-
             }
             res.send({
                 data: article
@@ -437,6 +430,7 @@ router.post('/comment', async function (req, res, next) {
         }
     }
 })
+
 //查看文章信息
 router.post('/article', async function (req, res, next) {
     if (req.body.token == undefined) {
@@ -444,7 +438,7 @@ router.post('/article', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -453,8 +447,8 @@ router.post('/article', async function (req, res, next) {
             })
             return
         }
-        var article = []
-        var articles = await db.article.find({
+        let article = []
+        let articles = await db.article.find({
             writerEmail: user.userEmail,
             isOk: true,
             isPublic: true
@@ -462,14 +456,12 @@ router.post('/article', async function (req, res, next) {
             _id: -1
         })
         for (let i = 0; i < articles.length; i++) {
-
-            var commentsNumber = articles[i].comments.length
+            let commentsNumber = articles[i].comments.length
             for (let j = 0; j < articles[i].comments.length; j++) {
                 if (articles[i].comments[j].secComments) {
                     commentsNumber += articles[i].comments[j].secComments.length
                 }
             }
-
             if (articles[i].smallmid == 'shuDong') {
                 article.push({
                     _id: articles[i]._id,
@@ -484,8 +476,7 @@ router.post('/article', async function (req, res, next) {
                     commentslength: commentsNumber
                 })
             } else {
-
-                var smallM = await db.smallModule.findOne({
+                let smallM = await db.smallModule.findOne({
                     _id: articles[i].smallmid
                 })
                 article.push({
@@ -515,7 +506,7 @@ router.post('/waitPublish', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -524,8 +515,8 @@ router.post('/waitPublish', async function (req, res, next) {
             })
             return
         }
-        var article = []
-        var articles = await db.article.find({
+        let article = []
+        let articles = await db.article.find({
             writerEmail: user.userEmail,
             isPublic: false,
             isOk: true
@@ -552,7 +543,7 @@ router.post('/haveDelete', async function (req, res, next) {
             isLogin: false
         })
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user == null) {
@@ -561,8 +552,8 @@ router.post('/haveDelete', async function (req, res, next) {
             })
             return
         }
-        var article = []
-        var articles = await db.article.find({
+        let article = []
+        let articles = await db.article.find({
             writerEmail: user.userEmail,
             isOk: false,
             isPublic: true
@@ -576,7 +567,6 @@ router.post('/haveDelete', async function (req, res, next) {
                     name: articles[i].name,
                     content: articles[i].content,
                     bigmName: '树洞',
-                    //有一个由于草稿箱引起的bug需要处理
                     smallName: '',
                     time: articles[i].time,
                     likerslength: articles[i].likers.length,
@@ -585,8 +575,7 @@ router.post('/haveDelete', async function (req, res, next) {
                     commentslength: articles[i].comments.length
                 })
             } else {
-
-                var smallM = await db.smallModule.findOne({
+                let smallM = await db.smallModule.findOne({
                     _id: articles[i].smallmid
                 })
                 article.push({
@@ -609,21 +598,6 @@ router.post('/haveDelete', async function (req, res, next) {
     }
 })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //修改个人资料
 router.post('/personChange', async function (req, res, next) {
     if (req.body.token == undefined) {
@@ -632,7 +606,7 @@ router.post('/personChange', async function (req, res, next) {
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     })
     if (user == null) {
@@ -641,7 +615,7 @@ router.post('/personChange', async function (req, res, next) {
         })
         return
     }
-    var user02 = await db.user.findOne({
+    let user02 = await db.user.findOne({
         userName: req.body.nickName
     })
     if (user02 !== null) {

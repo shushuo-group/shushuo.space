@@ -50,7 +50,7 @@ router.post('/Check', async function (req, res, next) {
         })
     } else {
         if (req.body.Email == user.userEmail && req.body.CheckNum == user.RegNumber) {
-            var tokenNum = jwt.sign({
+            let tokenNum = jwt.sign({
                 Email: Emailget,
                 buidTime: Date.now(),
                 tokenKey: "i love cxy forever"
@@ -59,7 +59,8 @@ router.post('/Check', async function (req, res, next) {
                 userEmail: Emailget
             }, {
                 $set: {
-                    tokenTime: Date.now() + 1000 * 60 * 60 * 24 * 3, //设置过期天数为3天
+                    //设置过期天数为3天
+                    tokenTime: Date.now() + 1000 * 60 * 60 * 24 * 3,
                     token: tokenNum,
                     userPassword: md5.md1(password)
                 }
@@ -68,17 +69,16 @@ router.post('/Check', async function (req, res, next) {
                     write.logerr(err)
                 }
             })
-
             res.send({
                 isCheck: true,
                 token: tokenNum
             })
         } else {
-                        res.send({
+            res.send({
                 isCheck: false
             })
         }
-
     }
 });
+
 module.exports = router;

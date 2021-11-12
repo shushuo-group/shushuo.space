@@ -6,14 +6,13 @@ const write = require('../middleware/consolelog');
 
 // 小模块点击事件
 router.post('/smallModule', async function (req, res, next) {
-
     //登录状态下的初始数据返回
-    var userSee = await db.user.findOne({
+    let userSee = await db.user.findOne({
         token: req.body.token
     })
     if (userSee !== null) {
-        var article = []
-        var articles = await db.article.find({
+        let article = []
+        let articles = await db.article.find({
             isShow: true,
             bigmid: req.body.bigModuleId,
             smallmid: req.body.smallModuleId,
@@ -23,29 +22,26 @@ router.post('/smallModule', async function (req, res, next) {
         }).sort({
             time: -1
         }).limit(10)
-
         for (let i = 0; i < articles.length; i++) {
-            var user = await db.user.find({
+            let user = await db.user.find({
                 userEmail: articles[i].writerEmail
             })
-
             //验证用户是否点赞过
-            var isLike = false
+            let isLike = false
             if (articles[i].likers.find((ele) => (ele.name == userSee.userEmail))) {
                 isLike = true
             }
-
             //验证用户是否踩一踩过
-            var isunLike = false
+            let isunLike = false
             if (articles[i].unlikers.find((ele) => (ele.name == userSee.userEmail))) {
                 isunLike = true
             }
             //验证用户是否收藏过
-            var isCollect = false
+            let isCollect = false
             if (articles[i].collectors.find((ele) => (ele.name == userSee.userEmail))) {
                 isCollect = true
             }
-            var commentsNumber = articles[i].comments.length
+            let commentsNumber = articles[i].comments.length
             for (let j = 0; j < articles[i].comments.length; j++) {
                 if (articles[i].comments[j].secComments) {
                     commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
@@ -74,9 +70,8 @@ router.post('/smallModule', async function (req, res, next) {
         })
         return
     }
-
-    var article = []
-    var articles = await db.article.find({
+    let article = []
+    let articles = await db.article.find({
         isShow: true,
         bigmid: req.body.bigModuleId,
         smallmid: req.body.smallModuleId,
@@ -87,17 +82,15 @@ router.post('/smallModule', async function (req, res, next) {
         time: -1
     }).limit(10)
     for (let i = 0; i < articles.length; i++) {
-        var articleWriter = await db.user.find({
+        let articleWriter = await db.user.find({
             userEmail: articles[i].writerEmail
         })
-
-        var commentsNumber = articles[i].comments.length
+        let commentsNumber = articles[i].comments.length
         for (let j = 0; j < articles[i].comments.length; j++) {
             if (articles[i].comments[j].secComments) {
                 commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
             }
         }
-
         article.push({
             articleComNumber: commentsNumber,
             articleContent: articles[i].content,
@@ -123,12 +116,12 @@ router.post('/smallModule', async function (req, res, next) {
 // 大模块点击事件
 router.post('/bigModule', async function (req, res, next) {
     //登录状态下的初始数据返回
-    var userSee = await db.user.findOne({
+    let userSee = await db.user.findOne({
         token: req.body.token
     })
     if (userSee !== null) {
-        var article = []
-        var articles = await db.article.find({
+        let article = []
+        let articles = await db.article.find({
             bigmid: req.body.bigModuleId,
             isShow: true,
             isOk: true,
@@ -136,29 +129,26 @@ router.post('/bigModule', async function (req, res, next) {
         }).sort({
             time: -1
         }).limit(10)
-
         for (let i = 0; i < articles.length; i++) {
-            var user = await db.user.find({
+            let user = await db.user.find({
                 userEmail: articles[i].writerEmail
             })
-
             //验证用户是否点赞过
-            var isLike = false
+            let isLike = false
             if (articles[i].likers.find((ele) => (ele.name == userSee.userEmail))) {
                 isLike = true
             }
-
             //验证用户是否踩一踩过
-            var isunLike = false
+            let isunLike = false
             if (articles[i].unlikers.find((ele) => (ele.name == userSee.userEmail))) {
                 isunLike = true
             }
             //验证用户是否收藏过
-            var isCollect = false
+            let isCollect = false
             if (articles[i].collectors.find((ele) => (ele.name == userSee.userEmail))) {
                 isCollect = true
             }
-            var commentsNumber = articles[i].comments.length
+            let commentsNumber = articles[i].comments.length
             for (let j = 0; j < articles[i].comments.length; j++) {
                 if (articles[i].comments[j].secComments) {
                     commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
@@ -187,9 +177,8 @@ router.post('/bigModule', async function (req, res, next) {
         })
         return
     }
-
-    var article = []
-    var articles = await db.article.find({
+    let article = []
+    let articles = await db.article.find({
         bigmid: req.body.bigModuleId,
         isShow: true,
         isOk: true,
@@ -198,28 +187,24 @@ router.post('/bigModule', async function (req, res, next) {
         time: -1
     }).limit(10)
     for (let i = 0; i < articles.length; i++) {
-        var articleWriter = await db.user.find({
+        let articleWriter = await db.user.find({
             userEmail: articles[i].writerEmail
         })
-
-        var commentsNumber = articles[i].comments.length
+        let commentsNumber = articles[i].comments.length
         for (let j = 0; j < articles[i].comments.length; j++) {
             if (articles[i].comments[j].secComments) {
                 commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
             }
         }
-
         article.push({
             articleComNumber: commentsNumber,
             articleContent: articles[i].content,
             articleName: articles[i].name,
             articleId: articles[i]._id,
             articleTime: articles[i].time,
-
             islike: false,
             isunlike: false,
             iscollect: false,
-
             like: articles[i].likers.length,
             unlike: articles[i].unlikers.length,
             writerHead: articleWriter[0].headImg,
@@ -235,51 +220,44 @@ router.post('/bigModule', async function (req, res, next) {
 
 // 树洞点击事件
 router.post('/toshuDong', async function (req, res, next) {
-
     //登录状态下的初始数据返回
-    var userSee = await db.user.findOne({
+    let userSee = await db.user.findOne({
         token: req.body.token
     })
     if (userSee !== null) {
-        var articles = await db.article.find({
+        let articles = await db.article.find({
             isShow: false,
             isOk: true,
             isPublic: true
         }).sort({
             time: -1
         }).limit(10)
-        var article = []
-
+        let article = []
         for (let i = 0; i < articles.length; i++) {
-            var user = await db.user.find({
+            let user = await db.user.find({
                 userEmail: articles[i].writerEmail
             })
-
             //验证用户是否点赞过
-            var isLike = false
+            let isLike = false
             if (articles[i].likers.find((ele) => (ele.name == userSee.userEmail))) {
                 isLike = true
             }
-
             //验证用户是否踩一踩过
-            var isunLike = false
+            let isunLike = false
             if (articles[i].unlikers.find((ele) => (ele.name == userSee.userEmail))) {
                 isunLike = true
             }
-
             //验证用户是否收藏过
-            var isCollect = false
+            let isCollect = false
             if (articles[i].collectors.find((ele) => (ele.name == userSee.userEmail))) {
                 isCollect = true
             }
-
-            var commentsNumber = articles[i].comments.length
+            let commentsNumber = articles[i].comments.length
             for (let j = 0; j < articles[i].comments.length; j++) {
                 if (articles[i].comments[j].secComments) {
                     commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
                 }
             }
-
             article.push({
                 articleComNumber: commentsNumber,
                 articleContent: articles[i].content,
@@ -293,31 +271,26 @@ router.post('/toshuDong', async function (req, res, next) {
                 iscollect: isCollect,
             })
         }
-
         res.send({
             articles: article
         })
         return
     }
-
-    var articles = await db.article.find({
+    let articles = await db.article.find({
         isShow: false,
         isOk: true,
         isPublic: true
     }).sort({
         time: -1
     }).limit(10)
-    var article = []
-
+    let article = []
     for (let i = 0; i < articles.length; i++) {
-
-        var commentsNumber = articles[i].comments.length
+        let commentsNumber = articles[i].comments.length
         for (let j = 0; j < articles[i].comments.length; j++) {
             if (articles[i].comments[j].secComments) {
                 commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
             }
         }
-
         article.push({
             articleComNumber: commentsNumber,
             articleContent: articles[i].content,
@@ -331,7 +304,6 @@ router.post('/toshuDong', async function (req, res, next) {
             iscollect: false,
         })
     }
-
     res.send({
         articles: article
     })
@@ -340,54 +312,47 @@ router.post('/toshuDong', async function (req, res, next) {
 // 广场点击事件
 router.post('/toSquare', async function (req, res, next) {
     //登录状态下的初始数据返回
-    var userSee = await db.user.findOne({
+    let userSee = await db.user.findOne({
         token: req.body.token
     })
     if (userSee !== null) {
         //可以根据本地token查找到此人
-        var articles = await db.article.find({
+        let articles = await db.article.find({
             isShow: true,
             isOk: true,
             isPublic: true
         }).sort({
             time: -1
         }).limit(10)
-
-        var article = []
+        let article = []
         for (let i = 0; i < articles.length; i++) {
-            var user = await db.user.find({
+            let user = await db.user.find({
                 userEmail: articles[i].writerEmail
             })
-
             //验证用户是否点赞过
-            var isLike = false
+            let isLike = false
             if (articles[i].likers.find((ele) => (ele.name == userSee.userEmail))) {
                 isLike = true
             }
-
             //验证用户是否踩一踩过
-            var isunLike = false
+            let isunLike = false
             if (articles[i].unlikers.find((ele) => (ele.name == userSee.userEmail))) {
                 isunLike = true
             }
-
             //验证用户是否收藏过
-            var isCollect = false
+            let isCollect = false
             if (articles[i].collectors.find((ele) => (ele.name == userSee.userEmail))) {
                 isCollect = true
             }
-
-            var commentsNumber = articles[i].comments.length
+            let commentsNumber = articles[i].comments.length
             for (let j = 0; j < articles[i].comments.length; j++) {
                 if (articles[i].comments[j].secComments) {
                     commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
                 }
             }
-
-            var small = await db.smallModule.findOne({
+            let small = await db.smallModule.findOne({
                 _id: articles[i].smallmid
             })
-
             article.push({
                 small_name: small.name,
                 big_name: small.father,
@@ -407,40 +372,34 @@ router.post('/toSquare', async function (req, res, next) {
                 writerId: user[0]._id,
                 writerWord: user[0].word
             })
-
         }
         res.send({
             articles: article
         })
         return
     }
-
     //非登录状态下的初始数据返回
-    var articles = await db.article.find({
+    let articles = await db.article.find({
         isShow: true,
         isOk: true,
         isPublic: true
     }).sort({
         time: -1
     }).limit(10)
-
-    var article = []
+    let article = []
     for (let i = 0; i < articles.length; i++) {
-        var user = await db.user.find({
+        let user = await db.user.find({
             userEmail: articles[i].writerEmail
         })
-
-        var commentsNumber = articles[i].comments.length
+        let commentsNumber = articles[i].comments.length
         for (let j = 0; j < articles[i].comments.length; j++) {
             if (articles[i].comments[j].secComments) {
                 commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
             }
         }
-
-        var small = await db.smallModule.findOne({
+        let small = await db.smallModule.findOne({
             _id: articles[i].smallmid
         })
-
         article.push({
             small_name: small.name,
             big_name: small.father,
@@ -460,8 +419,6 @@ router.post('/toSquare', async function (req, res, next) {
             writerId: user[0]._id,
             writerWord: user[0].word
         })
-
-
     }
     res.send({
         articles: article
@@ -471,48 +428,38 @@ router.post('/toSquare', async function (req, res, next) {
 // 滑动刷新事件
 router.post('/slideFlush', async function (req, res, next) {
     async function slideFlush(data) {
-
         //登录状态下的初始数据返回
-        var userSee = await db.user.findOne({
+        let userSee = await db.user.findOne({
             token: req.body.token
         })
-
         if (userSee !== null) {
-            var article = []
-            var articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
-
+            let article = []
+            let articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
             for (let i = 0; i < articles.length; i++) {
-
                 //验证用户是否点赞过
-                var isLike = false
+                let isLike = false
                 if (articles[i].likers.find((ele) => (ele.name == userSee.userEmail))) {
                     isLike = true
                 }
-
                 //验证用户是否踩一踩过
-                var isunLike = false
+                let isunLike = false
                 if (articles[i].unlikers.find((ele) => (ele.name == userSee.userEmail))) {
                     isunLike = true
                 }
-
                 //验证用户是否收藏过
-                var isCollect = false
+                let isCollect = false
                 if (articles[i].collectors.find((ele) => (ele.name == userSee.userEmail))) {
                     isCollect = true
                 }
-
-
-                var articleWriter = await db.user.find({
+                let articleWriter = await db.user.find({
                     userEmail: articles[i].writerEmail
                 })
-
-                var commentsNumber = articles[i].comments.length
+                let commentsNumber = articles[i].comments.length
                 for (let j = 0; j < articles[i].comments.length; j++) {
                     if (articles[i].comments[j].secComments) {
                         commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
                     }
                 }
-
                 article.push({
                     articleComNumber: commentsNumber,
                     articleContent: articles[i].content,
@@ -535,32 +482,27 @@ router.post('/slideFlush', async function (req, res, next) {
             })
             return
         }
-
-        var article = []
-        var articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
+        let article = []
+        let articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
         for (let i = 0; i < articles.length; i++) {
-            var articleWriter = await db.user.find({
+            let articleWriter = await db.user.find({
                 userEmail: articles[i].writerEmail
             })
-
-            var commentsNumber = articles[i].comments.length
+            let commentsNumber = articles[i].comments.length
             for (let j = 0; j < articles[i].comments.length; j++) {
                 if (articles[i].comments[j].secComments) {
                     commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
                 }
             }
-
             article.push({
                 articleComNumber: commentsNumber,
                 articleContent: articles[i].content,
                 articleName: articles[i].name,
                 articleId: articles[i]._id,
                 articleTime: articles[i].time,
-
                 islike: false,
                 isunlike: false,
                 iscollect: false,
-
                 like: articles[i].likers.length,
                 unlike: articles[i].unlikers.length,
                 writerHead: articleWriter[0].headImg,
@@ -576,52 +518,42 @@ router.post('/slideFlush', async function (req, res, next) {
     }
     async function slideFlush_shuDong(data) {
         //登录状态下的初始数据返回
-        var userSee = await db.user.findOne({
+        let userSee = await db.user.findOne({
             token: req.body.token
         })
         if (userSee !== null) {
-
-            var article = []
-            var articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
-
+            let article = []
+            let articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
             for (let i = 0; i < articles.length; i++) {
-
                 //验证用户是否点赞过
-                var isLike = false
+                let isLike = false
                 if (articles[i].likers.find((ele) => (ele.name == userSee.userEmail))) {
                     isLike = true
                 }
-
                 //验证用户是否踩一踩过
-                var isunLike = false
+                let isunLike = false
                 if (articles[i].unlikers.find((ele) => (ele.name == userSee.userEmail))) {
                     isunLike = true
                 }
-
                 //验证用户是否收藏过
-                var isCollect = false
+                let isCollect = false
                 if (articles[i].collectors.find((ele) => (ele.name == userSee.userEmail))) {
                     isCollect = true
                 }
-
-
-                var articleWriter = await db.user.find({
+                let articleWriter = await db.user.find({
                     userEmail: articles[i].writerEmail
                 })
-
-                var commentsNumber = articles[i].comments.length
+                let commentsNumber = articles[i].comments.length
                 for (let j = 0; j < articles[i].comments.length; j++) {
                     if (articles[i].comments[j].secComments) {
                         commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
                     }
                 }
-
                 article.push({
                     islike: isLike,
                     isunlike: isunLike,
                     iscollect: isCollect,
                     articleTime: articles[i].time,
-
                     articleComNumber: commentsNumber,
                     articleContent: articles[i].content,
                     articleName: articles[i].name,
@@ -635,41 +567,36 @@ router.post('/slideFlush', async function (req, res, next) {
             })
             return
         }
-
-        var article = []
-        var articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
+        let article = []
+        let articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
         for (let i = 0; i < articles.length; i++) {
-
-            var commentsNumber = articles[i].comments.length
+            let commentsNumber = articles[i].comments.length
             for (let j = 0; j < articles[i].comments.length; j++) {
                 if (articles[i].comments[j].secComments) {
                     commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
                 }
             }
-
             article.push({
                 articleComNumber: commentsNumber,
                 articleContent: articles[i].content,
                 articleName: articles[i].name,
                 articleId: articles[i]._id,
-
                 islike: false,
                 isunlike: false,
                 iscollect: false,
-
                 like: articles[i].likers.length,
                 unlike: articles[i].unlikers.length,
             })
-
         }
         res.send({
             articles: article,
             number: req.body.number
         })
     }
+    let articless = null
     switch (req.body.way) {
         case 'bigMway':
-            var articless = await db.article.find({
+            articless = await db.article.find({
                 bigmid: req.body.bigMid,
                 isShow: true,
                 isOk: true,
@@ -680,7 +607,7 @@ router.post('/slideFlush', async function (req, res, next) {
             slideFlush(articless)
             break;
         case 'smallMway':
-            var articless = await db.article.find({
+            articless = await db.article.find({
                 bigmid: req.body.bigMid,
                 smallmid: req.body.smallMid,
                 isShow: true,
@@ -692,7 +619,7 @@ router.post('/slideFlush', async function (req, res, next) {
             slideFlush(articless)
             break;
         case 'squareMway':
-            var articless = await db.article.find({
+            articless = await db.article.find({
                 isShow: true,
                 isOk: true,
                 isPublic: true
@@ -702,7 +629,7 @@ router.post('/slideFlush', async function (req, res, next) {
             slideFlush(articless)
             break;
         case 'shuDongMway':
-            var articless = await db.article.find({
+            articless = await db.article.find({
                 isShow: false,
                 isOk: true,
                 isPublic: true
@@ -718,17 +645,14 @@ router.post('/slideFlush', async function (req, res, next) {
 
 // 搜索记录
 router.post('/search', async function (req, res, next) {
-
     if (req.body.name.replace(/\s*/g, "").length == 0) {
         res.send('fuck u')
         return
     }
-
     let q = req.body.name
     q = q.replace(/&lt;/g, "<")
     q = q.replace(/&gt;/g, ">")
     let key = q
-
     if (req.body.token !== undefined) { //登录状态下
         // 修改搜索记录
         db.user.updateOne({
@@ -746,20 +670,17 @@ router.post('/search', async function (req, res, next) {
                 write.logerr(err)
             }
         })
-
     }
-
     // 用户
-    var result01 = await db.user.find({
+    let result01 = await db.user.find({
         "userName": {
             $regex: key,
             $options: 'i'
         },
         "isOk": true
     })
-
     // 文章
-    var result02 = await db.article.find({
+    let result02 = await db.article.find({
         "name": {
             $regex: key,
             $options: 'i'
@@ -767,11 +688,10 @@ router.post('/search', async function (req, res, next) {
         "isOk": true,
         "isPublic": true,
     })
-
     // user
-    var data01 = []
+    let data01 = []
     for (let i = 0; i < result01.length; i++) {
-        var data01_articles = await db.article.find({
+        let data01_articles = await db.article.find({
             "writerEmail": result01[i].userEmail,
             "isOk": true,
             "isPublic": true,
@@ -785,39 +705,33 @@ router.post('/search', async function (req, res, next) {
             word: result01[i].word
         })
     }
-
     // article
-    var data02 = []
+    let data02 = []
     for (let i = 0; i < result02.length; i++) {
         //作者信息
-        var articleWriter = await db.user.find({
+        let articleWriter = await db.user.find({
             userEmail: result02[i].writerEmail
         })
-
         // 评论数量
-        var commentsNumber = result02[i].comments.length
+        let commentsNumber = result02[i].comments.length
         for (let j = 0; j < result02[i].comments.length; j++) {
             if (result02[i].comments[j].secComments) {
                 commentsNumber = commentsNumber + result02[i].comments[j].secComments.length
             }
         }
-
-        var writerHead = articleWriter[0].headImg
-        var writerName = articleWriter[0].userName
-        var writerId = articleWriter[0]._id
-        var writerWord = articleWriter[0].word
-
-        var articleBigM
-        var articleSmM
-
+        let writerHead = articleWriter[0].headImg
+        let writerName = articleWriter[0].userName
+        let writerId = articleWriter[0]._id
+        let writerWord = articleWriter[0].word
+        let articleBigM
+        let articleSmM
         if (result02[i].isShow == false) { //树洞
-            var writerHead = ''
-            var writerName = '匿名'
-            var writerId = ''
-            var writerWord = ''
-
-            var articleBigM = '树洞'
-            var articleSmM = ''
+            let writerHead = ''
+            let writerName = '匿名'
+            let writerId = ''
+            let writerWord = ''
+            let articleBigM = '树洞'
+            let articleSmM = ''
         } else {
             let data = await db.smallModule.findOne({
                 _id: result02[i].smallmid
@@ -825,7 +739,6 @@ router.post('/search', async function (req, res, next) {
             articleSmM = data.name
             articleBigM = data.father
         }
-
         data02.push({
             articleComNumber: commentsNumber,
             articleContent: result02[i].content,
@@ -834,13 +747,10 @@ router.post('/search', async function (req, res, next) {
             articleTime: result02[i].time,
             like: result02[i].likers.length,
             unlike: result02[i].unlikers.length,
-
             articleBigM: articleBigM,
             articleSmM: articleSmM,
-
             BigM_id: result02[i].bigmid,
             SmM_id: result02[i].smallmid,
-
             writerHead: writerHead,
             writerName: writerName,
             writerId: writerId,
@@ -851,16 +761,15 @@ router.post('/search', async function (req, res, next) {
         user_search: data01,
         article_search: data02
     })
-
 });
+
 router.post('/searchRemove', async function (req, res, next) {
-    var data = await db.user.findOne({
+    let data = await db.user.findOne({
         token: req.body.token
     })
     for (let i = 0; i < data.search_history.length; i++) {
         data.search_history[i].isOk = false
     }
-
     db.user.updateOne({
         token: req.body.token
     }, {
@@ -876,13 +785,10 @@ router.post('/searchRemove', async function (req, res, next) {
             })
         }
     })
-
 })
 
-
-
 router.post('/webNotice', async function (req, res, next) {
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     })
     if (user == null) {
@@ -891,11 +797,7 @@ router.post('/webNotice', async function (req, res, next) {
         })
         return
     }
-    var webNoticesNotAll = await db.webNotice.find({
-        type: 'notAll'
-    })
-
-    var webNoticesNotAll = await db.webNotice.find({
+    let webNoticesNotAll = await db.webNotice.find({
         type: 'notAll',
         'listener.accountId': Number(user.userAccount),
         'listener.isCheck': false
@@ -903,21 +805,18 @@ router.post('/webNotice', async function (req, res, next) {
         order: 0,
         __v: 0
     })
-
-    var infosNumber = webNoticesNotAll.length
+    let infosNumber = webNoticesNotAll.length
     if (req.body.type == 'webNoticeNumber') {
         res.send({
             number: infosNumber
         })
     } else {
-        var infos = []
+        let infos = []
         for (let i = 0; i < webNoticesNotAll.length; i++) {
-
             // 去除未包含本人的通知
             if (webNoticesNotAll[i].listener.find(item => item.accountId == user.userAccount) == undefined) {
                 continue
             }
-
             // 进一步去除包含本人但是本人已阅读的通知
             if (webNoticesNotAll[i].listener.find(item => item.accountId == user.userAccount).isCheck == true) {
                 continue
@@ -932,11 +831,10 @@ router.post('/webNotice', async function (req, res, next) {
         infos.sort((a, b) => (a.sendTime < b.sendTime) ? 1 : ((b.sendTime > a.sendTime) ? -1 : 0))
         res.send(infos)
     }
-
 })
 
 router.post('/webNoticeCheck', async function (req, res, next) {
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     })
     if (user == null) {
@@ -967,8 +865,7 @@ router.post('/webNoticeCheck', async function (req, res, next) {
             })
             break;
         case 'notSingle':
-            var getData = JSON.parse(req.body.Data)
-
+            let getData = JSON.parse(req.body.Data)
             for (let i = 0; i < getData.length; i++) {
                 db.webNotice.updateOne({
                     _id: getData[i].noticeId,
@@ -985,24 +882,17 @@ router.post('/webNoticeCheck', async function (req, res, next) {
                     }
                 })
             }
-
             res.send({
                 isCheck: true
             })
-
             break;
-
         default:
             break;
     }
-
 })
 
-
-
-
 router.post('/webEmailCheck', async function (req, res, next) {
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     })
     if (user == null) {
@@ -1011,9 +901,7 @@ router.post('/webEmailCheck', async function (req, res, next) {
         })
         return
     }
-
-    var getData = JSON.parse(req.body.Data)
-
+    let getData = JSON.parse(req.body.Data)
     for (let i = 0; i < getData.length; i++) {
         db.webUserComments.updateOne({
             _id: getData[i].id,
@@ -1027,16 +915,12 @@ router.post('/webEmailCheck', async function (req, res, next) {
             }
         })
     }
-
     res.send({
         isCheck: true
     })
-
 })
 
-
 router.post('/webEmailCheck_single', async function (req, res, next) {
-
     db.webUserComments.updateOne({
         _id: req.body.id,
         isCheck: false
@@ -1055,14 +939,8 @@ router.post('/webEmailCheck_single', async function (req, res, next) {
     })
 })
 
-
-
-
-
-
-
 router.post('/webEmail', async function (req, res, next) {
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     })
     if (user == null) {
@@ -1071,7 +949,7 @@ router.post('/webEmail', async function (req, res, next) {
         })
         return
     }
-    var data = await db.article.find({
+    let data = await db.article.find({
         writerEmail: user.userEmail
     }, {
         _id: 1,
@@ -1080,9 +958,8 @@ router.post('/webEmail', async function (req, res, next) {
         unlikers: 1,
         collectors: 1
     })
-
     if (req.body.type == 'webEmailNumber') {
-        var infosNumber = 0
+        let infosNumber = 0
         for (let i = 0; i < data.length; i++) {
             if (data[i].likers.length !== 0) {
                 let num1 = data[i].likers.filter(item => item.isCheck == false).length
@@ -1098,23 +975,20 @@ router.post('/webEmail', async function (req, res, next) {
             }
         }
         //评论数量
-        var comments = await db.webUserComments.find({
+        let comments = await db.webUserComments.find({
             myName: user.userEmail,
             isCheck: false
         })
         infosNumber = infosNumber + comments.length
-
         res.send({
             number: infosNumber
         })
     } else {
-        var DATA = []
+        let DATA = []
         for (let i = 0; i < data.length; i++) {
             if (data[i].likers.length !== 0) {
                 //点赞
-
                 let smallData = data[i].likers.filter(item => item.isCheck == false)
-
                 for (let j = 0; j < smallData.length; j++) {
                     let doUser = await db.user.findOne({
                         userEmail: smallData[j].name
@@ -1122,7 +996,6 @@ router.post('/webEmail', async function (req, res, next) {
                         userName: 1,
                         userAccount: 1
                     })
-
                     db.article.updateOne({
                         _id: data[i]._id,
                         'likers.name': smallData[j].name
@@ -1135,10 +1008,8 @@ router.post('/webEmail', async function (req, res, next) {
                             write.logerr(err)
                         }
                     })
-
                     smallData[j].name = doUser.userName
                     smallData[j].type = 'like'
-
                     DATA.push({
                         userAccount: doUser.userAccount,
                         articleId: data[i]._id,
@@ -1147,16 +1018,11 @@ router.post('/webEmail', async function (req, res, next) {
                         type: smallData[j].type,
                         time: smallData[j].time
                     })
-
-
                 }
-
             }
             if (data[i].unlikers.length !== 0) {
                 // 踩一踩
-
                 let smallData = data[i].unlikers.filter(item => item.isCheck == false)
-
                 for (let j = 0; j < smallData.length; j++) {
                     let doUser = await db.user.findOne({
                         userEmail: smallData[j].name
@@ -1164,7 +1030,6 @@ router.post('/webEmail', async function (req, res, next) {
                         userName: 1,
                         userAccount: 1
                     })
-
                     db.article.updateOne({
                         _id: data[i]._id,
                         'unlikers.name': smallData[j].name
@@ -1177,10 +1042,8 @@ router.post('/webEmail', async function (req, res, next) {
                             write.logerr(err)
                         }
                     })
-
                     smallData[j].name = doUser.userName
                     smallData[j].type = 'unlike'
-
                     DATA.push({
                         userAccount: doUser.userAccount,
                         articleId: data[i]._id,
@@ -1193,9 +1056,7 @@ router.post('/webEmail', async function (req, res, next) {
             }
             if (data[i].collectors.length !== 0) {
                 // 收藏
-
                 let smallData = data[i].collectors.filter(item => item.isCheck == false)
-
                 for (let j = 0; j < smallData.length; j++) {
                     let doUser = await db.user.findOne({
                         userEmail: smallData[j].name
@@ -1203,7 +1064,6 @@ router.post('/webEmail', async function (req, res, next) {
                         userName: 1,
                         userAccount: 1
                     })
-
                     db.article.updateOne({
                         _id: data[i]._id,
                         'collectors.name': smallData[j].name
@@ -1216,7 +1076,6 @@ router.post('/webEmail', async function (req, res, next) {
                             write.logerr(err)
                         }
                     })
-
                     smallData[j].name = doUser.userName
                     smallData[j].type = 'collect'
                     DATA.push({
@@ -1230,9 +1089,8 @@ router.post('/webEmail', async function (req, res, next) {
                 }
             }
         }
-
         //评论
-        var comments = await db.webUserComments.find({
+        let comments = await db.webUserComments.find({
             myName: user.userEmail,
             isCheck: false
         }, {
@@ -1243,21 +1101,19 @@ router.post('/webEmail', async function (req, res, next) {
             date: 1
         })
         for (let i = 0; i < comments.length; i++) {
-            var article = await db.article.findOne({
+            let article = await db.article.findOne({
                 _id: comments[i].articleId
             }, {
                 name: 1
             })
-
             //被评论者
-            var user01 = await db.user.findOne({
+            let user01 = await db.user.findOne({
                 userEmail: comments[i].myName
             }, {
                 userName: 1
             })
-
             //评论者
-            var user02 = await db.user.findOne({
+            let user02 = await db.user.findOne({
                 userEmail: comments[i].anotherName
             }, {
                 userAccount: 1,
@@ -1273,17 +1129,15 @@ router.post('/webEmail', async function (req, res, next) {
                 id: comments[i]._id,
                 type: "comment"
             })
-
         }
         DATA.sort((a, b) => (a.time > b.time) ? 1 : ((b.time > a.time) ? -1 : 0))
         res.send(DATA)
     }
-
 })
 
 // diycss
 router.post('/FreeCss', async function (req, res, next) {
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     })
     if (user == null) {
@@ -1292,12 +1146,11 @@ router.post('/FreeCss', async function (req, res, next) {
         })
         return
     }
-
-    var oldCss = user.FreeCss
+    let oldCss = user.FreeCss
     if (oldCss == undefined) {
         oldCss = ''
     }
-    var newCss = oldCss + req.body.css
+    let newCss = oldCss + req.body.css
     db.user.updateOne({
         token: req.body.token
     }, {
@@ -1317,7 +1170,7 @@ router.post('/FreeCss', async function (req, res, next) {
 
 // cancel_css
 router.post('/FreeCss_Default', async function (req, res, next) {
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: req.body.token
     })
     if (user == null) {
@@ -1326,7 +1179,6 @@ router.post('/FreeCss_Default', async function (req, res, next) {
         })
         return
     }
-
     db.user.updateOne({
         token: req.body.token
     }, {
@@ -1343,4 +1195,5 @@ router.post('/FreeCss_Default', async function (req, res, next) {
         }
     })
 })
+
 module.exports = router;

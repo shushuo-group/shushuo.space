@@ -8,28 +8,30 @@ const random = require('string-random');
 const write = require('../middleware/consolelog');
 
 // 使用硬盘存储模式设置存放接收到的文件的路径以及文件名
-var storage = multer.diskStorage({
+let storage = multer.diskStorage({
     destination: function (req, file, cb) {
         // 接收到文件后输出的保存路径（若不存在则需要创建）
         cb(null, '/www/wwwroot/shushuo.space/upload/head/');
     },
     filename: async function (req, file, cb) {
-        var fileName = file.originalname.substr(0, file.originalname.length - 4) //文件名携带了token
-        var user = await db.user.findOne({
+        //文件名携带了token
+        let fileName = file.originalname.substr(0, file.originalname.length - 4)
+        let user = await db.user.findOne({
             token: fileName
         })
         if (user !== null) {
-
-            fs.unlink(`./upload/head/${user.headImg}`, function (err, data) { //成功实现将用户头像只限定保存在硬盘内一张
+            //成功实现将用户头像只限定保存在硬盘内一张
+            fs.unlink(`./upload/head/${user.headImg}`, function (err, data) {
                 if (err) {
                     write.logerr(err)
                 }
             });
-
-            var datenow = Date.now()
-            var headimgname = datenow + "-" + random(4) + '.png' //图片名称
+            let datenow = Date.now()
+            //图片名称
+            let headimgname = datenow + "-" + random(4) + '.png'
             cb(null, headimgname);
-            db.user.updateMany({ //更新头像名称
+            //更新头像名称
+            db.user.updateMany({
                 userEmail: user.userEmail,
                 isRegister: true
             }, {
@@ -44,8 +46,9 @@ var storage = multer.diskStorage({
         }
     }
 });
+
 // 创建文件夹
-var createFolder = function (folder) {
+let createFolder = function (folder) {
     try {
         // 测试 path 指定的文件或目录的用户权限,我们用来检测文件是否存在
         // 如果文件路径不存在将会抛出错误"no such file or directory"
@@ -56,19 +59,20 @@ var createFolder = function (folder) {
     }
 };
 
-var uploadFolder = './upload/';
+let uploadFolder = './upload/';
 createFolder(uploadFolder);
 
 // 创建 multer 对象
-var upload = multer({
+let upload = multer({
     storage: storage
 });
 
 router.post('/sendHeadImg', upload.single('file'), async function (req, res, next) {
-    var file = req.file;
-    var fileName = file.originalname.substr(0, file.originalname.length - 4) //文件名携带了token
-    var tokenString = jwt.verify(fileName, 'www.shushuo.space is built by Mr.Ge');
-    var user = await db.user.findOne({
+    let file = req.file;
+    //文件名携带了token
+    let fileName = file.originalname.substr(0, file.originalname.length - 4)
+    let tokenString = jwt.verify(fileName, 'www.shushuo.space is built by Mr.Ge');
+    let user = await db.user.findOne({
         userEmail: tokenString.Email
     })
     // 接收文件成功后返回数据给前端
@@ -77,7 +81,7 @@ router.post('/sendHeadImg', upload.single('file'), async function (req, res, nex
             isUpload: false
         })
     } else {
-        var userHeadimgName = user.headImg
+        let userHeadimgName = user.headImg
         res.send({
             isUpload: true,
             userHeadName: userHeadimgName
@@ -86,23 +90,21 @@ router.post('/sendHeadImg', upload.single('file'), async function (req, res, nex
 });
 
 // 使用硬盘存储模式设置存放接收到的文件的路径以及文件名
-var picimgname
-var storage_article = multer.diskStorage({
+let picimgname
+let storage_article = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, '/www/wwwroot/shushuo.space/upload/pic');
     },
     filename: function (req, file, cb) {
-        var type = file.mimetype.split('/')[1]
-
-        var datenow = Date.now()
-        picimgname = datenow + "-" + random(4) + '.' + type //图片名称
+        let type = file.mimetype.split('/')[1]
+        let datenow = Date.now()
+        //图片名称
+        picimgname = datenow + "-" + random(4) + '.' + type
         cb(null, picimgname);
-
-
     }
 });
 // 创建 multer 对象
-var upload_articleimg = multer({
+let upload_articleimg = multer({
     storage: storage_article
 });
 
@@ -118,7 +120,7 @@ router.post('/sendImg', upload_articleimg.single('file'), function (req, res, ne
 });
 
 /*router.post('/ImgDelete', async function (req, res, next) {
-    var a = JSON.parse(req.body.DATA)
+    let a = JSON.parse(req.body.DATA)
     if (req.body.token == undefined) {
         //未进行任何文章存储的进行删除多余图片的操作代码
         for (let i = 0; i < a.length; i++) {
@@ -131,7 +133,7 @@ router.post('/sendImg', upload_articleimg.single('file'), function (req, res, ne
         }
         res.send('0')
     } else {
-        var user = await db.user.findOne({
+        let user = await db.user.findOne({
             token: req.body.token
         })
         if (user !== null) {
@@ -146,6 +148,5 @@ router.post('/sendImg', upload_articleimg.single('file'), function (req, res, ne
         }
     }
 });*/
-
 
 module.exports = router;

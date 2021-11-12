@@ -11,18 +11,21 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/articleUpDating', async function (req, res, next) {
-    var tokenGet = req.body.token //未解密token
-    if (tokenGet == undefined) { //上传异常
+    //未解密token
+    let tokenGet = req.body.token
+    if (tokenGet == undefined) {
+        //上传异常
         res.send({
             isLogin: false
         })
         return
     }
-    var user = await db.user.findOne({
+    let user = await db.user.findOne({
         token: tokenGet,
         isOk: true
     })
-    if (user == null) { //上传异常
+    if (user == null) {
+        //上传异常
         res.send({
             isLogin: false
         })
@@ -35,9 +38,11 @@ router.post('/articleUpDating', async function (req, res, next) {
         })
         return
     }
-    var tokenInfors = jwt.verify(tokenGet, 'www.shushuo.space is built by Mr.Ge') //解密的token
-    var articleIdNum = Date.now() + '-' + tokenInfors.Email //文章ID
-    var html = xss(req.body.content);
+    //解密的token
+    let tokenInfors = jwt.verify(tokenGet, 'www.shushuo.space is built by Mr.Ge')
+    //文章ID
+    let articleIdNum = Date.now() + '-' + tokenInfors.Email
+    let html = xss(req.body.content);
     db.article.create({
         name: req.body.articleTitle,
         completeTime: Date.now(),
@@ -59,27 +64,32 @@ router.post('/articleUpDating', async function (req, res, next) {
 
 // 草稿箱上传
 router.post('/articleUpDating02', async function (req, res, next) {
-    var tokenGet = req.body.token //未解密token
-    if (tokenGet == undefined) { //上传异常
+    //未解密token
+    let tokenGet = req.body.token
+    if (tokenGet == undefined) {
+        //上传异常
         res.send({
             isLogin: false
         })
         return
     }
-    var user = await db.user.findOne({ //操作者
+    //操作者
+    let user = await db.user.findOne({
         token: tokenGet,
         isOk: true
     })
-    if (user == null) { //上传异常
+    if (user == null) {
+        //上传异常
         res.send({
             isLogin: false
         })
         return
     }
-    var article = await db.article.findOne({
+    let article = await db.article.findOne({
         _id: req.body.articleId
     })
-    if (article == null) { //上传异常
+    if (article == null) {
+        //上传异常
         res.send({
             isLogin: false
         })
@@ -94,9 +104,11 @@ router.post('/articleUpDating02', async function (req, res, next) {
         })
         return
     }
-    var tokenInfors = jwt.verify(tokenGet, 'www.shushuo.space is built by Mr.Ge') //解密的token
-    var articleIdNum = Date.now() + '-' + tokenInfors.Email //文章ID
-    var html = xss(req.body.content);
+    //解密的token
+    let tokenInfors = jwt.verify(tokenGet, 'www.shushuo.space is built by Mr.Ge')
+    //文章ID
+    let articleIdNum = Date.now() + '-' + tokenInfors.Email
+    let html = xss(req.body.content);
     db.article.updateOne({
         _id: req.body.articleId
     }, {
@@ -126,27 +138,32 @@ router.post('/articleUpDating02', async function (req, res, next) {
 
 // 已发布文章修改编辑文章
 router.post('/articleUpDating03', async function (req, res, next) {
-    var tokenGet = req.body.token //未解密token
-    if (tokenGet == undefined) { //上传异常
+    //未解密token
+    let tokenGet = req.body.token
+    if (tokenGet == undefined) {
+        //上传异常
         res.send({
             isLogin: false
         })
         return
     }
-    var user = await db.user.findOne({ //操作者
+    //操作者
+    let user = await db.user.findOne({
         token: tokenGet,
         isOk: true
     })
-    if (user == null) { //上传异常
+    if (user == null) {
+        //上传异常
         res.send({
             isLogin: false
         })
         return
     }
-    var article = await db.article.findOne({
+    let article = await db.article.findOne({
         _id: req.body.articleId
     })
-    if (article == null) { //上传异常
+    if (article == null) {
+        //上传异常
         res.send({
             isLogin: false
         })
@@ -155,7 +172,7 @@ router.post('/articleUpDating03', async function (req, res, next) {
     if (article.writerEmail !== user.userEmail) {
         return
     }
-    var html = xss(req.body.content);
+    let html = xss(req.body.content);
     db.article.updateOne({
         _id: req.body.articleId
     }, {
@@ -175,17 +192,20 @@ router.post('/articleUpDating03', async function (req, res, next) {
 });
 
 router.post('/getBigModule', async function (req, res, next) {
-    var largeModule = await db.largeModule.find({ //所有的大模块
+    //所有的大模块
+    let largeModule = await db.largeModule.find({
         isShow: true
     })
-    var data = []
+    let data = []
     for (let i = 0; i < largeModule.length; i++) {
-        var smallModule = await db.smallModule.find({ //各个小模块
+        //各个小模块
+        let smallModule = await db.smallModule.find({
             father: largeModule[i].name,
             isShow: true
         })
-        var smallMInfors = []
-        for (let j = 0; j < smallModule.length; j++) { //各个小模块的某个信息
+        let smallMInfors = []
+        for (let j = 0; j < smallModule.length; j++) {
+            //各个小模块的某个信息
             smallMInfors.push({
                 smallMname: smallModule[j].name,
                 smallMid: smallModule[j]._id,
@@ -202,14 +222,14 @@ router.post('/getBigModule', async function (req, res, next) {
     })
 });
 
-
 router.post('/personInfors', async function (req, res, next) {
-    var tokenGet = req.body.token
-    var user = await db.user.findOne({
+    let tokenGet = req.body.token
+    let user = await db.user.findOne({
         token: tokenGet
     })
     res.send({
         writerHeadimg: user.headImg
     })
 });
+
 module.exports = router;
