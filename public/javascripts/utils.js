@@ -2804,6 +2804,10 @@ function noLogin() {
 
 //前端进行xss过滤之基础
 function xssFilter(e) {
+    if (e === null) {
+        //应对一次评论无法上传处理所做的暂时性修改
+        return '/*该评论暂时失效，抱歉*/'
+    }
     return e.replace(/</gi, '&lt;')
 }
 
