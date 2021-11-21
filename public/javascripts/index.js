@@ -182,8 +182,8 @@ $(document).ready(async function () {
                         e.stopPropagation();
                         $('.head-part02').css('visibility', 'visible');
                         $('.head-part02').after('<div class="mask02"></div>');
-                        
-                        $('.head > *').click(function (e) { 
+
+                        $('.head > *').click(function (e) {
                             e.stopPropagation()
                         });
 
@@ -308,7 +308,8 @@ $(document).ready(async function () {
                                     name: $('#search_base_value').val().trim()
                                 },
                                 success: function (response) {
-
+                                    $('.navigation').remove();
+                                    $('.addArticle').remove();
                                     $('.centerLeftBottom>.commentSection_wait').remove();
                                     $('.centerLeftBottom').append(`
                                     <div class="centerLeftBottom_show" >
@@ -403,6 +404,7 @@ $(document).ready(async function () {
                                             <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
                                             <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.article_search[i].writerWord}</span>
                                             <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
+                                            
                                             <div class="contentposition">
                                                 <span>
                                                     ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
@@ -605,6 +607,8 @@ $(document).ready(async function () {
                                     name: $('#search_base_value').val().trim()
                                 },
                                 success: function (response) {
+                                    $('.navigation').remove();
+                                    $('.addArticle').remove();
                                     $('.centerLeftBottom>.commentSection_wait').remove();
                                     $('.centerLeftBottom').append(`
                                     <div class="centerLeftBottom_show" >
@@ -699,6 +703,7 @@ $(document).ready(async function () {
                                             <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
                                             <span class="contentSmallPartTopSmall contentSmallPartIDsign">${xssFilter(response.article_search[i].writerWord)}</span>
                                             <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
+                                            
                                             <div class="contentposition">
                                                 <span>
                                                     ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
@@ -807,6 +812,8 @@ $(document).ready(async function () {
                 name: $('#search_base_value').val().trim()
             },
             success: function (response) {
+                $('.navigation').remove();
+                $('.addArticle').remove();
                 $('.centerLeftBottom>.commentSection_wait').remove();
                 $('.centerLeftBottom').append(`
                 <div class="centerLeftBottom_show" >
@@ -901,6 +908,7 @@ $(document).ready(async function () {
                         <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
                         <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.article_search[i].writerWord}</span>
                         <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
+                        
                         <div class="contentposition">
                             <span>
                                 ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
@@ -1106,10 +1114,10 @@ $(document).ready(async function () {
     $('#toShudong').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
+        $('.navigation').remove();
+        $('.addArticle').remove();
         $('.backPast').hide();
         $('.centerLeftTop').hide();
-
-
 
         $(window).scrollTop(0)
 
@@ -1144,8 +1152,11 @@ $(document).ready(async function () {
     $('#square').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
+        $('.navigation').remove();
+        $('.addArticle').remove();
         $('.backPast').hide();
         $('.centerLeftTop').show();
+
         $(window).scrollTop(0)
 
         $('.centerLeftBottom').html('');

@@ -89,6 +89,9 @@ function centerLeftTopButtonAdd(e) {
 
 //大模块点击事件
 function bigPart(e) {
+
+    $('.centerLeftBottom').html('');
+
     if ($('.addArticle')) {
         $('.addArticle').remove();
     }
@@ -98,7 +101,7 @@ function bigPart(e) {
     $('.centerLeftTopButton>div:nth-child(2)').hide();
     if (!$('.navigation')[0]) {
         //初始时不存在
-        $('.centerLeftBottom').prepend(`<div class="navigation"><span bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span>><span class="navigation-smallM"></span></div>`);
+        $('.centerLeftTop').append(`<div style="margin: 0 3px;" class="navigation"><span bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span>><span class="navigation-smallM"></span></div>`);
     } else {
         //初始时存在
         $('.navigation-bigM').attr('bigMid', `${$(e).attr('bigmid')}`);
@@ -145,6 +148,9 @@ function bigPart(e) {
 
 //小模块点击事件
 function smp(e) {
+
+    $('.centerLeftBottom').html('');
+
     $('.backPast').hide();
     if ($('.addArticle')) {
         $('.addArticle').remove();
@@ -155,7 +161,7 @@ function smp(e) {
     $('.centerLeftTopButton>div:nth-child(2)').hide();
     if (!$('.navigation')[0]) {
         //初始时不存在
-        $('.centerLeftBottom').prepend(`<div class="navigation"><span bigmid="${$(e).parents('.centerLeftTopButton').attr('bigmid')}" class="navigation-bigM">${$(e).parents('.centerLeftTopButton').find('.bigMname').text()}</span>><span smallMId="${e.id}" class="navigation-smallM">${e.innerText}</span></div>`);
+        $('.centerLeftTop').append(`<div style="margin: 0 3px;" class="navigation"><span bigmid="${$(e).parents('.centerLeftTopButton').attr('bigmid')}" class="navigation-bigM">${$(e).parents('.centerLeftTopButton').find('.bigMname').text()}</span>><span smallMId="${e.id}" class="navigation-smallM">${e.innerText}</span></div>`);
     } else {
         //初始时存在
         $('.navigation-bigM').attr('bigmid', `${$(e).parents('.centerLeftTopButton').attr('bigmid')}`);
@@ -689,6 +695,7 @@ function square_smallPart_create(i, response, i2) {
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.articles[i].writerName)}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.articles[i].writerWord}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.articles[i].articleTime)}</span>
+                                
                             ${response.articles[i].small_name==undefined?'':'<div class="contentposition"><span>'+response.articles[i].big_name+'</span>><span>'+response.articles[i].small_name+'</span></div>'}
                             </div>
                             <div class="contentSmallPartTitle">
@@ -1810,6 +1817,8 @@ function search_history(e) {
             name: $(e).text().trim()
         },
         success: function (response) {
+            $('.navigation').remove();
+            $('.addArticle').remove();
             $('.centerLeftBottom>.commentSection_wait').remove();
             $('.centerLeftBottom').append(`
             <div class="centerLeftBottom_show contentSmallPart" >
@@ -1903,6 +1912,7 @@ function search_history(e) {
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.article_search[i].writerWord}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
+                                
                                                                 <div class="contentposition">
                                     <span>
                                         ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
