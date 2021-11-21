@@ -52,6 +52,22 @@ router.post('/webIndexStatic', async function (req, res, next) {
     res.send(data);
 });
 
+//进行小模块的搜索
+router.post('/smallModulesGet', async function (req, res, next) {
+    let temp = await db.smallModule.find({
+        'father': `${req.body.name}`,
+        'isShow': true
+    })
+    let data = []
+    for (let i = 0; i < temp.length; i++) {
+        data.push({
+            name: temp[i].name,
+            id: temp[i]._id
+        })
+    }
+    res.send(data);
+});
+
 // 使用token实现登录
 router.post('/isLogin', async function (req, res, next) {
     if (req.body.token == undefined) {

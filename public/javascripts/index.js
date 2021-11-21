@@ -964,11 +964,14 @@ $(document).ready(async function () {
             //创建大模块以及内部的小模块 并且进行事件绑定
             for (let i = 0; i < response.largeModule.length; i++) {
                 $('.centerLeftTop').append(`<span bigMid="${response.largeModule[i].bigMid}" onclick="bigPart(this)" class="centerLeftTopButton centerLeftTopButtonIsHot"><span class="bigMname">${response.largeModule[i].bigMname}</span><div class="centerLeftTopButton_smallbuttons"><div class="smallbuttons_white"></div></div></span>`)
-                //加蒙版的思路
+                //对ipad,mobile进行适配
                 if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-                    $(".centerLeftTopButton:nth(" + i + ")").append(`<span class="bigMmask" onclick="bigMmask(this)"></span>`);
+                    if (!($(window).width() < 600)) {
+                        //适配ipad
+                        $(".centerLeftTopButton:nth(" + i + ")").append(`<span class="bigMmask" onclick="bigMmask(this)"></span>`);
+                    }
                 } else {
-                    // 各个大模块绑定鼠标滑过事件
+                    // PC
                     $($($(".centerLeftTopButton")[i])).hover(function () {
                         // over
                         $(this).find('.centerLeftTopButton_smallbuttons').stop().show();

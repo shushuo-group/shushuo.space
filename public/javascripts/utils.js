@@ -100,13 +100,61 @@ function bigPart(e) {
     }
     $('.centerLeftTopButton>div:nth-child(2)').hide();
     if (!$('.navigation')[0]) {
-        //初始时不存在
-        $('.centerLeftTop').append(`<div style="margin: 0 3px;" class="navigation"><span bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span>><span class="navigation-smallM"></span></div>`);
+        //不存在navigation
+        if ($(window).width() < 600) {
+            //mobile
+            $('.centerLeftTop').after(`<div style="background: #fdfdfd;padding: 2px;border-radius: 3px;width: 98%;margin: auto;position: sticky;top: 80px;z-index: 2;white-space: nowrap;overflow-x: scroll;" class="navigation"><span style="border-radius: 5px;background: #e7f9f5;color: #138bfb;margin: 3px 2px;padding: 0 5px;" bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span></div>`);
+            //进行小模块的搜索请求
+            let data = $('.navigation-bigM').text()
+
+            $.ajax({
+                type: "post",
+                url: "/smallModulesGet",
+                data: {
+                    name: data
+                },
+                success: function (response) {
+                    for (let i = 0; i < response.length; i++) {
+                        $('.navigation-bigM').after(`
+                        <span onclick="smp(this)" style="border-radius: 5px;background: #ededed;color: #2a4d6d;margin: 3px 2px;padding: 0 5px;" class="navigation-smallM" id="${response[i].id}">${response[i].name}</span>
+                        `);
+                    }
+                }
+            });
+
+        } else {
+            //pc
+            $('.centerLeftTop').append(`<div style="margin: 0 3px;" class="navigation"><span bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span>><span class="navigation-smallM"></span></div>`);
+        }
     } else {
-        //初始时存在
-        $('.navigation-bigM').attr('bigMid', `${$(e).attr('bigmid')}`);
-        $('.navigation-bigM').html(`${$(e).find('.bigMname').text()}`);
-        $('.navigation-smallM').html(``);
+        //存在navigation
+        if ($(window).width() < 600) {
+            //mobile
+            $('.navigation-smallM').remove();
+            $('.navigation-bigM').text($(e).find('.bigMname').text()).attr('bigMid', $(e).attr('bigmid'));
+            //进行小模块的搜索请求
+            let data = $('.navigation-bigM').text()
+
+            $.ajax({
+                type: "post",
+                url: "/smallModulesGet",
+                data: {
+                    name: data
+                },
+                success: function (response) {
+                    for (let i = 0; i < response.length; i++) {
+                        $('.navigation-bigM').after(`
+                        <span onclick="smp(this)" style="border-radius: 5px;background: #ededed;color: #2a4d6d;margin: 3px 2px;padding: 0 5px;" class="navigation-smallM" id='${response[i].id}'>${response[i].name}</span>
+                        `);
+                    }
+                }
+            });
+        } else {
+            //pc
+            $('.navigation-bigM').attr('bigMid', `${$(e).attr('bigmid')}`);
+            $('.navigation-bigM').html(`${$(e).find('.bigMname').text()}`);
+            $('.navigation-smallM').html(``);
+        }
     }
     if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
         $('.bigMmask').show();
@@ -148,6 +196,44 @@ function bigPart(e) {
 
 //小模块点击事件
 function smp(e) {
+    //mobile
+    if ($(window).width()<600) {
+        $('.smallm_chosen').css('color', '#2a4d6d');
+        $(e).css('color', '#ff7272');
+        $(e).addClass('smallm_chosen');
+        $('.contentSmallPart').remove();
+        $('.addArticle').remove();
+        $.ajax({
+            type: "post",
+            url: "mainApp/smallModule",
+            data: {
+                bigModuleId: $('.navigation-bigM').attr('bigmid'),
+                smallModuleId: e.id,
+                token: window.localStorage.token
+            },
+            success: function (response) {
+                if (response.articles.length == 0) {
+                    $('.navigation').after(`<div class="addArticle"><a class="addArticle-a"><div class="addArticle-word">空空如也，来添加第一篇文章吧</div><svg class="addArticle-icon" t="1617944956553" viewBox="0 0 1147 1024" version="1.1"  p-id="4251" width="200" height="200"><path fill="#707070" d="M0 956.865864 1146.877993 956.865864 1146.877993 1020.7232 0 1020.7232 0 956.865864ZM0 912.775537 300.529213 827.452006 85.868257 614.103613 0 912.775537ZM802.673951 328.370422 588.010209 115.019284 115.744481 584.378491 330.405437 797.708861 802.673951 328.370422ZM902.442885 149.154775 768.272343 15.818629C746.042941-6.277693 708.804076-5.074616 685.091594 18.484019L620.682076 82.476319 835.34721 295.826104 899.75255 231.814349C923.465032 208.254362 924.668109 171.253883 902.442885 149.154775Z" p-id="4252"></path></svg></a></div>`);
+                    // 进行创作中心入口的提示用户登录操作
+                    $('.addArticle').click(function (e) {
+                        if ($('#loginButton')[0]) {
+                            //未登录
+                            noLogin()
+                        } else {
+                            location.href = 'https://www.shushuo.space/writer'
+                        }
+                    });
+                    return
+                }
+                for (let i = 0; i < response.articles.length; i++) {
+                    square_smallPart_create(i, response, i)
+                }
+                //首次刷新的时候加上一个待接点
+                $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
+            }
+        });
+        return
+    }
 
     $('.centerLeftBottom').html('');
 
@@ -1736,7 +1822,7 @@ function toUserMainPage(e) {
     $(e).append(`
     <div class="contentSmallPartHead_part">
         <span>
-            <a href="/person${$(e).parent().find('.contentSmallPartID').text() == window.localStorage.name?'':'?userName='+$(e).attr('id')+''}">个 人 主 页</a>
+            <a target='blank' href="/person${$(e).parent().find('.contentSmallPartID').text() == window.localStorage.name?'':'?userName='+$(e).attr('id')+''}">个 人 主 页</a>
         </span>
     </div>
     <div class="mask02"></div>
