@@ -361,7 +361,7 @@ $(document).ready(async function () {
                                 <div>
                                     <div class="user_small_main">
                                         <span>
-                                            <a target="_blank" href="/person?userName=${response.user_search[i].id}">
+                                            <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
                                                 <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
                                             </a>
                                         </span>
@@ -660,7 +660,7 @@ $(document).ready(async function () {
                                 <div>
                                     <div class="user_small_main">
                                         <span>
-                                            <a target="_blank" href="/person?userName=${response.user_search[i].id}">
+                                            <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
                                                 <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
                                             </a>
                                         </span>
@@ -865,7 +865,7 @@ $(document).ready(async function () {
             <div>
                 <div class="user_small_main">
                     <span>
-                        <a target="_blank" href="/person?userName=${response.user_search[i].id}">
+                        <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
                             <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
                         </a>
                     </span>

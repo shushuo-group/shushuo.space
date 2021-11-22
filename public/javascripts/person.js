@@ -19,6 +19,7 @@ $(document).ready(function () {
 
             //游客浏览的用户主页面
             if (window.location.search.split('=')[0] == '?userName') {
+                $('.headpicSvg').remove();
                 $('.centerTop').html('');
                 $('.centerTop').append(`
                 <div>

@@ -35,9 +35,15 @@ async function commentDelete(articleid, fatherid, seccommentid) {
 router.post('/articleDetail', async function (req, res, next) {
     let article = await db.article.findOne({
         _id: req.body.articleId,
-        isOk: true,
         isPublic: true
     })
+    if (article.isOk === false) {
+        //此处isOk为false则说明其为被删除的文章
+        res.send({
+            code:500
+        })
+        return
+    }
     //作者信息
     let user = await db.user.findOne({
         userEmail: article.writerEmail

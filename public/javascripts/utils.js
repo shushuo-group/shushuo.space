@@ -1874,6 +1874,16 @@ function searchHlt(goal, target) {
     return a
 }
 
+//搜索结果点击头像进行跳转
+function head_to_detail(e) {
+    if (!(document.querySelector('#loginButton') === null)) {
+        //非登陆状态
+        noLogin()
+        return
+    }
+    window.open(`/person?userName=${e.id}`)
+}
+
 // 点击历史记录进行搜索
 function search_history(e) {
     $('#search_base_value').val($(e).text().trim());
@@ -1957,7 +1967,7 @@ function search_history(e) {
                     <div>
                         <div class="user_small_main">
                             <span>
-                                <a target="_blank" href="/person?userName=${response.user_search[i].id}">
+                                <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
                                     <img onerror=\'picError(this)\' src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
                                 </a>
                             </span>
