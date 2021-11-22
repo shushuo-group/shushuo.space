@@ -1459,7 +1459,7 @@ function commmentSubmit(e) {
         data: {
             token: window.localStorage.token,
             articleId: $(e).parents('.contentSmallPart').find('.contentSmallPartTop').attr('articleId'),
-            content: $(e).parents('.commentSectionArea').find('#commentContent')[0].outerText
+            content: $(e).parents('.commentSectionArea').find('#commentContent').text()
         },
         success: function (response) {
             if (response.isLogin == false) {
@@ -1476,7 +1476,7 @@ function commmentSubmit(e) {
                 <div class="Comments_small">
                 <img onerror=\'picError(this)\' src="${$('.toPerson').find('img').attr('src')}" class="Comments_small_head">
                 <span class="Comments_small_name">${xssFilter($('.toPerson').attr('userName'))}：</span>
-                <div style="white-space: pre-line;margin-left: 20px;">${xssFilter($(e).parents('.commentSectionArea').find('#commentContent')[0].outerText)}</div>
+                <div style="white-space: pre-line;margin-left: 20px;">${xssFilter($(e).parents('.commentSectionArea').find('#commentContent').text())}</div>
                 <div commentId="${response.commentId}" class="firstComment">
                     <span style='display:none;' class="Comments_small_like">点赞(0)</span>
                     <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
@@ -1508,7 +1508,7 @@ function commmentSubmit_article(e) {
         data: {
             token: window.localStorage.token,
             articleId: $(e).parents('.contentSmallPart').find('.contentSmallPartTop').attr('articleId'),
-            content: $(e).parents('.commentSectionArea').find('#commentContent')[0].outerText
+            content: $(e).parents('.commentSectionArea').find('#commentContent').text()
         },
         success: function (response) {
             if (response.isLogin == false) {
@@ -1525,7 +1525,7 @@ function commmentSubmit_article(e) {
                 <div class="Comments_small">
                 <img onerror=\'picError(this)\' src="${$('#userHead').find('img').attr('src')}" class="Comments_small_head">
                 <span class="Comments_small_name">${xssFilter($('#userHead').find('img').attr('username'))}：</span>
-                <div style="white-space: pre-line;margin-left: 20px;">${xssFilter($(e).parents('.commentSectionArea').find('#commentContent')[0].outerText)}</div>
+                <div style="white-space: pre-line;margin-left: 20px;">${xssFilter($(e).parents('.commentSectionArea').find('#commentContent').text())}</div>
                 <div commentId="${response.commentId}" class="firstComment">
                     <span style='display:none;' class="Comments_small_like">点赞(0)</span>
                     <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
@@ -1773,7 +1773,7 @@ function secondComment(e) {
 function secCommmentSubmit(e) {
     let a = $(e).parents('.commentSectionArea').find('.commentSecondHead').attr('flagnum')
     a = Number(a) + 1
-    let subContent = $(e).parents('.commentSectionArea').find('#commentContent')[0].outerText.substr(a)
+    let subContent = $(e).parents('.commentSectionArea').find('#commentContent').text().substr(a)
     $.ajax({
         type: "post",
         url: "/complete/secCommentSub",
