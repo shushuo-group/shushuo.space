@@ -197,7 +197,7 @@ function bigPart(e) {
 //小模块点击事件
 function smp(e) {
     //mobile
-    if ($(window).width()<600) {
+    if ($(window).width() < 600) {
         $('.smallm_chosen').css('color', '#2a4d6d');
         $(e).css('color', '#ff7272');
         $(e).addClass('smallm_chosen');
@@ -1453,13 +1453,14 @@ function commmentSubmit(e) {
         alert('请输入评论')
         return
     }
+    let subcontent = $(e).parents('.commentSectionArea').find('#commentContent').html().replace(/<br>/gi, '\n')
     $.ajax({
         type: "post",
         url: "/complete/commentSub",
         data: {
             token: window.localStorage.token,
             articleId: $(e).parents('.contentSmallPart').find('.contentSmallPartTop').attr('articleId'),
-            content: $(e).parents('.commentSectionArea').find('#commentContent').text()
+            content: subcontent
         },
         success: function (response) {
             if (response.isLogin == false) {
@@ -1476,7 +1477,7 @@ function commmentSubmit(e) {
                 <div class="Comments_small">
                 <img onerror=\'picError(this)\' src="${$('.toPerson').find('img').attr('src')}" class="Comments_small_head">
                 <span class="Comments_small_name">${xssFilter($('.toPerson').attr('userName'))}：</span>
-                <div style="white-space: pre-line;margin-left: 20px;">${xssFilter($(e).parents('.commentSectionArea').find('#commentContent').text())}</div>
+                <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subcontent)}</div>
                 <div commentId="${response.commentId}" class="firstComment">
                     <span style='display:none;' class="Comments_small_like">点赞(0)</span>
                     <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
@@ -1502,13 +1503,14 @@ function commmentSubmit_article(e) {
         alert('请输入评论')
         return
     }
+    let subcontent = $(e).parents('.commentSectionArea').find('#commentContent').html().replace(/<br>/gi, '\n')
     $.ajax({
         type: "post",
         url: "/complete/commentSub",
         data: {
             token: window.localStorage.token,
             articleId: $(e).parents('.contentSmallPart').find('.contentSmallPartTop').attr('articleId'),
-            content: $(e).parents('.commentSectionArea').find('#commentContent').text()
+            content: subcontent
         },
         success: function (response) {
             if (response.isLogin == false) {
@@ -1525,7 +1527,7 @@ function commmentSubmit_article(e) {
                 <div class="Comments_small">
                 <img onerror=\'picError(this)\' src="${$('#userHead').find('img').attr('src')}" class="Comments_small_head">
                 <span class="Comments_small_name">${xssFilter($('#userHead').find('img').attr('username'))}：</span>
-                <div style="white-space: pre-line;margin-left: 20px;">${xssFilter($(e).parents('.commentSectionArea').find('#commentContent').text())}</div>
+                <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subcontent)}</div>
                 <div commentId="${response.commentId}" class="firstComment">
                     <span style='display:none;' class="Comments_small_like">点赞(0)</span>
                     <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
@@ -1754,8 +1756,7 @@ function secondComment(e) {
     $(e).parents('.commentSectionArea').find('#commentContent').html('')
     $(e).parents('.commentSectionArea').find('#commentContent').append(`
     <span commentId="${$(e).parent().attr('commentId')}"  class="commentSecondHead">
-    @${$(e).parent().siblings('.Comments_small_name').text().substr(0, $(e).parent().siblings('.Comments_small_name').text().length - 1)}
-    (${xssFilter($(e).parent().siblings('.Comments_small_name').siblings('div').text().replace(/\s+/g,'').substr(0, 6))}..):
+    @${$(e).parent().siblings('.Comments_small_name').text().substr(0, $(e).parent().siblings('.Comments_small_name').text().length - 1)}:
     </span>
     `)
 
@@ -1765,15 +1766,13 @@ function secondComment(e) {
         'flag': $(e).parents('.commentSectionArea').find('#commentContent').text().replace(/\s*/g, ""),
         'flagnum': $(e).parents('.commentSectionArea').find('#commentContent').text().replace(/\s*/g, "").length
     });
-    // $(e).parents('.commentSectionArea').find('.commentSecondHead').attr('flag', $(e).parents('.commentSectionArea').find('#commentContent').text().replace(/\s*/g, ""))
-    // $(e).parents('.commentSectionArea').find('.commentSecondHead').attr('flagnum', $(e).parents('.commentSectionArea').find('.commentSecondHead').text().length)
 }
 
 //首页二级评论
 function secCommmentSubmit(e) {
     let a = $(e).parents('.commentSectionArea').find('.commentSecondHead').attr('flagnum')
-    a = Number(a) + 1
-    let subContent = $(e).parents('.commentSectionArea').find('#commentContent').text().substr(a)
+    a = Number(a)
+    let subContent = $(e).parents('.commentSectionArea').find('.commentSecondHead').html().replace(/<br>/gi, '\n').trim().substr(a)
     $.ajax({
         type: "post",
         url: "/complete/secCommentSub",
