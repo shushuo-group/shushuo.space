@@ -30,16 +30,6 @@ $(document).ready(async function () {
             })
         }
 
-        /*await $.ajax({
-            type: "post",
-            url: "/uploadMedia/ImgDelete",
-            data: {
-                DATA: JSON.stringify(imgsub)
-            },
-            success: function (response) {
-                console.log(response);
-            }
-        });*/
     }
 
     window.onbeforeunload = function () {
@@ -363,18 +353,7 @@ $(document).ready(async function () {
                                             src: img[i].imgSrc
                                         })
                                     }
-        
-                                    /*$.ajax({
-                                        type: "post",
-                                        url: "/uploadMedia/ImgDelete",
-                                        data: {
-                                            DATA: JSON.stringify(waitdelete),
-                                            token: window.localStorage.token
-                                        },
-                                        success: function (response) {
-                                            console.log(response);
-                                        }
-                                    });*/
+
                                     location.href = 'https://www.shushuo.space/'
                                 }
                             }
@@ -430,18 +409,7 @@ $(document).ready(async function () {
                                             src: img[i].imgSrc
                                         })
                                     }
-        
-                                    /*$.ajax({
-                                        type: "post",
-                                        url: "/uploadMedia/ImgDelete",
-                                        data: {
-                                            DATA: JSON.stringify(waitdelete),
-                                            token: window.localStorage.token
-                                        },
-                                        success: function (response) {
-                                            console.log(response);
-                                        }
-                                    });*/
+
                                 } else {
                                     alert('上传失败')
                                 }
@@ -582,18 +550,7 @@ $(document).ready(async function () {
                                                 src: img[i].imgSrc
                                             })
                                         }
-        
-                                        /*$.ajax({
-                                            type: "post",
-                                            url: "/uploadMedia/ImgDelete",
-                                            data: {
-                                                DATA: JSON.stringify(waitdelete),
-                                                token: window.localStorage.token
-                                            },
-                                            success: function (response) {
-                                                console.log(response);
-                                            }
-                                        });*/
+
                                         location.href = 'https://www.shushuo.space/'
                                     }
                                 }
@@ -645,18 +602,6 @@ $(document).ready(async function () {
                                             src: img[i].imgSrc
                                         })
                                     }
-        
-                                    /*$.ajax({
-                                        type: "post",
-                                        url: "/uploadMedia/ImgDelete",
-                                        data: {
-                                            DATA: JSON.stringify(waitdelete),
-                                            token: window.localStorage.token
-                                        },
-                                        success: function (response) {
-                                            console.log(response);
-                                        }
-                                    });*/
         
                                     location.href = 'https://www.shushuo.space/'
         

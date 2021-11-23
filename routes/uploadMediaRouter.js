@@ -119,34 +119,4 @@ router.post('/sendImg', upload_articleimg.single('file'), function (req, res, ne
     })
 });
 
-/*router.post('/ImgDelete', async function (req, res, next) {
-    let a = JSON.parse(req.body.DATA)
-    if (req.body.token == undefined) {
-        //未进行任何文章存储的进行删除多余图片的操作代码
-        for (let i = 0; i < a.length; i++) {
-            fs.unlink(`./upload/pic/${a[i].src.split('/')[4]}`, function (err, data) { //成功实现将用户头像只限定保存在硬盘内一张
-                if (err) {
-                    write.logerr(err)
-                }
-                
-            });
-        }
-        res.send('0')
-    } else {
-        let user = await db.user.findOne({
-            token: req.body.token
-        })
-        if (user !== null) {
-            for (let i = 0; i < a.length; i++) {
-                fs.unlink(`./upload/pic/${a[i].src.split('/')[4]}`, function (err, data) { //成功实现将用户头像只限定保存在硬盘内一张
-                    if (err) {
-                        write.logerr(err)
-                    }
-                });
-            }
-            res.send('0')
-        }
-    }
-});*/
-
 module.exports = router;
