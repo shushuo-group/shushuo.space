@@ -1,14 +1,6 @@
 # shushuo.space
-- test
-- webhook test
-进行一个更新
-hello world
-再进行一次小更新
+本项目是葛格发起并主导，以兴趣主题聚合志同道合者的互动平台，同好网友聚集在这里交流话题、展示自我、结交朋友。我们的主题涵盖了娱乐、游戏、小说、地区、生活等各方面。
 
-merge test
-hello world
+我们的主旨是做**全球领先的说话社区**
 
-hellohello world
-hellohellohello world
-
-hellohellohellohello world
+[友好的交友社区](www.shushuo.space)
