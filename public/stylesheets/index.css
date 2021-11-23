@@ -345,21 +345,6 @@ body {
     border-top-right-radius: 10px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .searchPartInput {
     position: relative;
     top: 7.5px;
@@ -410,7 +395,6 @@ body {
     color: #989898;
     font-size: 15px;
 }
-
 
 .searchPartInput>span:nth-child(1)>span {
     position: absolute;
@@ -491,28 +475,16 @@ body {
 }
 
 .userHead {
-
     width: 41px;
-
     height: 41px;
-
     background: #bdbdbd;
-
     position: absolute;
-
     top: 0;
-
     right: 0;
-
     left: 0;
-
     bottom: 0;
-
-
     margin: auto;
-
     border-radius: 50%;
-
     overflow: hidden;
 }
 
@@ -938,9 +910,7 @@ body {
 }
 
 .Comments {
-    font-weight: lighter;
     min-height: 20px;
-    line-height: 20px;
 }
 
 .Comments_small {
@@ -952,7 +922,6 @@ body {
     width: 98%;
     position: relative;
     left: 2%;
-    font-size: 12px;
 }
 
 .Comments_small_head {
@@ -980,7 +949,7 @@ body {
 }
 
 .Comments_small_name {
-    font-weight: 400;
+    font-weight: bold;
 }
 
 .othersComment {
