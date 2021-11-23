@@ -47,7 +47,13 @@ router.post('/sendToken_travel', async function (req, res, next) {
     }, {
         headImg: 1
     })
-    res.send(user.headImg)
+
+    let data = user.headImg
+    if (data === 'NaN.png') {
+        data = 'staticIMG/NaN.png'
+    }
+
+    res.send(data)
 })
 
 //查看个人信息
