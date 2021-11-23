@@ -503,7 +503,7 @@ router.post('/commentGet', async function (req, res, next) {
     let comments = article.comments
     for (let i = 0; i < comments.length; i++) {
         if (comments[i].isOK == false) {
-            comments[i].content = '<i><b><u>该评论已删除</u></b></i>'
+            comments[i].content = '/*该评论已删除*/'
         }
         let smallUser = await db.user.findOne({
             userEmail: comments[i].comUser
@@ -517,7 +517,7 @@ router.post('/commentGet', async function (req, res, next) {
         if (comments[i].secComments) {
             for (let j = 0; j < comments[i].secComments.length; j++) {
                 if (comments[i].secComments[j].isOK == false) {
-                    comments[i].secComments[j].content = '<i><b><u>该评论已删除</u></b></i>'
+                    comments[i].secComments[j].content = '/*该评论已删除*/'
                 }
                 let smallUser = await db.user.findOne({
                     userEmail: comments[i].secComments[j].comUserEmail

@@ -95,7 +95,7 @@ router.post('/articleDetail', async function (req, res, next) {
         let commentsHead = []
         for (let i = 0; i < article.comments.length; i++) {
             if (article.comments[i].isOK == false) {
-                article.comments[i].content = '<i><b><u>该评论已删除</u></b></i>'
+                article.comments[i].content = '/*该评论已删除*/'
             }
             let commentsuser = await db.user.findOne({
                 userEmail: article.comments[i].comUser
@@ -112,7 +112,7 @@ router.post('/articleDetail', async function (req, res, next) {
             if (comments[i].secComments) {
                 for (let j = 0; j < comments[i].secComments.length; j++) {
                     if (comments[i].secComments[j].isOK == false) {
-                        comments[i].secComments[j].content = '<i><b><u>该评论已删除</u></b></i>'
+                        comments[i].secComments[j].content = '/*该评论已删除*/'
                     }
                     let secUser = await db.user.findOne({
                         userEmail: comments[i].secComments[j].comUserEmail
@@ -171,7 +171,7 @@ router.post('/articleDetail', async function (req, res, next) {
         let commentsHead = []
         for (let i = 0; i < article.comments.length; i++) {
             if (article.comments[i].isOK == false) {
-                article.comments[i].content = '<i><b><u>该评论已删除</u></b></i>'
+                article.comments[i].content = '/*该评论已删除*/'
             }
             let commentsuser = await db.user.findOne({
                 userEmail: article.comments[i].comUser
@@ -187,7 +187,7 @@ router.post('/articleDetail', async function (req, res, next) {
             if (comments[i].secComments) {
                 for (let j = 0; j < comments[i].secComments.length; j++) {
                     if (comments[i].secComments[j].isOK == false) {
-                        comments[i].secComments[j].content = '<i><b><u>该评论已删除</u></b></i>'
+                        comments[i].secComments[j].content = '/*该评论已删除*/'
                     }
                     let secUser = await db.user.findOne({
                         userEmail: comments[i].secComments[j].comUserEmail
