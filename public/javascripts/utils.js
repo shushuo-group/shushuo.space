@@ -1363,14 +1363,6 @@ function pasteRemoveCss(e) {
 //评论收到按钮
 function remark(e) {
 
-    //计划取消登陆状态查看评论区的设定
-    // if (!$('.toPerson>img')[0]) {
-
-    //     //未登录
-    //     noLogin()
-    //     return
-    // }
-
     if ($(e).attr('isopen') == 'false') {
 
         //打开评论区
@@ -1389,12 +1381,6 @@ function remark(e) {
 
                 $(e).parent().after('<div class="commentSection"><div class="commentSectionArea"><div class="othersComment"><div><span class="othersComment_number">0</span> 条评论</div><div class="Comments"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true" id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit(this)">发&nbsp布</span></div></div></div></div></div>')
 
-                //计划取消登陆状态查看评论区的设定
-                // if (response.isLogin == false) {
-                //     noLogin()
-                //     return
-                // }
-
                 // 确认了登录身份合法
                 if (response.comment.length == 0) {
                     //评论数为0
@@ -1405,7 +1391,7 @@ function remark(e) {
                         $(e).parents('.contentSmallPart').find('.Comments').append(
                             `
                         <div class="Comments_small">
-                            <img onerror=\'picError(this)\' onclick="window.open('/person${response.comment[i].comUser == window.localStorage.name?'':'?userName='+response.comment[i].comUserId+''}')" src="/head/${response.comment[i].headimg == "NaN.png" ? "staticIMG/NaN.png" : response.comment[i].headimg}" class="Comments_small_head">
+                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.comment[i].headimg == "NaN.png" ? "staticIMG/NaN.png" : response.comment[i].headimg}" id="${response.comment[i].comUserId}" class="Comments_small_head">
                             <span class="Comments_small_name">${xssFilter(response.comment[i].comUser)}：</span>
                             <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.comment[i].content)}</div>
                             <div commentId="${response.comment[i].id}" class="firstComment">
@@ -1421,7 +1407,7 @@ function remark(e) {
                                 num1 += 1
                                 $('.Comments_small:nth(' + i + ')').append(`
                                 <div class="Comments_small_second">
-                                <img onerror=\'picError(this)\' onclick="window.open('/person${response.comment[i].secComments[j].comUserName == window.localStorage.name?'':'?userName='+response.comment[i].secComments[j].comUserId+''}')" src="/head/${response.comment[i].secComments[j].comUserHead == "NaN.png" ? "staticIMG/NaN.png" : response.comment[i].secComments[j].comUserHead}" class="Comments_small_head">
+                                <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.comment[i].secComments[j].comUserHead == "NaN.png" ? "staticIMG/NaN.png" : response.comment[i].secComments[j].comUserHead}" id="${response.comment[i].secComments[j].comUserId}" class="Comments_small_head">
                                 <span class="Comments_small_name">${xssFilter(response.comment[i].secComments[j].comUserName)}：</span>
                                 <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.comment[i].secComments[j].content)}</div>
                                 <div commentid="${response.comment[i].secComments[j].id}" class="firstComment">
@@ -1555,12 +1541,11 @@ function toPerson(e) {
         noLogin()
         return
     }
-    location.href = `https://www.shushuo.space/person?way=${$(e).attr('id')}`
+    window.open(`/person?userId=${$('.toPerson').attr('id')}&&way=${$(e).attr('id')}`)
 }
 
 //person页面详情点击按钮
 function getDetail(e) {
-    // location.href = `https://www.shushuo.space/article?articleId=${$(e).parents('.article_smallCard').attr('articleid')}`
     window.open(`https://www.shushuo.space/article?articleId=${$(e).parents('.article_smallCard').attr('articleid')}`)
 }
 
@@ -1880,7 +1865,7 @@ function head_to_detail(e) {
         noLogin()
         return
     }
-    window.open(`/person?userName=${e.id}`)
+    window.open(`/person?userId=${e.id}`)
 }
 
 // 点击历史记录进行搜索
@@ -2000,7 +1985,7 @@ function search_history(e) {
                         <div style="display:block;" class="contentSmallPartTop">
                             <div>
                                 <span id="6097c9f92347ed2f9cdd4d18">
-                                    <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userName='+response.article_search[i].writerId+''}>
+                                    <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
                                        ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\' src='/head/"+a(i)+"'>"}
                                     </a>
                                 </span>

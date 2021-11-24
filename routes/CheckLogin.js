@@ -19,6 +19,7 @@ router.post('/', async function (req, res, next) {
                 isLogin: true,
                 userHeadimg: user.headImg,
                 userName: user.userName,
+                data_id:user._id
             })
         } else {
             //没找到用户

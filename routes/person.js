@@ -8,6 +8,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/sendToken', async function (req, res, next) {
+    console.dir(req.body);
     if (req.body.token == undefined) {
         res.send({
             isLogin: false
@@ -22,6 +23,14 @@ router.post('/sendToken', async function (req, res, next) {
                 isLogin: false
             })
         } else {
+            let isOwn = null;
+            if(user._id.toString() === req.body.userId){
+                //本人账号
+                isOwn = true
+            }else{
+                //非本人账号
+                isOwn = false
+            }
             let userInfors = {
                 userName: user.userName,
                 userEmail: user.userEmail,
@@ -34,6 +43,7 @@ router.post('/sendToken', async function (req, res, next) {
             //到这一步已经确定了可以根据本地token找到用户信息
             res.send({
                 isLogin: true,
+                isOwn: isOwn,
                 user: userInfors
             })
         }

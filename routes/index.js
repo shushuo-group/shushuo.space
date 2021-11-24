@@ -150,6 +150,7 @@ router.post('/isLogin', async function (req, res, next) {
                     headImg: userInfor.headImg,
                     userName: userInfor.userName,
                     id: userInfor.userAccount,
+                    data_id: userInfor._id,
                     userFinLog: userInfor.finLogTime,
                     userS_H: userS_H,
                     number1: userInfor.likeArticles.length,

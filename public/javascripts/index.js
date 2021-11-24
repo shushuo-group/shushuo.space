@@ -147,7 +147,8 @@ $(document).ready(async function () {
 
                 //头像进行设置
                 $('#loginButton').remove();
-                $('#userHead').prepend(`<a userId="${response.user.id}" userName="${response.user.userName}" class="toPerson" href="/person"></a>`);
+                $('#userHead').prepend(`<a userId="${response.user.id}" userName="${response.user.userName}" class="toPerson" onclick="window.open('/person?userId=${response.user.data_id}')" Id="${response.user.data_id}"></a>`);
+
 
                 if (response.user.headImg == 'NaN.png') {
                     $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  src="/head/staticIMG/' + response.user.headImg + '">');
@@ -164,7 +165,10 @@ $(document).ready(async function () {
 
                 // 针对所有触屏设备
                 if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-                    // $('.head-part').toggleClass('head-part02');
+
+                    $('.toPerson').attr('onclick', '');
+
+
                     $('.head-part').addClass('head-part02');
                     $('.head-part02').removeClass('head-part');
                     $('.head-part02').css({
@@ -175,7 +179,7 @@ $(document).ready(async function () {
                         'visibility': 'hidden'
                     });
                     $('.toPerson').removeAttr('href');
-                    $('.head-part02').prepend(`<span><a href="/person">个 人 主 页<a></span>`);
+                    $('.head-part02').prepend(`<span style="color: #004eff;" onclick="window.open('/person?userId=${$('.toPerson').attr('id')}')">个 人 主 页</span>`);
                     $('.head').click(function (e) {
                         e.preventDefault();
                         e.stopPropagation();
@@ -393,7 +397,7 @@ $(document).ready(async function () {
                                     <div style="display:block;" class="contentSmallPartTop">
                                         <div>
                                             <span id="6097c9f92347ed2f9cdd4d18">
-                                                <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userName='+response.article_search[i].writerId+''}>
+                                                <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
                                                    ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
                                                 </a>
                                             </span>
@@ -692,7 +696,7 @@ $(document).ready(async function () {
                                     <div style="display:block;" class="contentSmallPartTop">
                                         <div>
                                             <span id="6097c9f92347ed2f9cdd4d18">
-                                                <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userName='+response.article_search[i].writerId+''}>
+                                                <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
                                                    ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
                                                 </a>
                                             </span>
@@ -897,7 +901,7 @@ $(document).ready(async function () {
                 <div style="display:block;" class="contentSmallPartTop">
                     <div>
                         <span id="6097c9f92347ed2f9cdd4d18">
-                            <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userName='+response.article_search[i].writerId+''}>
+                            <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
                                ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
                             </a>
                         </span>
