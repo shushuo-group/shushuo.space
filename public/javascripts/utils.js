@@ -688,7 +688,7 @@ function readAllButton(e) {
         }
     } else {
         //pc
-        num -= $('.top')[0].clientHeight - $('.centerLeftTop')[0].clientHeight
+        num -= $('.centerLeftTop')[0].clientHeight
     }
     //进行调整滚动条以达到准确保持打开的文章处于文章顶部的功能  这个 34 有需要进行适配
     $(window).scrollTop(num);
