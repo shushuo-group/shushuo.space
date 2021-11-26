@@ -676,20 +676,19 @@ function readAllButton(e) {
 
     let scroll01 = $(window).scrollTop()
 
-    let num = 0;
+    let num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.top')[0].clientHeight;
 
     if (screen.width < 600) {
         //mobile
-        if ($('.navigation').length === 1) {
-            //出现了navigation
-            num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.navigation')[0].getBoundingClientRect().top - $('.navigation')[0].clientHeight
-        } else {
-            //没有navigation的情况
-            num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.centerLeftTop')[0].getBoundingClientRect().top - $('.centerLeftTop')[0].clientHeight
+        num -= $('.centerLeftTop')[0].clientHeight
+        let temp = $('.navigation')
+        if (temp.length === 1) {
+            //mobile_navigation is show
+            num -= temp[0].clientHeight
         }
     } else {
         //pc
-        num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.top').height() - $('.centerLeftTop').height()
+        num -= $('.top')[0].clientHeight - $('.centerLeftTop')[0].clientHeight
     }
     //进行调整滚动条以达到准确保持打开的文章处于文章顶部的功能  这个 34 有需要进行适配
     $(window).scrollTop(num);
