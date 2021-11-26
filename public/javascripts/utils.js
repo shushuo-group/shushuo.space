@@ -676,6 +676,18 @@ function readAllButton(e) {
 
     let scroll01 = $(window).scrollTop()
 
+    let num = 0;
+
+    if (screen.width < 600) {
+        //mobile
+        num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.navigation')[0].getBoundingClientRect().top - $('.navigation')[0].clientHeight
+    } else {
+        //pc
+        num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.top').height() - $('.centerLeftTop').height()
+    }
+    //进行调整滚动条以达到准确保持打开的文章处于文章顶部的功能  这个 34 有需要进行适配
+    $(window).scrollTop(num);
+
     $(e).parents('.contentSmallPart').css({
         'box-sizing': 'content-box',
         'border': '2px solid #03a9f4'
@@ -685,10 +697,6 @@ function readAllButton(e) {
     $(e).siblings('.contentExploreMask').hide();
     $(e).siblings('.innerContent').css('max-height', 'unset');
     $(e).parents('.contentSmallPart').find('.contentMoveArea').append('<div onclick="contentExploreButton_button(this)" class="contentExploreButton_close">收起</div>')
-
-    let num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.top').height() - $('.centerLeftTop').height()
-    //进行调整滚动条以达到准确保持打开的文章处于文章顶部的功能  这个 34 有需要进行适配
-    $(window).scrollTop(num);
 
     $(window).bind('scroll.a', function () {
         if ($(e).parents('.contentSmallPart')[0].getBoundingClientRect().bottom > $(window).height()) {
