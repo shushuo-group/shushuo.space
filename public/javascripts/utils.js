@@ -685,7 +685,7 @@ function readAllButton(e) {
             num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.navigation')[0].getBoundingClientRect().top - $('.navigation')[0].clientHeight
         } else {
             //没有navigation的情况
-            num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.navigation')[0].clientHeight
+            num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.centerLeftTop')[0].getBoundingClientRect().top - $('.centerLeftTop')[0].clientHeight
         }
     } else {
         //pc
