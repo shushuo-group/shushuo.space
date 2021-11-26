@@ -663,17 +663,17 @@ function firstFlush_hidden(data) {
 
 //粗略阅读全文事件
 function readAllButton(e) {
-    if ($('.contentExploreButton_close')) { //曾经 存在过被打开的文章
-        $('.contentExploreButton_close').remove();
-        $('.innerContent').css('max-height', '200px');
-        $('.contentExploreButton').show();
-        $('.contentExploreMask').show();
 
-        $('.contentSmallPart').css({
-            'box-sizing': '',
-            'border': ''
-        });
-    }
+    //存在过被打开的文章    之后需要对模块进行初始化
+    $('.contentExploreButton_close').remove();
+    $('.innerContent').css('max-height', '200px');
+    $('.contentExploreButton').show();
+    $('.contentExploreMask').show();
+    $('.contentSmallPart').css({
+        'box-sizing': '',
+        'border': ''
+    });
+
     let scroll01 = $(window).scrollTop()
 
     $(e).parents('.contentSmallPart').css({
@@ -686,9 +686,9 @@ function readAllButton(e) {
     $(e).siblings('.innerContent').css('max-height', 'unset');
     $(e).parents('.contentSmallPart').find('.contentMoveArea').append('<div onclick="contentExploreButton_button(this)" class="contentExploreButton_close">收起</div>')
 
-    let num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.top').height() - 34
+    let num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.top').height() - $('.centerLeftTop').height()
+    //进行调整滚动条以达到准确保持打开的文章处于文章顶部的功能  这个 34 有需要进行适配
     $(window).scrollTop(num);
-
 
     $(window).bind('scroll.a', function () {
         if ($(e).parents('.contentSmallPart')[0].getBoundingClientRect().bottom > $(window).height()) {
@@ -700,7 +700,6 @@ function readAllButton(e) {
                 'margin': '0',
                 'left': ($(window).width() - $('.center').width()) / 2 - ($('.centerLeft').width() - $('.centerLeftBottom').width()) + $('.centerLeft').width() - $('.contentExploreButton_close').width() + 'px'
             });
-
 
             if ($('.contentExploreButton_close')[0].getBoundingClientRect().top < $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top) {
                 $('.contentExploreButton_close').css({
@@ -721,7 +720,6 @@ function readAllButton(e) {
                     'left': ($(window).width() - $('.center').width()) / 2 - ($('.centerLeft').width() - $('.centerLeftBottom').width()) + $('.centerLeft').width() - $('.contentExploreButton_close').width() + 'px'
                 });
             }
-
 
         } else {
             $('.contentExploreButton_close').css({
