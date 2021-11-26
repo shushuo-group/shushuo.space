@@ -680,7 +680,13 @@ function readAllButton(e) {
 
     if (screen.width < 600) {
         //mobile
-        num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.navigation')[0].getBoundingClientRect().top - $('.navigation')[0].clientHeight
+        if ($('.navigation').length === 1) {
+            //出现了navigation
+            num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.navigation')[0].getBoundingClientRect().top - $('.navigation')[0].clientHeight
+        } else {
+            //没有navigation的情况
+            num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.navigation')[0].clientHeight
+        }
     } else {
         //pc
         num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.top').height() - $('.centerLeftTop').height()
