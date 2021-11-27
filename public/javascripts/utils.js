@@ -1373,7 +1373,6 @@ function pasteRemoveCss(e) {
 
 //评论收到按钮
 function remark(e) {
-
     if ($(e).attr('isopen') == 'false') {
 
         //打开评论区
@@ -1392,12 +1391,13 @@ function remark(e) {
 
                 $(e).parent().after('<div class="commentSection"><div class="commentSectionArea"><div class="othersComment"><div><span class="othersComment_number">0</span> 条评论</div><div class="Comments"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true" id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit(this)">发&nbsp布</span></div></div></div></div></div>')
 
-                // 确认了登录身份合法
                 if (response.comment.length == 0) {
                     //评论数为0
                     $(e).parents('.contentSmallPart').find('.Comments').prepend('<div class="commentWhite">空空如也，快来评论吧！</div>');
                 } else {
+                    //二次评论计数器
                     let num1 = 0
+
                     for (let i = 0; i < response.comment.length; i++) {
                         $(e).parents('.contentSmallPart').find('.Comments').append(
                             `
@@ -1413,10 +1413,11 @@ function remark(e) {
                         </div>
                         `
                         );
+                        //如过存在二次评论
                         if (response.comment[i].secComments) {
+                            num1 += response.comment[i].secComments_number
                             for (let j = 0; j < response.comment[i].secComments.length; j++) {
-                                num1 += 1
-                                $('.Comments_small:nth(' + i + ')').append(`
+                                $(e).parents('.contentSmallPart').find('.Comments_small:nth(' + i + ')').append(`
                                 <div class="Comments_small_second">
                                 <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.comment[i].secComments[j].comUserHead == "NaN.png" ? "staticIMG/NaN.png" : response.comment[i].secComments[j].comUserHead}" id="${response.comment[i].secComments[j].comUserId}" class="Comments_small_head">
                                 <span class="Comments_small_name">${xssFilter(response.comment[i].secComments[j].comUserName)}：</span>
@@ -1436,6 +1437,7 @@ function remark(e) {
                 $(e).parents('.contentSmallPart').find('.commentSection_wait').remove();
             }
         });
+
     } else {
         //关闭评论区
         $(e).attr('isopen', 'false')
