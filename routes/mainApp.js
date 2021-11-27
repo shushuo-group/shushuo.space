@@ -579,6 +579,7 @@ router.post('/slideFlush', async function (req, res, next) {
             article.push({
                 articleComNumber: commentsNumber,
                 articleContent: articles[i].content,
+                articleTime: articles[i].time,
                 articleName: articles[i].name,
                 articleId: articles[i]._id,
                 islike: false,
