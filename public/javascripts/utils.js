@@ -1790,7 +1790,7 @@ function secCommmentSubmit(e) {
                         <span class="Comments_small_name">${xssFilter(response.comUserName)}：</span>
                         <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subContent)}</div>
                         <div commentid="${response.id}" class="firstComment">
-                        <span class="Comments_small_time">${timeSet(response.time)}</span>C
+                        <span class="Comments_small_time">${timeSet(response.time)}</span>
                         </div>
                         </div>
                         `)
