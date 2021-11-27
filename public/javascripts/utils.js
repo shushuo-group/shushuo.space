@@ -398,7 +398,7 @@ function slideFlushBytime_shuDong(slideWay, bigMidData, smallMidData) {
             $('.centerLeftBottom>.commentSection_wait').remove();
 
             for (let i = 0; i < response.articles.length; i++) {
-                shuDong_smallPart_create(i, response, $('.contentSmallPart').length - 2)
+                shuDong_smallPart_create(i, response, $('.contentSmallPart').length)
             }
             $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
         }
