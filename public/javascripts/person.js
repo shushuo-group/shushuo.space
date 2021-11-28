@@ -695,7 +695,7 @@ $(document).ready(function () {
                             $('.commentSection_wait').remove();
                             $('.navigation').after(`<div class="likeArticle centerBottom-main"></div>`);
                             for (let i = 0; i < response.data.length; i++) {
-                                $('.likeArticle').append(`
+                                $('.likeArticle').prepend(`
                             <div class="article_smallCard" articleId="${response.data[i].articleId}">
                             <div class="article_smallCard_innercontent">
                             <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
@@ -734,7 +734,7 @@ $(document).ready(function () {
                             $('.commentSection_wait').remove();
                             $('.navigation').after(`<div class="collectArticle centerBottom-main"></div>`);
                             for (let i = 0; i < response.data.length; i++) {
-                                $('.collectArticle').append(`<div class="article_smallCard" articleId="${response.data[i].articleId}">
+                                $('.collectArticle').prepend(`<div class="article_smallCard" articleId="${response.data[i].articleId}">
                             <div class="article_smallCard_innercontent">
                             <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
         
@@ -773,7 +773,7 @@ $(document).ready(function () {
                             $('.commentSection_wait').remove();
                             $('.navigation').after(`<div class="commentArticle centerBottom-main"></div>`);
                             for (let i = 0; i < response.data.length; i++) {
-                                $('.commentArticle').append(`<div class="article_smallCard" fatherid="${response.data[i].fatherid}" isSec="${response.data[i].isSec}" commentId="${response.data[i].commentId}" articleId="${response.data[i].articleId}">
+                                $('.commentArticle').prepend(`<div class="article_smallCard" fatherid="${response.data[i].fatherid}" isSec="${response.data[i].isSec}" commentId="${response.data[i].commentId}" articleId="${response.data[i].articleId}">
                             <div class="article_smallCard_innercontent">
                             <div class="innercontent_action" onclick="commentaction(this)" isopen="false"><span>. . .</span></div>
                             <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
@@ -1072,7 +1072,7 @@ $(document).ready(function () {
                             $('.commentSection_wait').remove();
                             $('.navigation').after(`<div class="commentArticle centerBottom-main"></div>`);
                             for (let i = 0; i < response.data.length; i++) {
-                                $('.commentArticle').append(`<div class="article_smallCard" articleId="${response.data[i].articleId}">
+                                $('.commentArticle').prepend(`<div class="article_smallCard" articleId="${response.data[i].articleId}">
                                 <div class="article_smallCard_innercontent">
                                 <div class="innercontent_title">${xssFilter(response.data[i].articleName)}</div>
                                 <div class="innercontent_time">${timeSet(response.data[i].contentTime)}</div>
