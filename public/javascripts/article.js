@@ -50,7 +50,12 @@ $(document).ready(async function () {
 
                 $('body').append(`
                 <div class="img_bigshow_part">
-                <a class="img_bigshow_part_down" href="${$(imgs[i]).attr('src')}" download><svg t="1621226978872" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1902" width="200" height="200"><path d="M1024 645.248v330.752a48 48 0 0 1-48 48H48a48 48 0 0 1-48-48v-330.752a48 48 0 0 1 96 0V928h832v-282.752a48 48 0 0 1 96 0z m-545.152 145.984a47.936 47.936 0 0 0 67.904 0l299.904-299.84a48 48 0 1 0-67.968-67.904l-217.792 217.856V48a48.064 48.064 0 0 0-96.064 0v593.472L246.912 423.552a48 48 0 1 0-67.904 67.904l299.84 299.776z" p-id="1903" fill="#f1f3f4"></path></svg></a>
+                <a class="img_bigshow_part_down" href="${$(imgs[i]).attr('src')}" download>
+                <svg t="1621226978872" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1902" width="200" height="200"><path d="M1024 645.248v330.752a48 48 0 0 1-48 48H48a48 48 0 0 1-48-48v-330.752a48 48 0 0 1 96 0V928h832v-282.752a48 48 0 0 1 96 0z m-545.152 145.984a47.936 47.936 0 0 0 67.904 0l299.904-299.84a48 48 0 1 0-67.968-67.904l-217.792 217.856V48a48.064 48.064 0 0 0-96.064 0v593.472L246.912 423.552a48 48 0 1 0-67.904 67.904l299.84 299.776z" p-id="1903" fill="#f1f3f4"></path></svg>
+                </a>
+                <span class="img_bigshow_part_round">
+                <svg t="1638070345436" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2306" width="200" height="200"><path d="M482.773333 66.517333l148.181334 151.168a21.333333 21.333333 0 0 1 0 29.866667l-147.84 150.826667a21.333333 21.333333 0 0 1-28.16 2.090666l-2.346667-2.090666-27.050667-27.605334a21.333333 21.333333 0 0 1 0-29.866666l69.888-71.338667a304.64 304.64 0 1 0 318.421334 352.682667l1.024-6.826667c0.170667-1.408 0.426667-3.285333 0.64-5.632a21.333333 21.333333 0 0 1 22.314666-19.114667l42.666667 2.261334a21.333333 21.333333 0 0 1 20.224 22.4l-0.085333 1.024-1.194667 10.496A389.973333 389.973333 0 1 1 484.821333 184.746667l-59.306666-60.458667a21.333333 21.333333 0 0 1 0-29.866667l27.093333-27.605333a21.333333 21.333333 0 0 1 30.165333-0.298667z" p-id="2307" fill="#f1f3f4"></path></svg>
+                </span>
                 ${$(imgs[i])[0].outerHTML}
                 </div>
                 `);
@@ -60,12 +65,28 @@ $(document).ready(async function () {
                     window.event.stopPropagation()
                 });
 
+                //图片旋转函数
+                let temp_degree = 0
+                $('.img_bigshow_part_round').click(function () {
+                    window.event.stopPropagation()
+                    temp_degree += 90
+                    $(this).siblings('img').css('transform', `rotate(${temp_degree}deg)`);
+                });
+
                 $('.img_bigshow_part_down').hover(function () {
                     // over
                     $('.img_bigshow_part_down').find('path').attr('fill', '#03a9f4');
                 }, function () {
                     // out
                     $('.img_bigshow_part_down').find('path').attr('fill', '#f1f3f4');
+                });
+
+                $('.img_bigshow_part_round').hover(function () {
+                    // over
+                    $('.img_bigshow_part_round').find('path').attr('fill', '#03a9f4');
+                }, function () {
+                    // out
+                    $('.img_bigshow_part_round').find('path').attr('fill', '#f1f3f4');
                 });
 
                 // 点击进行大张图片浏览

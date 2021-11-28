@@ -1734,36 +1734,54 @@ pre {
     color: #959c9b;
     font-size: 15px;
     font-weight: bold;
-    text-align: center;
     position: fixed;
-    top: 50px;
-    width: 100%;
+    top: 0;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
     z-index: 2;
-    display: block;
-    content: "点击任意处即可退出浏览";
+    content: "点击任意空白处即可退出浏览";
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .img_bigshow_part_long::before {
     color: #959c9b;
     font-size: 15px;
     font-weight: bold;
-    text-align: center;
     position: fixed;
-    top: 0px;
-    width: 100%;
+    top: 0;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
     z-index: 2;
-    display: block;
-    content: "点击任意处即可退出浏览";
+    content: "点击任意空白处即可退出浏览";
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 .img_bigshow_part_down {
-    position: absolute;
-    right: 10px;
+    position: fixed;
+    left: 10px;
     top: 10px;
     z-index: 5;
 }
 
 .img_bigshow_part_down>svg {
+    width: 30px;
+    height: 30px;
+}
+
+.img_bigshow_part_round {
+    position: fixed;
+    left: 10px;
+    top: 50px;
+    z-index: 5;
+}
+
+.img_bigshow_part_round>svg {
     width: 30px;
     height: 30px;
 }
