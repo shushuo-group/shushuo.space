@@ -179,7 +179,6 @@ $(document).ready(async function () {
             token: window.localStorage.token
         },
         success: function (response) {
-            console.dir(response);
             if (response.isLogin == true) {
                 //登录成功
                 $('#loginButton').remove();

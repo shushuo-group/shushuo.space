@@ -1412,6 +1412,13 @@ function remark(e) {
 
                 $(e).parent().after('<div class="commentSection"><div class="commentSectionArea"><div class="othersComment"><div><span class="othersComment_number">0</span> 条评论</div><div class="Comments"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true" id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit(this)">发&nbsp布</span></div></div></div></div></div>')
 
+                $(e).parents('.contentSmallPart').find('#commentContent').keydown(function (e) {
+                    if (e.keyCode === 13) {
+                        document.execCommand('insertHTML', false, '<br></br>')
+                        return false
+                    }
+                });
+
                 if (response.comment.length == 0) {
                     //评论数为0
                     $(e).parents('.contentSmallPart').find('.Comments').prepend('<div class="commentWhite">空空如也，快来评论吧！</div>');
@@ -1769,15 +1776,19 @@ function bigMmask(e) {
 
 //二级评论
 function secondComment(e) {
-    $(e).parents('.commentSectionArea').find('#commentContent').attr('oninput', 'commentInput(this)')
     $(e).parents('.Comments').find('.Comments_small_comment').css('color', '')
+
     $(e).css('color', '#138bfb');
+
+    $(e).parents('.commentSectionArea').find('#commentContent').attr('oninput', 'commentInput(this)')
+
     $(e).parents('.commentSectionArea').find('#commentContent').html('')
-    $(e).parents('.commentSectionArea').find('#commentContent').append(`
-    <span commentId="${$(e).parent().attr('commentId')}"  class="commentSecondHead">
-    @${$(e).parent().siblings('.Comments_small_name').text().substr(0, $(e).parent().siblings('.Comments_small_name').text().length - 1)}:
-    </span>
-    `)
+
+    $(e).parents('.commentSectionArea').find('#commentContent').attr('commentid', $(e).parent().attr('commentId'))
+
+    $(e).parents('.commentSectionArea').find('#commentContent').attr('flagnum', $(e).parent().siblings('.Comments_small_name').text().trim().length + 1)
+
+    $(e).parents('.commentSectionArea').find('#commentContent').html(`@${$(e).parent().siblings('.Comments_small_name').text().trim()}`);
 
     $(e).parents('.commentSectionArea').find('.commentSubmit').attr('onclick', 'secCommmentSubmit(this)');
 
@@ -1789,16 +1800,16 @@ function secondComment(e) {
 
 //首页二级评论
 function secCommmentSubmit(e) {
-    let a = $(e).parents('.commentSectionArea').find('.commentSecondHead').attr('flagnum')
+    let a = $(e).parents('.commentSectionArea').find('#commentContent').attr('flagnum')
     a = Number(a)
-    let subContent = $(e).parents('.commentSectionArea').find('.commentSecondHead').html().replace(/<br>/gi, '\n').trim().substr(a)
+    let subContent = $(e).parents('.commentSectionArea').find('#commentContent').html().trim().replace(/<br>/gi, '\n').substr(a)
     $.ajax({
         type: "post",
         url: "/complete/secCommentSub",
         data: {
             token: window.localStorage.token,
             articleId: $(e).parents('.contentSmallPart').find('.contentSmallPartTop').attr('articleid'),
-            floorCommentId: $(e).parents('.CommentInputArea').find('.commentSecondHead').attr('commentid'),
+            floorCommentId: $(e).parents('.CommentInputArea').find('#commentContent').attr('commentid'),
             content: subContent
         },
         success: function (response) {
@@ -2974,12 +2985,17 @@ function jumpWeb(e) {
 //评论区小优化
 function commentInput(e) {
 
-    let str0 = $(e).parents('.commentSectionArea').find('.commentSecondHead').attr('flag');
-    let str1 = $(e).parents('.commentSectionArea').find('#commentContent').text().replace(/\s*/g, "").substr(0, $(e).parents('.commentSectionArea').find('.commentSecondHead').attr('flagnum'));
+    let str0 = $(e).parents('.commentSectionArea').find('#commentContent').attr('flagnum');
+    let str1 = $(e).parents('.commentSectionArea').find('#commentContent').text().trim().length;
 
-    if (str0 !== str1) {
-        $('.commentSecondHead').remove()
+    if (str0 > str1) {
+        //退出二次评论模式
+        $('#commentContent').html('');
+
+        $(e).parents('.commentSectionArea').find('#commentContent').attr('oninput', '')
+
         $(e).parents('.commentSectionArea').find('.Comments_small_comment').css('color', 'unset')
+
         $(e).parents('.commentSectionArea').find('.commentSubmit').attr('onclick', 'commmentSubmit(this)');
     }
 }

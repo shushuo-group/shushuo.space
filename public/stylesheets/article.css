@@ -810,7 +810,6 @@ body {
 }
 
 .Comments {
-    font-weight: lighter;
     min-height: 20px;
     line-height: 20px;
 }
@@ -824,7 +823,7 @@ body {
     width: 98%;
     position: relative;
     left: 2%;
-    font-size: 12px;
+    /* font-size: 12px; */
     background: #fdfdfd;
     border-radius: 5px;
 }

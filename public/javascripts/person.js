@@ -244,8 +244,6 @@ $(document).ready(function () {
                     }
                     $('.bottom').after('<div class="mask"></div>');
 
-                    console.log($(this).siblings('img').attr('src'));
-                    // console.log(e);
                     $('.mask').after(`
                 <div class="AvatarOperationArea"><div class="AOA-top"><div class="AOA-top-left"><div class="AOA-top-left-part"><div class="ATLP-Basic"><div class="ATLP-Basic-mask"></div><img src="">
                 </div></div></div><span class="AOA-top-line"></span><div class="AOA-top-right"><div class="AOA-top-right-part"><div class="ATRP-container"><img src=""></div></div></div></div><div class="AOA-bottom"><div class="AOA-bottom-left"><button class="AOA-bottom-left-bottom">选择图片</button><input class="AOA-bottom-left-input" type="file" accept="image/png" style="display: none;"></div><div class="AOA-bottom-right"><input class="AOA-bottom-right-input" type="submit"></div></div></div>`);

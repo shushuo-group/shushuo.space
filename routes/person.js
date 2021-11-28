@@ -8,7 +8,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/sendToken', async function (req, res, next) {
-    console.dir(req.body);
     if (req.body.token == undefined) {
         res.send({
             isLogin: false
