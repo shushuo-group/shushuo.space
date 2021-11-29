@@ -1388,8 +1388,16 @@ function pasteRemoveCss(e) {
     event.preventDefault();
     let clipboardData = event.clipboardData || window.clipboardData, // IE 兼容
         plainText = clipboardData.getData('text'); // 无格式文本
+
     document.execCommand('insertText', false, plainText); // 插入无格式文本
     document.execCommand('paste', false, plainText); // IE 兼容
+
+    let temp_html = $(e).html()
+    temp_html = temp_html.replace(/<div>/gi, '<br>')
+    temp_html = temp_html.replace(/<\/div>/gi, '')
+    temp_html = temp_html.replace(/\n/gi, '')
+    temp_html = temp_html.replace(/\r/gi, '')
+    $(e).html(temp_html)
 }
 
 //评论收到按钮
