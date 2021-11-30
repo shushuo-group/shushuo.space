@@ -530,8 +530,6 @@ function firstFlush_hidden(data) {
 
             $(imgs[i]).click(function (e) {
 
-                $(this).hide();
-
                 $('html').css({
                     'overflow': 'hidden',
                     'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
