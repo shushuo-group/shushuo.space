@@ -727,12 +727,14 @@ router.post('/search', async function (req, res, next) {
         let articleBigM
         let articleSmM
         if (result02[i].isShow == false) { //树洞
-            let writerHead = ''
-            let writerName = '匿名'
-            let writerId = ''
-            let writerWord = ''
-            let articleBigM = '树洞'
-            let articleSmM = ''
+
+            writerHead = 'NaN.png'
+            writerName = '匿名'
+            writerId = ''
+            writerWord = ''
+            articleSmM = '树洞'
+            articleBigM = '树洞'
+
         } else {
             let data = await db.smallModule.findOne({
                 _id: result02[i].smallmid
