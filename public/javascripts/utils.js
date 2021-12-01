@@ -1857,11 +1857,12 @@ function toUserMainPage(e) {
     $(e).append(`
     <div class="contentSmallPartHead_part">
         <span>
-            <a target='blank' href="/person${$(e).parent().find('.contentSmallPartID').text() == window.localStorage.name?'':'?userName='+$(e).attr('id')+''}">个 人 主 页</a>
+            <a target='blank' href="/person?userId=${$(e).attr('id')}">个 人 主 页</a>
         </span>
     </div>
     <div class="mask02"></div>
     `);
+
     $('.mask02').click(function () {
         $(e).find('.contentSmallPartHead_part').remove()
         $(e).find('.mask02').remove()

@@ -87,7 +87,7 @@ $(document).ready(function () {
                                 for (let i = 0; i < response.data.length; i++) {
                                     $('.likeArticle').prepend(`<div class="article_smallCard" articleId="${response.data[i].articleId}">
                                 <div class="article_smallCard_innercontent">
-                                <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                                <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                                 <div class="innercontent_title">${xssFilter(response.data[i].articleName)}</div>
                                 <div class="innercontent_time">${timeSet(response.data[i].articleTime)}</div>
                                 <div class="innercontent_detail" onclick="getDetail(this)">详情</div>
@@ -117,7 +117,7 @@ $(document).ready(function () {
                                 for (let i = 0; i < response.data.length; i++) {
                                     $('.collectArticle').prepend(`<div class="article_smallCard" articleId="${response.data[i].articleId}">
                                 <div class="article_smallCard_innercontent">
-                                <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                                <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
         
                                 <div class="innercontent_title">${xssFilter(response.data[i].articleName)}</div>
                                 <div class="innercontent_time">${timeSet(response.data[i].articleTime)}</div>
@@ -151,7 +151,7 @@ $(document).ready(function () {
         
                                 <div class="innercontent_action" onclick="commentaction(this)" isopen="false"><span>. . .</span></div>
         
-                                <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                                <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                                 <div class="innercontent_title">${xssFilter(response.data[i].articleName)}</div>
                                 <div class="innercontent_time">${timeSet(response.data[i].contentTime)}</div>
                                 <div class="innercontent_content">${xssFilter(response.data[i].content)}</div>
@@ -180,7 +180,7 @@ $(document).ready(function () {
                                     $('.personArticle').append(`<div class="article_smallCard" articleId="${response.data[i]._id}">
                                 <div class="article_smallCard_innercontent">
                                 <div class="innercontent_action" onclick="articleaction(this)" isopen="false"><span>. . .</span></div>
-                                <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                                <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                                 <div class="innercontent_title">${xssFilter(response.data[i].name)}</div>
                                 <div class="innercontent_time">${timeSet(response.data[i].time)}</div>
                                 <div class="innercontent_data">赞（${response.data[i].likerslength}） 踩（${response.data[i].unlikerslength}） 评论（${response.data[i].commentslength}）收藏（${response.data[i].collectorslength}）</div>
@@ -211,7 +211,7 @@ $(document).ready(function () {
                                 $('.personArticle').append(`<div class="article_smallCard" articleId="${response.data[i]._id}">
                             <div class="article_smallCard_innercontent">
                             <div class="innercontent_action" onclick="articleaction(this)" isopen="false"><span>. . .</span></div>
-                            <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                            <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                             <div class="innercontent_title">${xssFilter(response.data[i].name)}</div>
                             <div class="innercontent_time">${timeSet(response.data[i].time)}</div>
                             <div class="innercontent_data">赞（${response.data[i].likerslength}） 踩（${response.data[i].unlikerslength}） 评论（${response.data[i].commentslength}）收藏（${response.data[i].collectorslength}）</div>
@@ -698,7 +698,7 @@ $(document).ready(function () {
                                 $('.likeArticle').prepend(`
                             <div class="article_smallCard" articleId="${response.data[i].articleId}">
                             <div class="article_smallCard_innercontent">
-                            <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                            <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                             <div class="innercontent_title">${xssFilter(response.data[i].articleName)}</div>
                             <div class="innercontent_time">${timeSet(response.data[i].articleTime)}</div>
                             <div class="innercontent_detail" onclick="getDetail(this)">详情</div>
@@ -736,7 +736,7 @@ $(document).ready(function () {
                             for (let i = 0; i < response.data.length; i++) {
                                 $('.collectArticle').prepend(`<div class="article_smallCard" articleId="${response.data[i].articleId}">
                             <div class="article_smallCard_innercontent">
-                            <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                            <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
         
                             <div class="innercontent_title">${xssFilter(response.data[i].articleName)}</div>
                             <div class="innercontent_time">${timeSet(response.data[i].articleTime)}</div>
@@ -776,7 +776,7 @@ $(document).ready(function () {
                                 $('.commentArticle').prepend(`<div class="article_smallCard" fatherid="${response.data[i].fatherid}" isSec="${response.data[i].isSec}" commentId="${response.data[i].commentId}" articleId="${response.data[i].articleId}">
                             <div class="article_smallCard_innercontent">
                             <div class="innercontent_action" onclick="commentaction(this)" isopen="false"><span>. . .</span></div>
-                            <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                            <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                             <div class="innercontent_title">${xssFilter(response.data[i].articleName)}</div>
                             <div class="innercontent_time">${timeSet(response.data[i].contentTime)}</div>
                             <div class="innercontent_content">${xssFilter(response.data[i].content)}</div>
@@ -816,7 +816,7 @@ $(document).ready(function () {
                                 $('.personArticle').append(`<div class="article_smallCard" articleId="${response.data[i]._id}">
                             <div class="article_smallCard_innercontent">
                             <div class="innercontent_action" onclick="articleaction(this)" isopen="false"><span>. . .</span></div>
-                            <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                            <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                             <div class="innercontent_title">${xssFilter(response.data[i].name)}</div>
                             <div class="innercontent_time">${timeSet(response.data[i].time)}</div>
                             <div class="innercontent_data">赞（${response.data[i].likerslength}） 踩（${response.data[i].unlikerslength}） 评论（${response.data[i].commentslength}）收藏（${response.data[i].collectorslength}）</div>
@@ -910,7 +910,7 @@ $(document).ready(function () {
                             for (let i = 0; i < response.data.length; i++) {
                                 $('.personArticle').append(`<div class="article_smallCard" articleId="${response.data[i]._id}">
                             <div class="article_smallCard_innercontent">
-                            <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                            <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                             <div class="innercontent_title">${xssFilter(response.data[i].name)}</div>
                             <div class="innercontent_time">${timeSet(response.data[i].time)}</div>
                             <div class="innercontent_data">赞（${response.data[i].likerslength}） 踩（${response.data[i].unlikerslength}） 评论（${response.data[i].commentslength}）收藏（${response.data[i].collectorslength}）</div>
@@ -1003,7 +1003,7 @@ $(document).ready(function () {
                         for (let i = 0; i < response.data.length; i++) {
                             $('.personArticle').append(`<div class="article_smallCard" articleId="${response.data[i]._id}">
                             <div class="article_smallCard_innercontent">
-                            <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                            <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                             <div class="innercontent_title">${xssFilter(response.data[i].name)}</div>
                             <div class="innercontent_time">${timeSet(response.data[i].time)}</div>
                             <div class="innercontent_data">赞（${response.data[i].likerslength}） 踩（${response.data[i].unlikerslength}） 评论（${response.data[i].commentslength}）收藏（${response.data[i].collectorslength}）</div>
@@ -1038,7 +1038,7 @@ $(document).ready(function () {
                             for (let i = 0; i < response.data.length; i++) {
                                 $('.personArticle').append(`<div class="article_smallCard" articleId="${response.data[i]._id}">
                                 <div class="article_smallCard_innercontent">
-                                <div class="innercontent_position">${response.data[i].bigmName}/${response.data[i].smallName}</div>
+                                <div class="innercontent_position">${response.data[i].bigmName}${response.data[i].smallName == ''?'':"/"+response.data[i].smallName}</div>
                                 <div class="innercontent_title">${xssFilter(response.data[i].name)}</div>
                                 <div class="innercontent_time">${timeSet(response.data[i].time)}</div>
                                 <div class="innercontent_data">赞（${response.data[i].likerslength}） 踩（${response.data[i].unlikerslength}） 评论（${response.data[i].commentslength}）收藏（${response.data[i].collectorslength}）</div>
