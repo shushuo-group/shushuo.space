@@ -585,6 +585,7 @@ body {
     border-radius: 10px;
     margin: 5px auto;
     width: 98%;
+    box-shadow: 0px 0px 1px 2px rgb(92 112 128 / 60%);
 }
 
 .centerLeftTop {
@@ -600,6 +601,7 @@ body {
     z-index: 2;
     top: 50px;
     border-radius: 10px;
+    box-shadow: inset 0px 0px 1px 2px rgb(92 112 128 / 60%);
 }
 
 .centerLeftTopButton {
@@ -703,8 +705,8 @@ body {
     width: 98%;
     background-color: #e7f9f5;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgb(18 18 18 / 10%);
     word-break: break-all;
+    box-shadow: 0px -1px 4px 1px rgb(16 22 26 / 40%);
 }
 
 .contentMoveArea,
@@ -1037,6 +1039,7 @@ body {
 
 .centerRight_part {
     background-color: #fdfdfd;
+    box-shadow: inset 0px 0px 1px 2px rgb(92 112 128 / 60%);
 }
 
 .webInfors_webNumber>span {
@@ -1054,6 +1057,7 @@ body {
     -ms-user-select: none;
     user-select: none;
     position: relative;
+    box-shadow: inset 0px 0px 1px 2px rgb(92 112 128 / 60%);
 }
 
 .centerRightTopPart {
@@ -1959,9 +1963,7 @@ pre {
     width: 98%;
     background-color: #fdfdfd;
     overflow: hidden;
-    -webkit-box-shadow: 0 1px 3px rgb(18 18 18 / 10%);
     word-break: break-all;
-    box-shadow: 0 5px 20px rgb(18 18 18 / 10%);
 }
 
 
@@ -2942,7 +2944,6 @@ span.uiSetFree_buttton_check {
         margin: auto;
         width: 9em;
     }
-
 
     #toWriter>svg {
         position: absolute;
