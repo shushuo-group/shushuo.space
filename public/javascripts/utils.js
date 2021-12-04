@@ -2223,13 +2223,13 @@ async function notSingleCheck(e) {
                 return
             }
             if (response.isCheck == true) {
-                $('.notice_part_bottom_small').animate({
-                    right: $(".notice_part_bottom_small").width(),
-                }, 1000, function () {
-                    $('.notice_part_bottom_small').remove();
-                    $('.notice_part_top>span:nth-child(1)').html(`通知(0)`);
-                    $('#notice_number').html('0');
-                });
+                $('.notice_part_bottom_small').remove();
+                $('.notice_part_top>span:nth-child(1)').html(`通知(0)`);
+                $('#notice_number').html('0');
+
+                $('.head-part02').css('visibility', 'hidden');
+                $('.mask02').remove();
+                $('.notice_part').remove();
             }
         }
     });
@@ -2269,6 +2269,7 @@ async function notSingleCheck_email(e) {
             if (response.isCheck == true) {
                 $('#message_number').html('');
                 $('.message_part').remove();
+                $('.head-part02').css('visibility', 'hidden');
                 $('.mask02').remove();
             }
         }
