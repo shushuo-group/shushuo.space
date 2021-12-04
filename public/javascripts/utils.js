@@ -420,8 +420,7 @@ function picError(e) {
     e.src = "data:image/png;base64,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"
     $(e).css({
         'width': 'unset',
-        'max-width': '100px',
-        'cursor': 'default'
+        'max-width': '100px'
     });
     // 去除掉使用js绑定的鼠标点击事件，故以后迭代需要注意不要直接在img上添加点击事件
     $(e).unbind('click');
@@ -1256,7 +1255,7 @@ function report(e) {
             </div>
         </div>
         <div class="report_part_submit">
-            <button id="report_submit">确认发送</button>
+            <button style="cursor:pointer;" id="report_submit">确认发送</button>
         </div>
     </div>`);
         $('html').css({
@@ -1328,7 +1327,7 @@ function report_person(e) {
             </div>
         </div>
         <div class="report_part_submit">
-            <button id="report_submit">确认发送</button>
+            <button style="cursor:pointer;" id="report_submit">确认发送</button>
         </div>
     </div>`);
         $('html').css({
@@ -2241,34 +2240,7 @@ function SingleCheck_email(e, event) {
     if (e == undefined) {
         return
     }
-    $.ajax({
-        type: "post",
-        url: "/mainApp/webEmailCheck_single",
-        data: {
-            token: window.localStorage.token,
-            id: e
-        },
-        success: function (response) {
-            if (response.isLogin == false) {
-                window.location.href = 'https://www.shushuo.space/'
-                return
-            }
-            if (response.isCheck == true) {
-                $(event).animate({
-                    right: $(".message_part_bottom_small").width(),
-                }, 1000, function () {
-                    $(event).remove();
-
-
-                    $('.message_part_top>span:nth-child(1)').html(`信息(${$('.message_part_top>span:nth-child(1)').html().split('信息(')[1].split(')')[0]-1})`);
-                    $('#message_number').html($('#message_number').html() - 1);
-
-
-
-                });
-            }
-        }
-    });
+    return
 }
 
 
@@ -2295,13 +2267,9 @@ async function notSingleCheck_email(e) {
                 return
             }
             if (response.isCheck == true) {
-                $('.message_part_bottom_small[type=comment]').animate({
-                    right: $(".message_part_bottom_small").width(),
-                }, 1000, function () {
-                    $('.message_part_bottom_small').remove();
-                    $('.message_part_top>span:nth-child(1)').html(`信息(0)`);
-                    $('#message_number').html('0');
-                });
+                $('#message_number').html('');
+                $('.message_part').remove();
+                $('.mask02').remove();
             }
         }
     });
@@ -2339,7 +2307,6 @@ function messageCreate(data) {
 // 信箱点击事件
 function messageClick(event) {
     if (!$('.toPerson>img')[0]) {
-
         //未登录
         noLogin()
         return
@@ -2357,14 +2324,13 @@ function messageClick(event) {
     });
     $('.mask02').click(function (e) {
         let num = $('.message_part_bottom_small[type=like]').length + $('.message_part_bottom_small[type=unlike]').length + $('.message_part_bottom_small[type=collect]').length
-        $('#message_number').html($('.message_part_bottom_small').length - num);
-
+        let temp = $('.message_part_bottom_small').length - num
+        $('#message_number').html(temp == 0 ? '' : temp);
         e.preventDefault();
         e.stopPropagation();
         $(this).remove();
         $('.message_part').remove();
         $('.head').css('z-index', '');
-
     });
     $('.head').css('z-index', 0);
     $.ajax({
@@ -2393,12 +2359,9 @@ function messageClick(event) {
             <div style='display:none;' class="message_part_small message_part_bottom"></div>
             `);
 
-            let idMyself = $('.toPerson').attr('userid')
             for (let i = 0; i < response.length; i++) {
                 $('.message_part_bottom').prepend(`
-                <div onclick="
-                SingleCheck_email('${response[i].id}',this)
-                window.open('/article?articleId=${response[i].type=='comment'?response[i].articleId+'=type=commentFind'+'='+'idOther='+response[i].userAccount+'='+'idMyself='+idMyself+'='+'time='+response[i].time:response[i].articleId}')" class="pcTouch02 message_part_bottom_small" type="${response[i].type}">
+                <div class="pcTouch02 message_part_bottom_small" type="${response[i].type}">
                     <div class="message_part_bottom_part_time">${timeSet(response[i].time)}</div>
                     <div articleId="${response[i].articleId}" class="message_part_bottom_part_content">${messageCreate(response[i])}</div>
                 </div>

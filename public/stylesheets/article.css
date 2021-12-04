@@ -155,15 +155,11 @@ ol {
 }
 
 .mask {
-
     z-index: 1;
     background-color: rgba(18, 18, 18, .65);
     opacity: 0.5;
-    bottom: 0;
-    left: 0;
+    inset: 0;
     position: fixed;
-    right: 0;
-    top: 0;
     z-index: 1;
 }
 
@@ -418,28 +414,13 @@ body {
 }
 
 .userHead {
-
     width: 41px;
-
     height: 41px;
-
     background: #bdbdbd;
-
     position: absolute;
-
-    top: 0;
-
-    right: 0;
-
-    left: 0;
-
-    bottom: 0;
-
-
+    inset: 0;
     margin: auto;
-
     border-radius: 50%;
-
     overflow: hidden;
 }
 
@@ -823,7 +804,6 @@ body {
     width: 98%;
     position: relative;
     left: 2%;
-    /* font-size: 12px; */
     background: #fdfdfd;
     border-radius: 5px;
 }
@@ -1372,12 +1352,11 @@ body {
 }
 
 .report_part {
-    margin: 0 auto;
     width: 60%;
     min-width: 360px;
     background-color: #e4e3e3;
     border-radius: 10px;
-    position: absolute;
+    position: fixed;
     top: 52px;
     z-index: 4;
     margin: 0 auto;
@@ -1444,10 +1423,7 @@ body {
     margin: auto;
     position: absolute;
     display: block;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    inset: 0;
     height: 30px;
     font-weight: bold;
 }
@@ -1537,10 +1513,7 @@ body {
     margin: auto;
     position: absolute;
     display: block;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    inset: 0;
     height: 30px;
     font-weight: bold;
 }
@@ -1700,10 +1673,7 @@ pre {
 
 .img_bigshow_part {
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    inset: 0;
     margin: auto;
     background: rgba(18, 18, 18, .65);
     z-index: 2;
