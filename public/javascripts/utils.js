@@ -509,7 +509,11 @@ function firstFlush_hidden(data) {
 
             $(imgs[i]).attr('onerror', "picError(this)");
 
-            if ($(imgs[i]).attr('src').substr(0, 5) !== '/pic/') {
+            let temp = 'https://www.shushuo.space/'
+            let temp_str = $(imgs[i]).attr('src').substr(0, temp.length)
+
+            if (($(imgs[i]).attr('src').substr(0, 5) !== '/pic/') && (temp !== temp_str)) {
+                //非法图片
                 $(imgs[i]).attr({
                     src: '0702',
                     means: '3rd'
