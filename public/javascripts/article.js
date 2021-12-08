@@ -192,20 +192,8 @@ $(document).ready(async function () {
             } else {
                 localStorage.clear();
                 $('#loginButton').click(function () {
-                    $('body').after('<div class="mask"></div>');
-                    $('.mask').after('<div class="logReg"><div><div class="waitChange"><div class="logByAcc" name="账号登录？"><div><div><div><span>账号：</span><span><div><input type="text" id="userName"></div></span></div></div></div><div><div><div><span>密码：</span><span><div><input type="password" id="passWord"></div></span><a href="/findPassword">忘记密码？</a></div></div></div></div></div><div class="ChangeButton"><div><span>邮箱登录？</span><span>/</span><span>注册？</span></div></div></div><div><div id="logRegButton">登 录</div></div></div>');
-                    $('html').css({
-                        'overflow': 'hidden',
-                        'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
-                    });
-                    $('.mask').click(function () {
-                        $('.mask').remove();
-                        $('.logReg').remove();
-                        $('html').css({
-                            'overflow': 'unset',
-                            'margin-right': 'unset'
-                        });
-                    });
+
+                    noLogin()
 
                     //登录 注册功能切换模块
                     $('.ChangeButton>div>span:nth-child(1),.ChangeButton>div>span:nth-child(3)').click(function (e) {
