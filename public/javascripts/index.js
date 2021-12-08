@@ -23,11 +23,7 @@ $(document).ready(async function () {
         });
     }
 
-    // 争对小屏幕触屏设备(phone)
-    let arr = [screen.width, screen.height]
-    arr = arr.sort()
-    if (arr[0] < 600) {
-
+    if (is_mobile) {
         $('body').after(`<div id="preventTran" style="position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden; background-color: rgb(46, 46, 46); text-align: center; z-index: 99999; visibility: hidden;"><img onerror=\'picError(this)\' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAABaCAYAAADkUTU1AAAI9ElEQVR4Xu1cfXBcVRU/5+Z1N8GEj2AhFQvUIigfBetYaRVbBhADU2wHVoYk3bx3k8kMcSyFPxzUf8IfOjrqIHYUXbL3vW6mKXbtINapg1ColLEUnYIj9QPGOE0VdUjjlE3tdnffO87J7GY26yZ9H5tNst37X5tzzu/87rl777v3nnMR5rhFo9HLhBDrhRC3AMBqAFgBABfmYU8CwAgAHAGAVwDgJaXUO+Vc6u7uXhkOh0/GYrGxIC5jEOVZdLG3t7fdcZyHiOgORHSL4xDRfiHEE/F4fB8AEGNIKdcS0fMA8IxpmluC+OzWEdcY0Wh0jaZp2wFgjWulMoJE9CoRbRVCEHcCIp4PAOOpVOqSZDJp+7VdMcIbNmzQVqxYMYCIXwEA4dehEj2O+GlEfF/h/xFxfTwef9mv/YoQ7u/vb06n00kA+FypIxweAHgdAJ4DgF9nMpmj4+Pj77Jca2vr0nA4fC0ArAeAO4lotYvh/22l1JfnjXAkEmluaWn5JQB8ukx09hLRgGVZb7hxUNf1m4QQjxHRxlmI/0kpxZ3kqwWNMEopfwIAkRL0fwNAn1Lq51696ujouKKxsfEwAFw6k246nV45PDzMs7vnFoiwlPIRAPhuCeqbjuPcYVnWv7x609nZ+cFwOMzL0xVn0d2qlOKJ0XPzTZjXxYaGhqMAEC5C/aOmaetisRivr55aV1fXsiVLlhxExJVnU+QlyjTNz55NrtzffROWUj4DAJuKjI4j4up4PH7MjyOGYTyNiPe70SWiDCK+XymVciNfLOOLcDQaXaVpGk9EU/qO40Qtyxry6kBB3jCMpUQUEUJsIKIbEPEqANBmsseypmn+1CueL8JSyh8AQH8BjIiOmKb5ca/gs8l3dnae39jYeJfjODxjXw8APNSn1mMiUqZp9njF9EXYMIw3EfG6IsKbTNN81iu4F/mBgQExOjq6DgA2A8AnAeC3SqmHvdhgWb+E/4mIbXkwO5VKXZxMJj1PVF6drYS8X8IPI+K3AKCBiLabprmtEs5Uw4YvwuyYrusXnjlzRtu1a1eg7Vo1SAaepavtZCXxfEe4kk5U01adcDV7ez6w6hGej16vJmY9wtXs7fnAKhvhSCTS1NTUtFQIcZ5t2xUbBYjo+7TRbecIITKZTObk8PDwf8rpTCPT0dFxUTgc/ioA8Kdjg1uQhShHRG8T0bZTp069kEwmMwUfpwgbhnEtIv4GAC5YiAT8+sTEbdu+NZFI/GNqtxSJRFqbm5v/ioiFKxC/9heq3gki+qhpmu9ORrinp+cpIupdqN5WyK+fKaU2Y19f3wW5XO4Eb/XKGHYK9zteQIlIuDhQ92KyIrKO41yNhmF0IWLZsygi6jdN88mKoM2BEcMwHkTEH7o1TUSP8EH64wBQdgNfa4QBwCrcHHyhXC/VIOE9TJiPOu+tE+bZqsZ+wwBQj/C0kV2PsNv5v0pyXpel+pAuDUytDulfAMDd59KyVCdciPYiHdJj2Wx2zdDQ0N90Xf+wEILzRS7Kc5pch2spwg4iLo3H4+OFoEkpPwAAf8/flNYc4f1KqdtL5yMpJSfKfKqwLNVShA8rpW4uJdzT0/M6Ed1Uc4Q56w8RP6OU4ohOtu7u7tuEEM/nDyRqbkgzxywRDRLRbkTsRES9KDmmJgnP9mG7h494ONz/90NnrUW6LM1OWErJidd1wvUIV2nL5wXG7/awPqQX+bf0bIMkyd/S50yEiWi4Trh4PNTaOlyIMGfB3nMunHgQUYy/tL6RrzUqxzlJRFMf4l6WjErJIiJXajXPYG8NIm50izV5mabr+i1CCN+FT27BFoJcLpe7hi/EeeI6lE+6Xgh+zZUPu5VS909mAESj0as1TePqsfPmCm0+7RLRO7Ztr0okEiemklrypLlc7sr5dG4OsF8TQtwzODjIxWPTSwA4P6ulpYWrSh5DxE/MAXi1THKqBpcHfjOVSh0qrkadMelMStmSTqdbGxsbF1W+Vi6XOyOEOGFZVrpc71Ysy65aoQuKUycctAcXun49wgs9QkH9W5QR3rJly/VNTU0jsVjsv147YFERbm9vDy9btoxvA28koveI6POWZR3wQtoP4YLO5Bsb1Wy6rm8UQhSX2T+tlHrAiw+eCRuGsQcRbwOAo1xGK4T4VSaTeXFoaOiUF2A/slJKTpHkVMnJRkRPmqY5VdbrxqYfwuX2z1kA4Az0P/DzMgCwzzTN424c8CIjpdxd/MCC4zjbLMt6wosNz4R1Xb9ZCMHbydkaX+TxmzpcZ/xjpRSXzwdqfX19S3K5HG8ACrf5IIRYOzg4+KoXw54Jc+HysWPHuH74EpdA25VSW13Kziim6zqXy3OEC20slUq1eX2mxjNhRpNSmlxR64LEHk3THojFYjzkAzUp5e8AoLjs/kdKqQe9GvVLmNON+cGS2dpzjuNsmmnX4sVRXdc7hBA7i3R4hfiYUur3XuywrC/C/CBBOBzm93RC5QCJ6MWxsbGNe/fu9fxhUGovGo1e3tDQcAQRLy78jYieNU2z+EkN17x9Ec4P6xcAgJenaY2IDk5MTNyVTCYnXHsxgyB3bCgUehkRbywim7Ft+4ZEIvGWH/u+Ceu6/pAQ4ntlQF87ffr03UFL5Xt7ey+1bXsfP4ZSjOE4zqOWZfH7A76ab8JdXV1XhUKht2cY0qOO48gdO3bs9+OVYRh3AkAcES8r0edSHM7e5yMcX8034fyw/jMAXAMAXFNYehTETvFE83Wl1F/ceNfd3X2dEOJr+Sdqpj1CRkSHJyYmbg/6UwlE2DAMPuyLZLPZezVNiyFi6ZtazJOJ8+0F54Mdymazbx0/fnwyU2758uWtoVDoI7Ztr+WTRSJaW67eiSfBTCazeefOne+56bjZZAIRzhtmG8Q7mba2tu8AwBcrWKTFnfX4yMjIowcOHMgFJcv6lSA8zQ8p5a0AwJPZqiAOEtEb/AigZVkHg9gp1a04YQaIRCINzc3N9yHil4honYeIF4b/9/Pf374np5k6aU4IF4NJKT8EAO355E5+NelyACjcBvJ7WKMAwLusV3K53L5EIsH/nrP2PzAJNfmP9znfAAAAAElFTkSuQmCC" style="margin: 60px auto 30px;"><p style="width: 100%; height: auto; font-size: 22px; color: rgb(98, 98, 98); line-height: 34px; text-align: center;">为了您的良好体验<br>请将手机竖屏操作</p></div>`);
         if (window.orientation == 90 || window.orientation == -90) {
             $('#preventTran').css('visibility', 'visible');
@@ -55,64 +51,250 @@ $(document).ready(async function () {
         $('.searchPartInput>span>input').remove();
         $('#searchPartInput_search').remove();
 
-        $('body').after(`
-        <div style="visibility:hidden;" class="searchpart_mobile">
-                
-        <div class="search_base_value_father"><input type="search" placeholder="用户/文章" id="search_base_value"></div>
-                        <span id="searchPartInput_search">
-                            <svg viewBox="0 0 1024 1024">
-                                <path d="M407.9 98.2c-170.7 0-309 138.3-309 309s138.3 309 309 309 309-138.3 309-309c0-170.6-138.3-309-309-309z m0 564c-140.8 0-255-114.2-255-255s114.2-255 255-255 255 114.2 255 255-114.2 255-255 255zM602.3 615.9c-7.7 7.8-7.6 20.6 0.2 28.3l274.1 270.1c7.8 7.7 20.6 7.6 28.3-0.2l8-8.1c7.7-7.8 7.6-20.6-0.2-28.3L638.6 607.5c-7.8-7.7-20.6-7.6-28.3 0.2l-8 8.2z" fill="#2680F0" class="searchPartInputIconKEY">
-                                </path>
-                            </svg>
-                        </span>
-                    </div>
-        `);
-
-        $('#searchPartInput_search').click(function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $('.mask').remove();
-            $('.searchpart_mobile').css('visibility', 'hidden');
-            $('.searchPartInput_searchlist').css('visibility', 'hidden');
-            $(window).unbind('keydown');
-            $('.searchPartInput_searchlist').scrollTop(0);
-            $('.searchPartInput').css('visibility', 'visible');
-        });
-
         $('#searchPartInput_search_fake').click(function (e) {
             e.preventDefault();
             e.stopPropagation();
-            $('.searchPartInput').css('visibility', 'hidden');
-            $('.searchpart_mobile').css('visibility', 'visible');
-            $('body').after(`<div class="mask"></div>`);
 
-            $('.mask').click(function (e) {
+            let temp_html = `
+            <div style="z-index: 2;" class="mask"></div>
+            <div style="z-index: 2;" class="searchpart_mobile"><div class="search_base_value_father"><input type="search" placeholder="用户/文章" id="search_base_value"></div><span id="searchPartInput_search_mobile"><svg viewBox="0 0 1024 1024"><path d="M407.9 98.2c-170.7 0-309 138.3-309 309s138.3 309 309 309 309-138.3 309-309c0-170.6-138.3-309-309-309z m0 564c-140.8 0-255-114.2-255-255s114.2-255 255-255 255 114.2 255 255-114.2 255-255 255zM602.3 615.9c-7.7 7.8-7.6 20.6 0.2 28.3l274.1 270.1c7.8 7.7 20.6 7.6 28.3-0.2l8-8.1c7.7-7.8 7.6-20.6-0.2-28.3L638.6 607.5c-7.8-7.7-20.6-7.6-28.3 0.2l-8 8.2z" fill="#2680F0" class="searchPartInputIconKEY"></path></svg></span></div>
+            `
+
+            jump_window({}, temp_html)
+
+            let temp_search_data = window.localStorage.search
+            if (temp_search_data !== undefined) {
+                // login status will build the list
+                temp_search_data = JSON.parse(temp_search_data)
+                if (temp_search_data.length !== 0) {
+                    // data is not 0 , we can show the list
+                    $('#searchPartInput_search_mobile').after(`
+                    <div class="searchPartInput_searchlist">
+                            <div class="searchPartInput_searchlist_sma_word">搜索记录：</div>
+                            <div class="searchPartInput_searchlist_sma_clear">清空列表</div>
+                    </div>
+                    `);
+                    for (let i = 0; i < temp_search_data.length; i++) {
+                        $('.searchPartInput_searchlist_sma_clear').after(`
+                        <div onclick="search_history(this)" class="pcTouch searchPartInput_searchlist_sma">${temp_search_data[i].name}</div>
+                        `);
+                    }
+
+                    //进行phone端的清空列表绑定事件
+                    $('.searchPartInput_searchlist_sma_clear').click(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $('#jump_window').html('');
+                        $('body').unbind();
+
+                        $.ajax({
+                            type: "post",
+                            url: "/mainApp/searchRemove",
+                            data: {
+                                token: window.localStorage.token
+                            },
+                            success: function (response) {
+                                if (response.isDelete == true) {
+
+                                    $(window).unbind('keydown');
+                                    window.localStorage.search = JSON.stringify([])
+
+                                }
+                            }
+                        });
+
+                    });
+                }
+            }
+
+            $('#searchPartInput_search_mobile').click(function (e) {
                 e.preventDefault();
                 e.stopPropagation();
-                $('.searchpart_mobile').css('visibility', 'hidden');
-                $('.searchPartInput_searchlist').css('visibility', 'hidden');
-                $(window).unbind('keydown');
-                $('.searchPartInput_searchlist').scrollTop(0);
-                $('.searchPartInput').css('visibility', 'visible');
-                $('.mask').remove();
+
+
+                if ($('#search_base_value').val().trim().length == 0) {
+                    alert('请输入有效信息')
+                    return
+                }
+
+                //滚动条回到顶部
+                $(window).scrollTop('0px');
+
+                //前端对已登录用户进行搜索记录存储
+                if (window.localStorage.search !== undefined) {
+                    let data = JSON.parse(window.localStorage.search)
+                    data.push({
+                        name: $('#search_base_value').val()
+                    })
+                    window.localStorage.search = JSON.stringify(data)
+                    $('.searchPartInput_searchlist_sma_clear').after(`
+                    <div onclick="search_history(this)" class="pcTouch searchPartInput_searchlist_sma">${xssFilter($('#search_base_value').val())}</div>
+                    `);
+                }
+
+                $('.centerLeftBottom').html('');
+                $('.centerLeftBottom').prepend(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
+
+                $('#search_base_value').val($('#search_base_value').val().trim());
+
+                $.ajax({
+                    type: "post",
+                    url: "/mainApp/search",
+                    data: {
+                        token: window.localStorage.token,
+                        name: $('#search_base_value').val().trim()
+                    },
+                    success: function (response) {
+                        $('.navigation').remove();
+                        $('.addArticle').remove();
+                        $('.centerLeftBottom>.commentSection_wait').remove();
+                        $('.centerLeftBottom').append(`
+                        <div class="centerLeftBottom_show" >
+                            <div class="navigation">
+                                <span class="navigation_search">搜索结果：
+                                    <span class='navigation_search_number navigation_search_user_button'>用户(${response.user_search.length>90?'99+':response.user_search.length})</span>
+                                    <span class='navigation_search_number navigation_search_article_button'>文章(${response.article_search.length>90?'99+':response.article_search.length})</span>
+                                </span>
+                            </div>
+                        </div>`);
+
+                        $('.navigation_search_user_button').click(function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            $('.centerLeftBottom_article_line').hide();
+                            $('.article_small_color').hide();
+
+                            $('.centerLeftBottom_user_line').show();
+                            $('.user_small').show();
+                        });
+
+                        $('.navigation_search_article_button').click(function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            $('.centerLeftBottom_user_line').hide();
+                            $('.user_small').hide();
+
+                            $('.centerLeftBottom_article_line').show();
+                            $('.article_small_color').show();
+                        });
+
+                        $('.navigation_search').click(function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            $('.centerLeftBottom_user_line').show();
+                            $('.user_small').show();
+
+                            $('.centerLeftBottom_article_line').show();
+                            $('.article_small_color').show();
+                        });
+
+                        if (response.user_search.length !== 0) {
+                            $('.navigation').after(`
+                <div class="centerLeftBottom_user_line">用户</div>
+                `);
+                            for (let i = 0; i < response.user_search.length; i++) {
+                                $('.centerLeftBottom_user_line').after(`
+                    <div class="contentSmallPart user_small">
+                    <div>
+                        <div class="user_small_main">
+                            <span>
+                                <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
+                                    <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
+                                </a>
+                            </span>
+                            <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
+                            <span class="user_small_main_word">${response.user_search[i].word}</span>
+                            <span class="user_small_main_commentNum">评论(${response.user_search[i].commentsNum>99?'99+':response.user_search[i].commentsNum})</span>
+                            <span class="user_small_main_articleNum">文章(${response.user_search[i].articleNum>99?'99+':response.user_search[i].articleNum})</span>
+                        </div>
+                    </div>
+                </div>
+                    `);
+                            }
+                        }
+
+                        if (response.article_search.length !== 0) {
+                            $('.centerLeftBottom_show').append(`
+                <div class="centerLeftBottom_article_line">文章</div>
+                `);
+
+                            function a(data) {
+                                if (response.article_search[data].writerHead == 'NaN.png') {
+                                    let b = 'staticIMG/NaN.png'
+                                    return b
+                                } else {
+                                    return response.article_search[data].writerHead
+                                }
+                            }
+
+                            for (let i = 0; i < response.article_search.length; i++) {
+
+                                $('.centerLeftBottom_show').append(`
+                    <div class="contentSmallPart article_small_color">
+                        <div style="display:block;" class="contentSmallPartTop">
+                            <div>
+                                <span id="6097c9f92347ed2f9cdd4d18">
+                                    <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
+                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
+                                    </a>
+                                </span>
+                                <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
+                                <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.article_search[i].writerWord}</span>
+                                <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
+                                
+                                <div class="contentposition">
+                                    <span>
+                                        ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
+                                    </span>
+                                    ${response.article_search[i].articleBigM=='树洞'?'':'/'}
+                                    <span>
+                                        ${response.article_search[i].articleBigM=='树洞'?'':response.article_search[i].articleSmM}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="contentSmallPartTitle">
+                                ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
+                            </div>
+                        </div>
+                        <div onclick='window.open("https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
+                            <div style="display: block;" class="content">
+                                <div class="article_small" style="display:none;">
+                                    ${response.article_search[i].articleContent}
+                                </div>
+                                <div>
+                                    <a class="contentExploreMask_article_contentExploreButton">阅读全文</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `);
+
+                                searchCommen(i)
+
+                                $('.article_small_color:nth(' + i + ')').find('.article_small').show();
+
+                            }
+                        }
+
+                        if (response.article_search.length == 0 && response.user_search.length == 0) {
+                            $('.centerLeftBottom_show').html(`<div class="search_empty">对不起，俺找遍了整片森林也没找到ta呐 /(ㄒoㄒ)/~~~~</div>`);
+                        }
+
+                        $(window).unbind('keydown');
+                        $('#jump_window').html('');
+                    }
+
+                });
+
             });
 
-            $('.searchpart_mobile').show();
-        });
-        $('.top>.web-font').append(`<div id='mobile_hot_button' isOpen=false onclick="moblie_hot(this)" style="position: fixed;right: 0;background: rgb(255 214 214);width: 33px;height: 15px;top: 52px;right: 2px;font-size: 0;border: 1px solid #d2c0c0;box-sizing: content-box;border-radius: 10px;"><svg viewBox="0 0 1024 1024" style="width: 100%;height: 150%;position: relative;top: -9px;"><path d="M675.994 463.72c-55.56-66.232-34.5-155.088-34.312-155.916l8.124-32.36-32.748 6.188c-57.498 10.828-103.372 35.266-136.372 72.624-26.092 29.546-44.31 67.436-54.326 112.918-1.968-1.11-3.578-2.204-4.454-3.282l-23.202-28.92-13.344 34.608c-14.344 37.25-19.984 73.264-16.766 107.044 2.954 31.122 13.266 59.746 30.672 85.122 36.138 52.624 101.746 86.684 167.228 86.808H588.37v-1.438c23.248-3.062 46.436-11 66.934-23.124 28.562-16.872 50.562-40.496 63.562-68.372 15.754-33.812 31.126-103.682-42.872-191.9z" fill="#fc6e51"></path><path d="M277.334 301.6c-11.78 0-21.326 9.546-21.326 21.328v170.666H42.686v-170.666c0-11.782-9.562-21.328-21.344-21.328S0.016 311.146 0.016 322.928v384.004c0 11.75 9.544 21.308 21.326 21.308s21.344-9.558 21.344-21.308v-170.668h213.322v170.668c0 11.75 9.546 21.308 21.326 21.308 11.782 0 21.344-9.558 21.344-21.308V322.928c0-11.78-9.562-21.328-21.344-21.328zM1002.674 301.6H746.68c-11.81 0-21.374 9.546-21.374 21.328 0 11.78 9.562 21.342 21.374 21.342h106.624v362.664c0 11.75 9.562 21.308 21.376 21.308 11.748 0 21.31-9.558 21.31-21.308V344.27h106.686c11.748 0 21.31-9.562 21.31-21.342-0.002-11.78-9.564-21.328-21.312-21.328z" fill="#ff7272"></path></svg></div>`);
+            $('.mask').click(function (e) {
+                $('#jump_window').html('');
+                $('body').unbind();
+            });
 
-        $('#square').click(function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $('.centerRight').hide();
-            $('#mobile_hot_button').attr('isOpen', 'false');
         });
-        $('#toShudong').click(function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $('.centerRight').hide();
-            $('#mobile_hot_button').attr('isOpen', 'false');
-        });
+
     } else {
         // 退后操作对颜色进行的适配
         if ($("#search_base_value")[0].value !== "") { //没有输入搜索信息
@@ -165,37 +347,81 @@ $(document).ready(async function () {
 
                 // 针对所有触屏设备
                 if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-
-                    $('.toPerson').attr('onclick', '');
-
-
-                    $('.head-part').addClass('head-part02');
-                    $('.head-part02').removeClass('head-part');
-                    $('.head-part02').css({
-                        'position': 'fixed',
-                        'right': '0',
-                        'font-size': '17px',
-                        'width': '100px',
-                        'visibility': 'hidden'
-                    });
+                    $('.toPerson').attr('onclick', 'return false');
+                    $('.head-part').remove();
                     $('.toPerson').removeAttr('href');
-                    $('.head-part02').prepend(`<span style="color: #004eff;" onclick="window.open('/person?userId=${$('.toPerson').attr('id')}')">个 人 主 页</span>`);
-                    $('.head').click(function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
 
+                    //通过接口请求的方式获取数据 不必担心代码的修改 接口已经写好
 
-                        $('.head-part02').css('visibility', 'visible');
-                        $('.head-part02').after('<div class="mask02"></div>');
+                    //接下来需要完成争对于小屏幕设备的信箱点击事件进行优化
+                    if (!is_mobile) {
+                        //适配ipad
 
-                        $('.mask02').click(function (e) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            $('.head-part02').css('visibility', 'hidden');
-                            $('.mask02').remove();
+                        $('.toPerson').click(function (e) {
+                            e.stopPropagation()
+                            let temp_html = `<div class="head-part02" style="top:${$('.top').height()}px;position: fixed; right: 0px; font-size: 17px; width: 100px; visibility: visible;"><span style="color: #004eff;" onclick="window.open('/person?userId=${response.user.data_id}')">个 人 主 页</span>
+                            <span id="outLogin" class="pcTouch">退 出 登 录</span>
+                        </div>`
+                            jump_window({}, temp_html)
+
+                            //点击退出登录按钮本地去除本地缓存
+                            $('#outLogin').click(function (e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                localStorage.clear();
+                                location.href = 'https://www.shushuo.space/'
+                            });
+
                         });
 
-                    });
+                    } else {
+                        //适配phone
+
+                        $('.toPerson').click(function (e) {
+                            e.stopPropagation()
+                            let temp_html = `<div class="head-part02" style="top:${$('.top').height()}px;position: fixed; right: 0px; font-size: 17px; width: 100px; visibility: visible;">
+                            <span onclick="noticeClick(event)" class="notice smallp">通&nbsp;&nbsp;知</span>
+                            <span onclick="messageClick(event)" class="message smallp">
+                                <span id="message_number"></span>
+                                信&nbsp;&nbsp;箱
+                            </span>
+                                <span style="color: #004eff;" onclick="window.open('/person?userId=6092e2b5e0506dcb6ad54bb2')">个 人 主 页</span>
+                                <span id="outLogin" class="pcTouch">退 出 登 录</span>
+                            </div>`
+                            jump_window({}, temp_html)
+
+                            //进行内置信箱的读取
+                            $.ajax({
+                                type: "post",
+                                url: "/mainApp/webEmail",
+                                data: {
+                                    token: window.localStorage.token,
+                                    type: 'webEmailNumber'
+                                },
+                                success: function (response) {
+                                    if (response.isLogin == false) {
+                                        window.location.href = 'https://www.shushuo.space/'
+                                        return
+                                    }
+                                    if (response.number == 0) {
+                                        return
+                                    }
+                                    $('#message_number').html(numEasy(response.number));
+                                }
+                            });
+
+                            //点击退出登录按钮本地去除本地缓存
+                            $('#outLogin').click(function (e) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                localStorage.clear();
+                                location.href = 'https://www.shushuo.space/'
+                            });
+
+                        });
+
+                    }
+
                 } else {
                     // 针对所有非触屏设备
                     $('.head-part').css({
@@ -210,28 +436,6 @@ $(document).ready(async function () {
                     });
                 }
 
-                if (arr[0] < 600) {
-                    $('.head-part02').prepend(`
-                        <span onclick="noticeClick(event)" class='notice smallp'>通&nbsp&nbsp知</span>
-                        <span onclick="messageClick(event)" class='message smallp'>信&nbsp&nbsp箱</span>
-                    `);
-                }
-
-                $('#search_base_value').parent().after(`
-                        <div class="searchPartInput_searchlist">
-                            <div class="searchPartInput_searchlist_sma_word">搜索记录：</div>
-                            <div class="searchPartInput_searchlist_sma_clear">清空列表</div>
-                        </div>
-                `);
-
-                for (let i = 0; i < response.user.userS_H.length; i++) {
-
-                    $('.searchPartInput_searchlist_sma_clear').after(`
-                    <div onclick="search_history(this)" class="pcTouch searchPartInput_searchlist_sma">${xssFilter(response.user.userS_H[i].name)}</div>
-                    `);
-
-                }
-
                 //点击退出登录按钮本地去除本地缓存
                 $('#outLogin').click(function (e) {
                     e.preventDefault();
@@ -240,220 +444,258 @@ $(document).ready(async function () {
                     location.href = 'https://www.shushuo.space/'
                 });
 
-                // 登录状态下的搜索
-                $("#search_base_value").focus(function (e) {
-                    e.stopPropagation()
-                    $('.mask02').remove();
+                // 登录状态下的搜索(just for pc & ipad , not support for ipad)
+                if (!is_mobile) {
+                    $("#search_base_value").click(function (e) {
 
-                    //非触屏设备
-                    $('.searchPartInput').mouseleave(function (e) {
                         e.stopPropagation()
                         e.preventDefault()
-                        $("#search_base_value").blur();
 
-                        $('.searchPartInput_searchlist').css('visibility', 'hidden');
-                        $(window).unbind('keydown');
-                        $('.searchPartInput_searchlist').scrollTop(0);
+                        $(".searchPartInput_search_pc>svg>path").attr('fill', "#2680F0");
+                        $('.searchPartInput>span').css({
+                            "border-color": "rgb(3,166,244)"
+                        });
 
-                        if ($("#search_base_value")[0].value == "") {
-                            //没有输入搜索信息
-                            $(".searchPartInput_search_pc>svg>path").attr('fill', "#bfbfbf");
-
-                            $('.searchPartInput>span').css({
-                                "border": ""
+                        //弹窗生成历史记录
+                        let temp_search_data = JSON.parse(window.localStorage.search)
+                        let temp_html = `<div class="searchPartInput_searchlist">
+                        <div class="searchPartInput_searchlist_sma_word">搜索记录：</div>
+                        <div class="searchPartInput_searchlist_sma_clear">清空列表</div>
+                    </div>`
+                        let temp_pos = {
+                            'top': `${$('.searchPartInput')[0].getBoundingClientRect().bottom}px`,
+                            'left': `${$('.searchPartInput')[0].getBoundingClientRect().left}px`,
+                            'position': 'fixed',
+                            'width': `${$('.searchPartInput').width()}px`,
+                            'z-index': '1'
+                        }
+                        jump_window(temp_pos, temp_html, function () {
+                            $('body').click(function () {
+                                $('.searchPartInput>span').attr('style', '');
                             });
+                        })
+
+                        for (let i = 0; i < temp_search_data.length; i++) {
+
+                            $('.searchPartInput_searchlist_sma_clear').after(`
+                            <div onclick="search_history(this)" class="pcTouch searchPartInput_searchlist_sma">${xssFilter(temp_search_data[i].name)}</div>
+                            `);
+
                         }
 
-                    });
+                        $('.searchPartInput_searchlist_sma').click(function (e) {
+                            $('.searchPartInput>span').attr('style', '');
+                        });
 
-                    $(window).keydown(function (event) {
-                        event.stopPropagation()
-                        if (event.keyCode == '13') {
-                            if ($('#search_base_value').val().trim().length == 0) {
-                                alert('请输入有效信息')
-                                return
+                        $('.searchPartInput_searchlist').css({
+                            'border-top-left-radius': '0',
+                            'border-top-right-radius': '0'
+                        });
+
+                        $('.searchPartInput>span').css({
+                            'border-bottom-left-radius': '0',
+                            'border-bottom-right-radius': '0'
+                        });
+
+                        //非触屏设备
+
+                        let range_x1 = $('.searchPartInput')[0].getBoundingClientRect().left
+                        let range_x2 = $('.searchPartInput')[0].getBoundingClientRect().left + $('.searchPartInput').width()
+
+                        let range_y1 = $('.searchPartInput')[0].getBoundingClientRect().top
+                        let range_y2 = $('.searchPartInput')[0].getBoundingClientRect().top + $('.searchPartInput').height() + $('#jump_window').height()
+
+                        $('body').mousemove(function (e) {
+                            if (e.clientX < range_x1 || e.clientX > range_x2 || e.clientY < range_y1 || e.clientY > range_y2) {
+
+                                $("#search_base_value").blur();
+                                $(window).unbind('keydown');
+                                $('.searchPartInput>span').attr('style', '');
+                                $('#jump_window').html('');
+                                $(".searchPartInput_search_pc>svg>path").attr('fill', "#bfbfbf");
+                                $('body').unbind();
+
                             }
+                        });
 
-                            $(window).scrollTop('0px');
+                        $(window).keydown(function (event) {
+                            event.stopPropagation()
+                            if (event.keyCode == '13') {
+                                if ($('#search_base_value').val().trim().length == 0) {
+                                    alert('请输入有效信息')
+                                    return
+                                }
 
-                            if (window.localStorage.search !== undefined) { //登录状态下的操作
+                                $(window).scrollTop('0px');
+
                                 let data = JSON.parse(window.localStorage.search)
                                 data.push({
                                     name: $('#search_base_value').val()
                                 })
                                 window.localStorage.search = JSON.stringify(data)
-                                $('.searchPartInput_searchlist_sma_clear').after(`
-                                <div onclick="search_history(this)" class="pcTouch searchPartInput_searchlist_sma">${xssFilter($('#search_base_value').val())}</div>
+
+                                $(window).unbind('keydown');
+                                $("#search_base_value").blur()
+                                $('#jump_window').html('');
+                                $('body').unbind();
+                                $('.searchPartInput>span').attr('style', '');
+                                $("#searchPartInput_search>svg>path").attr('fill', "#bfbfbf");
+
+                                $('.centerLeftBottom').html('');
+                                $('.centerLeftBottom').prepend(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
+
+                                $('#search_base_value').val($('#search_base_value').val().trim());
+
+                                $.ajax({
+                                    type: "post",
+                                    url: "/mainApp/search",
+                                    data: {
+                                        token: window.localStorage.token,
+                                        name: $('#search_base_value').val().trim()
+                                    },
+                                    success: function (response) {
+                                        $('.navigation').remove();
+                                        $('.addArticle').remove();
+                                        $('.centerLeftBottom>.commentSection_wait').remove();
+                                        $('.centerLeftBottom').append(`
+                                        <div class="centerLeftBottom_show" >
+                                            <div class="navigation">
+                                                <span class="navigation_search">搜索结果：
+                                                    <span class='navigation_search_number navigation_search_user_button'>用户(${response.user_search.length>90?'99+':response.user_search.length})</span>
+                                                    <span class='navigation_search_number navigation_search_article_button'>文章(${response.article_search.length>90?'99+':response.article_search.length})</span>
+                                                </span>
+                                            </div>
+                                        </div>`);
+
+                                        $('.navigation_search_user_button').click(function (e) {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            $('.centerLeftBottom_article_line').hide();
+                                            $('.article_small_color').hide();
+
+                                            $('.centerLeftBottom_user_line').show();
+                                            $('.user_small').show();
+                                        });
+
+                                        $('.navigation_search_article_button').click(function (e) {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            $('.centerLeftBottom_user_line').hide();
+                                            $('.user_small').hide();
+
+                                            $('.centerLeftBottom_article_line').show();
+                                            $('.article_small_color').show();
+                                        });
+
+                                        $('.navigation_search').click(function (e) {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            $('.centerLeftBottom_user_line').show();
+                                            $('.user_small').show();
+
+                                            $('.centerLeftBottom_article_line').show();
+                                            $('.article_small_color').show();
+                                        });
+
+                                        if (response.user_search.length !== 0) {
+                                            $('.navigation').after(`
+                                <div class="centerLeftBottom_user_line">用户</div>
                                 `);
-                            }
-
-                            $('.mask').remove();
-                            $('.mask02').remove();
-                            $('.searchpart_mobile').css('visibility', 'hidden');
-                            $('.searchPartInput_searchlist').css('visibility', 'hidden');
-                            $(window).unbind('keydown');
-                            $('.searchPartInput_searchlist').scrollTop(0);
-                            $('.searchPartInput').css('visibility', 'visible');
-
-                            $('.centerLeftBottom').html('');
-                            $('.centerLeftBottom').prepend(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
-
-                            $('#search_base_value').val($('#search_base_value').val().trim());
-
-                            $.ajax({
-                                type: "post",
-                                url: "/mainApp/search",
-                                data: {
-                                    token: window.localStorage.token,
-                                    name: $('#search_base_value').val().trim()
-                                },
-                                success: function (response) {
-                                    $('.navigation').remove();
-                                    $('.addArticle').remove();
-                                    $('.centerLeftBottom>.commentSection_wait').remove();
-                                    $('.centerLeftBottom').append(`
-                                    <div class="centerLeftBottom_show" >
-                                        <div class="navigation">
-                                            <span class="navigation_search">搜索结果：
-                                                <span class='navigation_search_number navigation_search_user_button'>用户(${response.user_search.length>90?'99+':response.user_search.length})</span>
-                                                <span class='navigation_search_number navigation_search_article_button'>文章(${response.article_search.length>90?'99+':response.article_search.length})</span>
-                                            </span>
-                                        </div>
-                                    </div>`);
-
-                                    $('.navigation_search_user_button').click(function (e) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        $('.centerLeftBottom_article_line').hide();
-                                        $('.article_small_color').hide();
-
-                                        $('.centerLeftBottom_user_line').show();
-                                        $('.user_small').show();
-                                    });
-
-                                    $('.navigation_search_article_button').click(function (e) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        $('.centerLeftBottom_user_line').hide();
-                                        $('.user_small').hide();
-
-                                        $('.centerLeftBottom_article_line').show();
-                                        $('.article_small_color').show();
-                                    });
-
-                                    $('.navigation_search').click(function (e) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        $('.centerLeftBottom_user_line').show();
-                                        $('.user_small').show();
-
-                                        $('.centerLeftBottom_article_line').show();
-                                        $('.article_small_color').show();
-                                    });
-
-                                    if (response.user_search.length !== 0) {
-                                        $('.navigation').after(`
-                            <div class="centerLeftBottom_user_line">用户</div>
-                            `);
-                                        for (let i = 0; i < response.user_search.length; i++) {
-                                            $('.centerLeftBottom_user_line').after(`
-                                <div class="contentSmallPart user_small">
-                                <div>
-                                    <div class="user_small_main">
-                                        <span>
-                                            <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                                <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
-                                            </a>
-                                        </span>
-                                        <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
-                                        <span class="user_small_main_word">${response.user_search[i].word}</span>
-                                        <span class="user_small_main_commentNum">评论(${response.user_search[i].commentsNum>99?'99+':response.user_search[i].commentsNum})</span>
-                                        <span class="user_small_main_articleNum">文章(${response.user_search[i].articleNum>99?'99+':response.user_search[i].articleNum})</span>
-                                    </div>
-                                </div>
-                            </div>
-                                `);
-                                        }
-                                    }
-
-                                    if (response.article_search.length !== 0) {
-                                        $('.centerLeftBottom_show').append(`
-                            <div class="centerLeftBottom_article_line">文章</div>
-                            `);
-
-                                        function a(data) {
-                                            if (response.article_search[data].writerHead == 'NaN.png') {
-                                                let b = 'staticIMG/NaN.png'
-                                                return b
-                                            } else {
-                                                return response.article_search[data].writerHead
-                                            }
-                                        }
-                                        for (let i = 0; i < response.article_search.length; i++) {
-
-
-                                            $('.centerLeftBottom_show').append(`
-                                <div class="contentSmallPart article_small_color">
-                                    <div style="display:block;" class="contentSmallPartTop">
-                                        <div>
-                                            <span id="6097c9f92347ed2f9cdd4d18">
-                                                <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                                   ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
+                                            for (let i = 0; i < response.user_search.length; i++) {
+                                                $('.centerLeftBottom_user_line').after(`
+                                    <div class="contentSmallPart user_small">
+                                    <div>
+                                        <div class="user_small_main">
+                                            <span>
+                                                <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
+                                                    <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
                                                 </a>
                                             </span>
-                                            <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
-                                            <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.article_search[i].writerWord}</span>
-                                            <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
-                                            
-                                            <div class="contentposition">
-                                                <span>
-                                                    ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
-                                                </span>
-                                                ${response.article_search[i].articleBigM=='树洞'?'':'/'}
-                                                <span>
-                                                    ${response.article_search[i].articleBigM=='树洞'?'':response.article_search[i].articleSmM}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="contentSmallPartTitle">
-                                            ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
+                                            <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
+                                            <span class="user_small_main_word">${response.user_search[i].word}</span>
+                                            <span class="user_small_main_commentNum">评论(${response.user_search[i].commentsNum>99?'99+':response.user_search[i].commentsNum})</span>
+                                            <span class="user_small_main_articleNum">文章(${response.user_search[i].articleNum>99?'99+':response.user_search[i].articleNum})</span>
                                         </div>
                                     </div>
-                                    <a target="_blank" href="https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}">
-                                        <div class="content" style="display:block;">
-                                            <div class="article_small">
-                                                ${response.article_search[i].articleContent}
-                                            </div>
-                                            <div>
-                                                <a class="contentExploreMask_article_contentExploreButton">阅读全文</a>
-                                            </div>
-                                        </div>
-                                    </a>
                                 </div>
+                                    `);
+                                            }
+                                        }
+
+                                        if (response.article_search.length !== 0) {
+                                            $('.centerLeftBottom_show').append(`
+                                <div class="centerLeftBottom_article_line">文章</div>
                                 `);
 
-                                            searchCommen(i)
+                                            function a(data) {
+                                                if (response.article_search[data].writerHead == 'NaN.png') {
+                                                    let b = 'staticIMG/NaN.png'
+                                                    return b
+                                                } else {
+                                                    return response.article_search[data].writerHead
+                                                }
+                                            }
+                                            for (let i = 0; i < response.article_search.length; i++) {
 
-                                            $('.article_small_color:nth(' + i + ')').find('.article_small').show();
 
+                                                $('.centerLeftBottom_show').append(`
+                                    <div class="contentSmallPart article_small_color">
+                                        <div style="display:block;" class="contentSmallPartTop">
+                                            <div>
+                                                <span id="6097c9f92347ed2f9cdd4d18">
+                                                    <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
+                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
+                                                    </a>
+                                                </span>
+                                                <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
+                                                <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.article_search[i].writerWord}</span>
+                                                <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
+                                                
+                                                <div class="contentposition">
+                                                    <span>
+                                                        ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
+                                                    </span>
+                                                    ${response.article_search[i].articleBigM=='树洞'?'':'/'}
+                                                    <span>
+                                                        ${response.article_search[i].articleBigM=='树洞'?'':response.article_search[i].articleSmM}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="contentSmallPartTitle">
+                                                ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
+                                            </div>
+                                        </div>
+                                        <a target="_blank" href="https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}">
+                                            <div class="content" style="display:block;">
+                                                <div class="article_small">
+                                                    ${response.article_search[i].articleContent}
+                                                </div>
+                                                <div>
+                                                    <a class="contentExploreMask_article_contentExploreButton">阅读全文</a>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    `);
+
+                                                searchCommen(i)
+
+                                                $('.article_small_color:nth(' + i + ')').find('.article_small').show();
+
+                                            }
                                         }
+
+                                        if (response.article_search.length == 0 && response.user_search.length == 0) {
+                                            $('.centerLeftBottom_show').html(`
+                                <div class="search_empty">对不起，俺找遍了整片森林也没找到ta呐 /(ㄒoㄒ)/~~~~</div>
+                                `);
+                                        }
+
                                     }
+                                });
 
-                                    if (response.article_search.length == 0 && response.user_search.length == 0) {
-                                        $('.centerLeftBottom_show').html(`
-                            <div class="search_empty">对不起，俺找遍了整片森林也没找到ta呐 /(ㄒoㄒ)/~~~~</div>
-                            `);
-                                    }
-                                }
-                            });
-
-                            $("#search_base_value").blur()
-                            $(window).unbind('keydown');
-                        }
-                    });
-
-
-                    if (window.localStorage.search !== undefined) {
+                            }
+                        });
 
                         if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
                             $('.searchPartInput').append(`<div class="mask02" style="
@@ -467,18 +709,11 @@ $(document).ready(async function () {
                             });
                         }
 
-
-                        $('.searchPartInput_searchlist').css('visibility', 'visible');
-
                         $('.searchPartInput_searchlist_sma_clear').click(function (e) {
                             e.preventDefault();
                             e.stopPropagation();
-
-                            //为手机端而写
-                            $('.searchpart_mobile').css('visibility', 'hidden');
-                            $('.mask').remove();
-                            $('.searchPartInput').css('visibility', 'visible');
-
+                            $('#jump_window').html('');
+                            $('body').unbind();
 
                             $.ajax({
                                 type: "post",
@@ -489,25 +724,17 @@ $(document).ready(async function () {
                                 success: function (response) {
                                     if (response.isDelete == true) {
 
-                                        $('.searchPartInput_searchlist').css('visibility', 'hidden');
                                         $(window).unbind('keydown');
-
                                         window.localStorage.search = JSON.stringify([])
 
-                                        $('.searchPartInput_searchlist_sma').remove();
                                     }
                                 }
                             });
+
                         });
 
-                    }
-
-                    $("#searchPartInput_search>svg>path").attr('fill', "#2680F0");
-                    $('.searchPartInput>span').css({
-                        "border-color": "#03a9f4"
                     });
-
-                });
+                }
 
                 //进行待收通知的读取
                 $.ajax({
@@ -553,408 +780,393 @@ $(document).ready(async function () {
                     }
                 });
 
-
-
                 $('head').append(`
                 <style id='free_style'>${escape2Html(response.user.FreeCss)}</style>
                 `);
 
             } else {
-                // 登录失败
-                $('.head-part').remove();
-
+                // nologin
+                // just for pc and ipad ,not support for phone
                 //自动清除本地缓存
                 localStorage.clear();
 
-                // 非登录状态下的搜索
-                $("#search_base_value").focus(function () {
-                    $(window).keydown(function (event) {
-                        event.stopPropagation()
-                        if (event.keyCode == '13') {
-                            if ($('#search_base_value').val().trim().length == 0) {
-                                alert('请输入有效信息')
-                                return
-                            }
+                if (!is_mobile) {
+                    $("#search_base_value").focus(function () {
+                        $(window).keydown(function (event) {
+                            event.stopPropagation()
+                            if (event.keyCode == '13') {
+                                if ($('#search_base_value').val().trim().length == 0) {
+                                    alert('请输入有效信息')
+                                    return
+                                }
 
-                            $(window).scrollTop('0px');
+                                $(window).scrollTop('0px');
 
-                            if (window.localStorage.search !== undefined) { //登录状态下的操作
-                                let data = JSON.parse(window.localStorage.search)
-                                data.push({
-                                    name: $('#search_base_value').val()
-                                })
-                                window.localStorage.search = JSON.stringify(data)
-                                $('.searchPartInput_searchlist_sma_clear').after(`
-                                <div onclick="search_history(this)" class="pcTouch searchPartInput_searchlist_sma">${xssFilter($('#search_base_value').val())}</div>
+                                $('.centerLeftBottom').html('');
+                                $('.centerLeftBottom').prepend(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
+                                $("#search_base_value").blur()
+                                $(window).unbind('keydown');
+
+                                $('#search_base_value').val($('#search_base_value').val().trim());
+
+                                $.ajax({
+                                    type: "post",
+                                    url: "/mainApp/search",
+                                    data: {
+                                        token: window.localStorage.token,
+                                        name: $('#search_base_value').val().trim()
+                                    },
+                                    success: function (response) {
+                                        $('.navigation').remove();
+                                        $('.addArticle').remove();
+                                        $('.centerLeftBottom>.commentSection_wait').remove();
+                                        $('.centerLeftBottom').append(`
+                                        <div class="centerLeftBottom_show" >
+                                            <div class="navigation">
+                                                <span class="navigation_search">搜索结果：
+                                                    <span class='navigation_search_number navigation_search_user_button'>用户(${response.user_search.length>90?'99+':response.user_search.length})</span>
+                                                    <span class='navigation_search_number navigation_search_article_button'>文章(${response.article_search.length>90?'99+':response.article_search.length})</span>
+                                                </span>
+                                            </div>
+                                        </div>`);
+
+                                        $('.navigation_search_user_button').click(function (e) {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            $('.centerLeftBottom_article_line').hide();
+                                            $('.article_small_color').hide();
+
+                                            $('.centerLeftBottom_user_line').show();
+                                            $('.user_small').show();
+                                        });
+
+                                        $('.navigation_search_article_button').click(function (e) {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            $('.centerLeftBottom_user_line').hide();
+                                            $('.user_small').hide();
+
+                                            $('.centerLeftBottom_article_line').show();
+                                            $('.article_small_color').show();
+                                        });
+
+                                        $('.navigation_search').click(function (e) {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            $('.centerLeftBottom_user_line').show();
+                                            $('.user_small').show();
+
+                                            $('.centerLeftBottom_article_line').show();
+                                            $('.article_small_color').show();
+                                        });
+
+                                        if (response.user_search.length !== 0) {
+                                            $('.navigation').after(`
+                                <div class="centerLeftBottom_user_line">用户</div>
                                 `);
-                            }
-
-                            $('.mask').remove();
-                            $('.mask02').remove();
-                            $('.searchpart_mobile').css('visibility', 'hidden');
-                            $('.searchPartInput').css('visibility', 'visible');
-
-                            $('.centerLeftBottom').html('');
-                            $('.centerLeftBottom').prepend(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
-
-                            $('#search_base_value').val($('#search_base_value').val().trim());
-
-                            $.ajax({
-                                type: "post",
-                                url: "/mainApp/search",
-                                data: {
-                                    token: window.localStorage.token,
-                                    name: $('#search_base_value').val().trim()
-                                },
-                                success: function (response) {
-                                    $('.navigation').remove();
-                                    $('.addArticle').remove();
-                                    $('.centerLeftBottom>.commentSection_wait').remove();
-                                    $('.centerLeftBottom').append(`
-                                    <div class="centerLeftBottom_show" >
-                                        <div class="navigation">
-                                            <span class="navigation_search">搜索结果：
-                                                <span class='navigation_search_number navigation_search_user_button'>用户(${response.user_search.length>90?'99+':response.user_search.length})</span>
-                                                <span class='navigation_search_number navigation_search_article_button'>文章(${response.article_search.length>90?'99+':response.article_search.length})</span>
-                                            </span>
-                                        </div>
-                                    </div>`);
-
-                                    $('.navigation_search_user_button').click(function (e) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        $('.centerLeftBottom_article_line').hide();
-                                        $('.article_small_color').hide();
-
-                                        $('.centerLeftBottom_user_line').show();
-                                        $('.user_small').show();
-                                    });
-
-                                    $('.navigation_search_article_button').click(function (e) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        $('.centerLeftBottom_user_line').hide();
-                                        $('.user_small').hide();
-
-                                        $('.centerLeftBottom_article_line').show();
-                                        $('.article_small_color').show();
-                                    });
-
-                                    $('.navigation_search').click(function (e) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        $('.centerLeftBottom_user_line').show();
-                                        $('.user_small').show();
-
-                                        $('.centerLeftBottom_article_line').show();
-                                        $('.article_small_color').show();
-                                    });
-
-                                    if (response.user_search.length !== 0) {
-                                        $('.navigation').after(`
-                            <div class="centerLeftBottom_user_line">用户</div>
-                            `);
-                                        for (let i = 0; i < response.user_search.length; i++) {
-                                            $('.centerLeftBottom_user_line').after(`
-                                <div class="contentSmallPart user_small">
-                                <div>
-                                    <div class="user_small_main">
-                                        <span>
-                                            <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                                <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
-                                            </a>
-                                        </span>
-                                        <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
-                                        <span class="user_small_main_word">${response.user_search[i].word}</span>
-                                        <span class="user_small_main_commentNum">评论(${response.user_search[i].commentsNum>99?'99+':response.user_search[i].commentsNum})</span>
-                                        <span class="user_small_main_articleNum">文章(${response.user_search[i].articleNum>99?'99+':response.user_search[i].articleNum})</span>
-                                    </div>
-                                </div>
-                            </div>
-                                `);
-                                        }
-                                    }
-
-                                    if (response.article_search.length !== 0) {
-                                        $('.centerLeftBottom_show').append(`
-                            <div class="centerLeftBottom_article_line">文章</div>
-                            `);
-
-                                        function a(data) {
-                                            if (response.article_search[data].writerHead == 'NaN.png') {
-                                                let b = 'staticIMG/NaN.png'
-                                                return b
-                                            } else {
-                                                return response.article_search[data].writerHead
-                                            }
-                                        }
-                                        for (let i = 0; i < response.article_search.length; i++) {
-
-
-                                            $('.centerLeftBottom_show').append(`
-                                <div class="contentSmallPart article_small_color">
-                                    <div style="display:block;" class="contentSmallPartTop">
-                                        <div>
-                                            <span id="6097c9f92347ed2f9cdd4d18">
-                                                <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                                   ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
+                                            for (let i = 0; i < response.user_search.length; i++) {
+                                                $('.centerLeftBottom_user_line').after(`
+                                    <div class="contentSmallPart user_small">
+                                    <div>
+                                        <div class="user_small_main">
+                                            <span>
+                                                <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
+                                                    <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
                                                 </a>
                                             </span>
-                                            <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
-                                            <span class="contentSmallPartTopSmall contentSmallPartIDsign">${xssFilter(response.article_search[i].writerWord)}</span>
-                                            <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
-                                            
-                                            <div class="contentposition">
-                                                <span>
-                                                    ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
-                                                </span>
-                                                ${response.article_search[i].articleBigM=='树洞'?'':'/'}
-                                                <span>
-                                                    ${response.article_search[i].articleBigM=='树洞'?'':response.article_search[i].articleSmM}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="contentSmallPartTitle">
-                                            ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
+                                            <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
+                                            <span class="user_small_main_word">${response.user_search[i].word}</span>
+                                            <span class="user_small_main_commentNum">评论(${response.user_search[i].commentsNum>99?'99+':response.user_search[i].commentsNum})</span>
+                                            <span class="user_small_main_articleNum">文章(${response.user_search[i].articleNum>99?'99+':response.user_search[i].articleNum})</span>
                                         </div>
                                     </div>
-                                    <a target="_blank" href="https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}">
-                                        <div class="content" style="display:block;">
-                                            <div class="article_small">
-                                                ${response.article_search[i].articleContent}
-                                            </div>
-                                            <div>
-                                                <a class="contentExploreMask_article_contentExploreButton">阅读全文</a>
-                                            </div>
-                                        </div>
-                                    </a>
                                 </div>
+                                    `);
+                                            }
+                                        }
+
+                                        if (response.article_search.length !== 0) {
+                                            $('.centerLeftBottom_show').append(`
+                                <div class="centerLeftBottom_article_line">文章</div>
                                 `);
 
-                                            searchCommen(i)
+                                            function a(data) {
+                                                if (response.article_search[data].writerHead == 'NaN.png') {
+                                                    let b = 'staticIMG/NaN.png'
+                                                    return b
+                                                } else {
+                                                    return response.article_search[data].writerHead
+                                                }
+                                            }
+                                            for (let i = 0; i < response.article_search.length; i++) {
 
-                                            $('.article_small_color:nth(' + i + ')').find('.article_small').show();
 
+                                                $('.centerLeftBottom_show').append(`
+                                    <div class="contentSmallPart article_small_color">
+                                        <div style="display:block;" class="contentSmallPartTop">
+                                            <div>
+                                                <span id="6097c9f92347ed2f9cdd4d18">
+                                                    <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
+                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
+                                                    </a>
+                                                </span>
+                                                <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
+                                                <span class="contentSmallPartTopSmall contentSmallPartIDsign">${xssFilter(response.article_search[i].writerWord)}</span>
+                                                <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
+                                                
+                                                <div class="contentposition">
+                                                    <span>
+                                                        ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
+                                                    </span>
+                                                    ${response.article_search[i].articleBigM=='树洞'?'':'/'}
+                                                    <span>
+                                                        ${response.article_search[i].articleBigM=='树洞'?'':response.article_search[i].articleSmM}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="contentSmallPartTitle">
+                                                ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
+                                            </div>
+                                        </div>
+                                        <a target="_blank" href="https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}">
+                                            <div class="content" style="display:block;">
+                                                <div class="article_small">
+                                                    ${response.article_search[i].articleContent}
+                                                </div>
+                                                <div>
+                                                    <a class="contentExploreMask_article_contentExploreButton">阅读全文</a>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    `);
+
+                                                searchCommen(i)
+
+                                                $('.article_small_color:nth(' + i + ')').find('.article_small').show();
+
+                                            }
+                                        }
+
+                                        if (response.article_search.length == 0 && response.user_search.length == 0) {
+                                            $('.centerLeftBottom_show').html(`
+                                <div class="search_empty">对不起，俺找遍了整片森林也没找到ta呐 /(ㄒoㄒ)/~~~~</div>
+                                `);
                                         }
                                     }
+                                });
+                            }
+                        });
 
-                                    if (response.article_search.length == 0 && response.user_search.length == 0) {
-                                        $('.centerLeftBottom_show').html(`
-                            <div class="search_empty">对不起，俺找遍了整片森林也没找到ta呐 /(ㄒoㄒ)/~~~~</div>
-                            `);
-                                    }
-                                }
-                            });
+                        $(".searchPartInputIconKEY").attr('fill', "#2680F0");
+                        $('.searchPartInput>span').css({
+                            "border-color": "#03a9f4"
+                        });
 
-                            $("#search_base_value").blur()
-
-                            $(window).unbind('keydown');
-                        }
                     });
 
-                    $(".searchPartInputIconKEY").attr('fill', "#2680F0");
-                    $('.searchPartInput>span').css({
-                        "border-color": "#03a9f4"
-                    });
+                    $("#search_base_value").blur(function () {
 
-                });
-                $("#search_base_value").blur(function () {
-
-                    if ($("#search_base_value")[0].value == "") {
-                        //没有输入搜索信息
+                        $('.searchPartInput>span').attr('style', '');
                         $(".searchPartInput_search_pc>svg>path").attr('fill', "#bfbfbf");
 
-                        $('.searchPartInput>span').css({
-                            "border": ""
-                        });
-                    }
-                });
+                    });
+                }
+
             }
         }
     });
-    //搜索按钮
-    $('#searchPartInput_search').click(function (e) {
-        e.preventDefault();
-        e.stopPropagation();
 
-        if ($('#search_base_value').val().trim().length == 0) {
-            alert('请输入有效信息')
-            return
-        }
+    //搜索按钮 just for pc & ipad
+    if (!is_mobile) {
+        $('#searchPartInput_search').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
 
-        //滚动条回到顶部
-        $(window).scrollTop('0px');
+            $('#jump_window').html('');
+            $('.searchPartInput>span').attr('style', '');
+            $("#searchPartInput_search>svg>path").attr('fill', "#bfbfbf");
 
-        //前端对已登录用户进行搜索记录存储
-        if (window.localStorage.search !== undefined) {
-            let data = JSON.parse(window.localStorage.search)
-            data.push({
-                name: $('#search_base_value').val()
-            })
-            window.localStorage.search = JSON.stringify(data)
-            $('.searchPartInput_searchlist_sma_clear').after(`
-            <div onclick="search_history(this)" class="pcTouch searchPartInput_searchlist_sma">${xssFilter($('#search_base_value').val())}</div>
+            if ($('#search_base_value').val().trim().length == 0) {
+                alert('请输入有效信息')
+                return
+            }
+
+            //滚动条回到顶部
+            $(window).scrollTop('0px');
+
+            //前端对已登录用户进行搜索记录存储
+            if (window.localStorage.search !== undefined) {
+                let data = JSON.parse(window.localStorage.search)
+                data.push({
+                    name: $('#search_base_value').val()
+                })
+                window.localStorage.search = JSON.stringify(data)
+                $('.searchPartInput_searchlist_sma_clear').after(`
+                <div onclick="search_history(this)" class="pcTouch searchPartInput_searchlist_sma">${xssFilter($('#search_base_value').val())}</div>
+                `);
+            }
+
+            $('.centerLeftBottom').html('');
+            $('.centerLeftBottom').prepend(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
+
+            $('.mask02').remove();
+
+            $('#search_base_value').val($('#search_base_value').val().trim());
+
+            $.ajax({
+                type: "post",
+                url: "/mainApp/search",
+                data: {
+                    token: window.localStorage.token,
+                    name: $('#search_base_value').val().trim()
+                },
+                success: function (response) {
+                    $('.navigation').remove();
+                    $('.addArticle').remove();
+                    $('.centerLeftBottom>.commentSection_wait').remove();
+                    $('.centerLeftBottom').append(`
+                    <div class="centerLeftBottom_show" >
+                        <div class="navigation">
+                            <span class="navigation_search">搜索结果：
+                                <span class='navigation_search_number navigation_search_user_button'>用户(${response.user_search.length>90?'99+':response.user_search.length})</span>
+                                <span class='navigation_search_number navigation_search_article_button'>文章(${response.article_search.length>90?'99+':response.article_search.length})</span>
+                            </span>
+                        </div>
+                    </div>`);
+
+                    $('.navigation_search_user_button').click(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $('.centerLeftBottom_article_line').hide();
+                        $('.article_small_color').hide();
+
+                        $('.centerLeftBottom_user_line').show();
+                        $('.user_small').show();
+                    });
+
+                    $('.navigation_search_article_button').click(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $('.centerLeftBottom_user_line').hide();
+                        $('.user_small').hide();
+
+                        $('.centerLeftBottom_article_line').show();
+                        $('.article_small_color').show();
+                    });
+
+                    $('.navigation_search').click(function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        $('.centerLeftBottom_user_line').show();
+                        $('.user_small').show();
+
+                        $('.centerLeftBottom_article_line').show();
+                        $('.article_small_color').show();
+                    });
+
+                    if (response.user_search.length !== 0) {
+                        $('.navigation').after(`
+            <div class="centerLeftBottom_user_line">用户</div>
             `);
-        }
-
-        $('.centerLeftBottom').html('');
-        $('.centerLeftBottom').prepend(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
-
-        $('.mask02').remove();
-
-        $('#search_base_value').val($('#search_base_value').val().trim());
-
-        $.ajax({
-            type: "post",
-            url: "/mainApp/search",
-            data: {
-                token: window.localStorage.token,
-                name: $('#search_base_value').val().trim()
-            },
-            success: function (response) {
-                $('.navigation').remove();
-                $('.addArticle').remove();
-                $('.centerLeftBottom>.commentSection_wait').remove();
-                $('.centerLeftBottom').append(`
-                <div class="centerLeftBottom_show" >
-                    <div class="navigation">
-                        <span class="navigation_search">搜索结果：
-                            <span class='navigation_search_number navigation_search_user_button'>用户(${response.user_search.length>90?'99+':response.user_search.length})</span>
-                            <span class='navigation_search_number navigation_search_article_button'>文章(${response.article_search.length>90?'99+':response.article_search.length})</span>
+                        for (let i = 0; i < response.user_search.length; i++) {
+                            $('.centerLeftBottom_user_line').after(`
+                <div class="contentSmallPart user_small">
+                <div>
+                    <div class="user_small_main">
+                        <span>
+                            <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
+                                <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
+                            </a>
                         </span>
+                        <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
+                        <span class="user_small_main_word">${response.user_search[i].word}</span>
+                        <span class="user_small_main_commentNum">评论(${response.user_search[i].commentsNum>99?'99+':response.user_search[i].commentsNum})</span>
+                        <span class="user_small_main_articleNum">文章(${response.user_search[i].articleNum>99?'99+':response.user_search[i].articleNum})</span>
                     </div>
-                </div>`);
-
-                $('.navigation_search_user_button').click(function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    $('.centerLeftBottom_article_line').hide();
-                    $('.article_small_color').hide();
-
-                    $('.centerLeftBottom_user_line').show();
-                    $('.user_small').show();
-                });
-
-                $('.navigation_search_article_button').click(function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    $('.centerLeftBottom_user_line').hide();
-                    $('.user_small').hide();
-
-                    $('.centerLeftBottom_article_line').show();
-                    $('.article_small_color').show();
-                });
-
-                $('.navigation_search').click(function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    $('.centerLeftBottom_user_line').show();
-                    $('.user_small').show();
-
-                    $('.centerLeftBottom_article_line').show();
-                    $('.article_small_color').show();
-                });
-
-                if (response.user_search.length !== 0) {
-                    $('.navigation').after(`
-        <div class="centerLeftBottom_user_line">用户</div>
-        `);
-                    for (let i = 0; i < response.user_search.length; i++) {
-                        $('.centerLeftBottom_user_line').after(`
-            <div class="contentSmallPart user_small">
-            <div>
-                <div class="user_small_main">
-                    <span>
-                        <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                            <img onerror=\'picError(this)\'  src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
-                        </a>
-                    </span>
-                    <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
-                    <span class="user_small_main_word">${response.user_search[i].word}</span>
-                    <span class="user_small_main_commentNum">评论(${response.user_search[i].commentsNum>99?'99+':response.user_search[i].commentsNum})</span>
-                    <span class="user_small_main_articleNum">文章(${response.user_search[i].articleNum>99?'99+':response.user_search[i].articleNum})</span>
                 </div>
             </div>
-        </div>
-            `);
-                    }
-                }
-
-                if (response.article_search.length !== 0) {
-                    $('.centerLeftBottom_show').append(`
-        <div class="centerLeftBottom_article_line">文章</div>
-        `);
-
-                    function a(data) {
-                        if (response.article_search[data].writerHead == 'NaN.png') {
-                            let b = 'staticIMG/NaN.png'
-                            return b
-                        } else {
-                            return response.article_search[data].writerHead
+                `);
                         }
                     }
 
-                    for (let i = 0; i < response.article_search.length; i++) {
-
+                    if (response.article_search.length !== 0) {
                         $('.centerLeftBottom_show').append(`
-            <div class="contentSmallPart article_small_color">
-                <div style="display:block;" class="contentSmallPartTop">
-                    <div>
-                        <span id="6097c9f92347ed2f9cdd4d18">
-                            <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                               ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
-                            </a>
-                        </span>
-                        <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
-                        <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.article_search[i].writerWord}</span>
-                        <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
-                        
-                        <div class="contentposition">
-                            <span>
-                                ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
-                            </span>
-                            ${response.article_search[i].articleBigM=='树洞'?'':'/'}
-                            <span>
-                                ${response.article_search[i].articleBigM=='树洞'?'':response.article_search[i].articleSmM}
-                            </span>
-                        </div>
-                    </div>
-                    <div class="contentSmallPartTitle">
-                        ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
-                    </div>
-                </div>
-                <div onclick='window.open("https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
-                    <div style="display: block;" class="content">
-                        <div class="article_small" style="display:none;">
-                            ${response.article_search[i].articleContent}
-                        </div>
-                        <div>
-                            <a class="contentExploreMask_article_contentExploreButton">阅读全文</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="centerLeftBottom_article_line">文章</div>
             `);
 
-                        searchCommen(i)
+                        function a(data) {
+                            if (response.article_search[data].writerHead == 'NaN.png') {
+                                let b = 'staticIMG/NaN.png'
+                                return b
+                            } else {
+                                return response.article_search[data].writerHead
+                            }
+                        }
 
-                        $('.article_small_color:nth(' + i + ')').find('.article_small').show();
+                        for (let i = 0; i < response.article_search.length; i++) {
 
+                            $('.centerLeftBottom_show').append(`
+                <div class="contentSmallPart article_small_color">
+                    <div style="display:block;" class="contentSmallPartTop">
+                        <div>
+                            <span id="6097c9f92347ed2f9cdd4d18">
+                                <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
+                                   ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/head/"+a(i)+"'>"}
+                                </a>
+                            </span>
+                            <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
+                            <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.article_search[i].writerWord}</span>
+                            <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
+                            
+                            <div class="contentposition">
+                                <span>
+                                    ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
+                                </span>
+                                ${response.article_search[i].articleBigM=='树洞'?'':'/'}
+                                <span>
+                                    ${response.article_search[i].articleBigM=='树洞'?'':response.article_search[i].articleSmM}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="contentSmallPartTitle">
+                            ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
+                        </div>
+                    </div>
+                    <div onclick='window.open("https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
+                        <div style="display: block;" class="content">
+                            <div class="article_small" style="display:none;">
+                                ${response.article_search[i].articleContent}
+                            </div>
+                            <div>
+                                <a class="contentExploreMask_article_contentExploreButton">阅读全文</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `);
+
+                            searchCommen(i)
+
+                            $('.article_small_color:nth(' + i + ')').find('.article_small').show();
+
+                        }
                     }
-                }
 
-                if (response.article_search.length == 0 && response.user_search.length == 0) {
-                    $('.centerLeftBottom_show').html(`
-        <div class="search_empty">对不起，俺找遍了整片森林也没找到ta呐 /(ㄒoㄒ)/~~~~</div>
-        `);
-                }
+                    if (response.article_search.length == 0 && response.user_search.length == 0) {
+                        $('.centerLeftBottom_show').html(`
+            <div class="search_empty">对不起，俺找遍了整片森林也没找到ta呐 /(ㄒoㄒ)/~~~~</div>
+            `);
+                    }
 
-                $('.searchPartInput_searchlist').scrollTop(0);
-                $('.searchPartInput_searchlist').css('visibility', 'hidden');
-                $(window).unbind('keydown');
-            }
+                    $('.searchPartInput_searchlist').scrollTop(0);
+                    $('.searchPartInput_searchlist').css('visibility', 'hidden');
+                    $(window).unbind('keydown');
+                }
+            });
+
         });
-    });
+    }
 
     // 请求静态文件
     await $.ajax({
@@ -963,10 +1175,10 @@ $(document).ready(async function () {
         success: function (response) {
             //创建大模块以及内部的小模块 并且进行事件绑定
             for (let i = 0; i < response.largeModule.length; i++) {
-                $('.centerLeftTop').append(`<span bigMid="${response.largeModule[i].bigMid}" onclick="bigPart(this)" class="centerLeftTopButton centerLeftTopButtonIsHot"><span class="bigMname">${response.largeModule[i].bigMname}</span><div class="centerLeftTopButton_smallbuttons"><div class="smallbuttons_white"></div></div></span>`)
+                $('.centerLeftTop').append(`<span bigMid="${response.largeModule[i].bigMid}" onclick="bigPart(this)" class="centerLeftTopButton centerLeftTopButtonIsHot"><span class="bigMname">${response.largeModule[i].bigMname}</span><div style="border-radius: 5px;" class="centerLeftTopButton_smallbuttons"><div class="smallbuttons_white"></div></div></span>`)
                 //对ipad,mobile进行适配
                 if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-                    if (!($(window).width() < 600)) {
+                    if (!(is_mobile)) {
                         //适配ipad
                         $(".centerLeftTopButton:nth(" + i + ")").append(`<span class="bigMmask" onclick="bigMmask(this)"></span>`);
                     }
@@ -987,7 +1199,53 @@ $(document).ready(async function () {
                 }
 
                 // 每个大模块内部添加一个小模块并且进行事件绑定
-                $('.centerLeftTopButton_smallbuttons:nth(' + i + ')').append('<span  onclick="centerLeftTopButtonAdd(this)" class="centerLeftTopButtonAdd"><svg t="1612847930683" class="pcTouch icon" viewBox="0 0 1024 1024" version="1.1"  p-id="5052"><path d="M0 128C0 57.6 57.6 0 128 0h768c70.4 0 128 57.6 128 128v768c0 70.4-57.6 128-128 128H128C57.6 1024 0 966.4 0 896V128z m64 0v768c0 32 25.6 64 64 64h768c32 0 64-25.6 64-64V128c0-32-25.6-64-64-64H128c-38.4 0-64 25.6-64 64z" fill="#8a8a8a" p-id="5053"></path><path d="M256 512.8c0-19.2 12.8-32 32-32h447.2c19.2 0 32 12.8 32 32s-12.8 32-32 32h-448c-19.2 0-31.2-12.8-31.2-32z" fill="#8a8a8a" p-id="5054"></path><path d="M511.2 256.8c19.2 0 32 12.8 32 32V736c0 19.2-12.8 32-32 32s-32-12.8-32-32V288.8c0-19.2 12.8-32 32-32z" fill="#8a8a8a" p-id="5055"></path></svg></span>')
+                $('.centerLeftTopButton_smallbuttons:nth(' + i + ')').append('<span  onclick="centerLeftTopButtonAdd(this)" class="centerLeftTopButtonAdd"  style="display:none;"><svg t="1612847930683" class="pcTouch icon" viewBox="0 0 1024 1024" version="1.1"  p-id="5052"><path d="M0 128C0 57.6 57.6 0 128 0h768c70.4 0 128 57.6 128 128v768c0 70.4-57.6 128-128 128H128C57.6 1024 0 966.4 0 896V128z m64 0v768c0 32 25.6 64 64 64h768c32 0 64-25.6 64-64V128c0-32-25.6-64-64-64H128c-38.4 0-64 25.6-64 64z" fill="#8a8a8a" p-id="5053"></path><path d="M256 512.8c0-19.2 12.8-32 32-32h447.2c19.2 0 32 12.8 32 32s-12.8 32-32 32h-448c-19.2 0-31.2-12.8-31.2-32z" fill="#8a8a8a" p-id="5054"></path><path d="M511.2 256.8c19.2 0 32 12.8 32 32V736c0 19.2-12.8 32-32 32s-32-12.8-32-32V288.8c0-19.2 12.8-32 32-32z" fill="#8a8a8a" p-id="5055"></path></svg></span>')
+            }
+
+            if (is_mobile) {
+                $('.centerRight').remove();
+                $('.centerLeftTop').prepend(`<span style="color: #f44336;font-weight: bold;background: #efefef;box-shadow: inset 0px 0px 2px 2px rgb(255 0 0);" id="req_hot" class="centerLeftTopButton centerLeftTopButtonIsHot"><span class="bigMname">热榜</span></span>`);
+
+                $('#req_hot').click(function (e) {
+
+                    $(window).scrollTop('0px')
+
+                    $('.centerLeftBottom').html('');
+
+                    $('.addArticle').remove();
+
+                    $('.centerLeftTopButton>div:nth-child(2)').hide();
+
+                    $('.navigation').remove();
+
+                    $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
+
+                    $('.centerLeftBottom').prepend(`<div style="position: relative;font-size: 18px;font-weight: bold;color: #f44336;width: 98%;margin: auto;">热榜</div>`);
+
+                    $.ajax({
+                        type: "post",
+                        url: "complete/hotFlesh",
+                        success: function (response) {
+
+                            for (let i = 0; i < response.length; i++) {
+
+                                $('.centerLeftBottom').append(`
+                                <div onclick="window.open('/article?articleId=${response[i].id}')" class="contentSmallPart hot_mobile toArticleDetail"><span style="display: block;position: relative;">NO.${(i + 1)}
+                                <span style="color: black;font-size: 12px;position: absolute;bottom: 0;right: 0;">${response[i].bigmname}${response[i].bigmname=='树洞'? '':'/'}${response[i].smallname}</span>
+                                </span><span>${xssFilter(response[i].name)}</span>
+                                </div>
+                                `);
+
+                            }
+
+                            //不删除的原因便是防止进行滚动加载的动作 这样可以少改动代码
+                            $('.commentSection_wait').hide();
+
+                        }
+                    });
+
+                });
+                return
             }
 
             // 热榜
@@ -998,6 +1256,7 @@ $(document).ready(async function () {
                 </div>`);
             }
 
+            // 此处为展示注册人数以及备案号的区域
             $('.webInfors').append(`
     <div class="webInfors_regNumber"><span>注册人数：</span><span class="webInfors_regNumber_number">${response.usernumber}</span></div>
     <div class="webInfors_articleNumber"><span>文章总数：</span><span class="webInfors_articleNumber_number">${response.articlenumber}</span></div>
@@ -1006,7 +1265,9 @@ $(document).ready(async function () {
         }
     });
 
-    $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>')
+    //缓存加载动画
+    $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
+
     // 刚刷新时候就应该执行查询广场事件
     await $.ajax({
         type: "post",
@@ -1023,11 +1284,12 @@ $(document).ready(async function () {
 
             //首次刷新的时候加上一个待接点
             $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
+
         }
     });
 
     // 点击TOP按钮发送的事件
-    let posPast
+    let posPast = 0
     $(".Totop").click(function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -1052,18 +1314,20 @@ $(document).ready(async function () {
         }, 100)
     });
 
-
     // 懒加载的实现
     $(window).scroll(function () {
+
         if ($('.navigation_search').length == 1) {
             return
         }
 
         TopButtonShowHide()
+
         if ($('.contentSmallPart').length == 0) {
             //一定不进行懒加载事件
             return
         }
+
         if ($(this).scrollTop() + $(this).height() + 1 >= $(document).height()) {
             //触底则进行懒加载事件
             switch ($('#square').attr('isactive')) {
@@ -1111,12 +1375,11 @@ $(document).ready(async function () {
                     break;
             }
         }
+
     });
 
     //树洞按钮点击事件
     $('#toShudong').click(function (e) {
-        e.preventDefault();
-        e.stopPropagation();
         $('.navigation').remove();
         $('.addArticle').remove();
         $('.backPast').hide();
@@ -1130,7 +1393,8 @@ $(document).ready(async function () {
 
         $('.centerLeftBottom').html('');
 
-        $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>')
+        $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
+
         $.ajax({
             type: "post",
             url: "/mainApp/toshuDong",
@@ -1149,12 +1413,11 @@ $(document).ready(async function () {
                 $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
             }
         });
+
     });
 
     // 广场按钮点击事件
     $('#square').click(function (e) {
-        e.preventDefault();
-        e.stopPropagation();
         $('.navigation').remove();
         $('.addArticle').remove();
         $('.backPast').hide();
@@ -1168,6 +1431,7 @@ $(document).ready(async function () {
         // 小蓝条的一个切换
         $('#square').attr('isactive', true)
         $('#toShudong').attr('isactive', false)
+
         $.ajax({
             type: "post",
             url: "/mainApp/toSquare",
@@ -1184,6 +1448,7 @@ $(document).ready(async function () {
                 $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
             }
         });
+
     });
 
     // 进行创作中心入口的提示用户登录操作
@@ -1198,69 +1463,75 @@ $(document).ready(async function () {
         }
     });
 
+    //登陆||注册入口
     $('#loginButton').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
         noLogin()
     });
 
-    // 热榜的展开与收起
-    $('.chartClose').click(function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        $('.centerRight>div:nth-child(2)').hide(0, function () {
-            $('.centerRight>div:nth-child(1)').after('<span class="chartOpen">收起</span>');
-            $('.chartOpen').css({
-                "text-align": "center",
-                "position": "sticky",
-                "color": "rgb(9 133 10)",
-                "background-color": "rgb(173 194 189)",
-                "font-weight": "bold",
-                "top": "55px",
-                "margin-top": "3px"
-            }).html("展开");
-            $('.webInfors').css('top', '80px');
-            $(".chartOpen").click(function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                $(".chartOpen").remove();
-                $(".centerRight>div:nth-child(2)").show();
-                $('.webInfors').css('top', '');
+    // 热榜的展开与收起(just for pc & ipad ,not support for phone)
+    if (!is_mobile) {
+        $('.chartClose').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.centerRight>div:nth-child(2)').hide(0, function () {
+                $('.centerRight>div:nth-child(1)').after('<span class="chartOpen">收起</span>');
+                $('.chartOpen').css({
+                    "text-align": "center",
+                    "position": "sticky",
+                    "color": "rgb(9 133 10)",
+                    "background-color": "rgb(173 194 189)",
+                    "font-weight": "bold",
+                    "top": "55px",
+                    "margin-top": "3px"
+                }).html("展开");
+                $('.webInfors').css('top', '80px');
+                $(".chartOpen").click(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(".chartOpen").remove();
+                    $(".centerRight>div:nth-child(2)").show();
+                    $('.webInfors').css('top', '');
+                });
             });
         });
-    });
+    }
 
-    $('.chartTitle_flesh').click(function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        $('.chartTitle_flesh').css('animation', 'rotate 1s linear infinite');
+    // 热榜刷新按钮(just for pc & ipad ,not support for phone)
+    if (!is_mobile) {
+        $('.chartTitle_flesh').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $('.chartTitle_flesh').css('animation', 'rotate 1s linear infinite');
 
-        $('.toArticleDetail').remove();
-        $('.chartTitle').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>');
-        $('.chart>div:nth-child(1)').css('border-bottom', 'unset');
+            $('.toArticleDetail').remove();
+            $('.chartTitle').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>');
+            $('.chart>div:nth-child(1)').css('border-bottom', 'unset');
 
-        $.ajax({
-            type: "post",
-            url: "complete/hotFlesh",
-            success: function (response) {
-                for (let i = 0; i < response.length; i++) {
-                    $('.chart').append(`<div class="pcTouch toArticleDetail" articleId="${response[i].id}"><span>NO.${(i + 1)}
-                    <span style="color: black;font-weight: 100;font-size: 12px;">${response[i].bigmname}${response[i].bigmname=='树洞'? '':'/'}${response[i].smallname}</span>
-                    </span><span title="${xssFilter(response[i].name)}">${xssFilter(response[i].name)}</span>
-                    </div>`);
+            $.ajax({
+                type: "post",
+                url: "complete/hotFlesh",
+                success: function (response) {
+                    for (let i = 0; i < response.length; i++) {
+                        $('.chart').append(`<div class="pcTouch toArticleDetail" articleId="${response[i].id}"><span>NO.${(i + 1)}
+                        <span style="color: black;font-weight: 100;font-size: 12px;">${response[i].bigmname}${response[i].bigmname=='树洞'? '':'/'}${response[i].smallname}</span>
+                        </span><span title="${xssFilter(response[i].name)}">${xssFilter(response[i].name)}</span>
+                        </div>`);
 
-                    $('.toArticleDetail:nth(' + i + ')').click(function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        window.location.href = `https://www.shushuo.space/article?articleId=${response[i].id}`
-                    });
+                        $('.toArticleDetail:nth(' + i + ')').click(function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            window.location.href = `https://www.shushuo.space/article?articleId=${response[i].id}`
+                        });
+                    }
+
+                    $('.chartTitle_flesh').css('animation', 'unset');
+                    $('.chartTitle>.commentSection_wait').remove();
+                    $('.chart>div:nth-child(1)').css('border-bottom', '');
                 }
-
-                $('.chartTitle_flesh').css('animation', 'unset');
-                $('.chartTitle>.commentSection_wait').remove();
-                $('.chart>div:nth-child(1)').css('border-bottom', '');
-            }
+            });
         });
-    });
+    }
 
 });

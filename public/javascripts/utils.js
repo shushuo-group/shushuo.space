@@ -3,6 +3,17 @@
  * @Description: All commen tools
  */
 
+// 争对小屏幕触屏设备(phone)
+let arr = [screen.width, screen.height]
+arr = arr.sort()
+
+let is_mobile = false
+
+// is_mobile == true ? 小屏幕设备 ： 大屏幕设备
+if (arr[0] < 600) {
+    is_mobile = true
+}
+
 //增加小模块的申请模块
 function centerLeftTopButtonAdd(e) {
     if (!$('.toPerson>img')[0]) {
@@ -90,18 +101,17 @@ function centerLeftTopButtonAdd(e) {
 //大模块点击事件
 function bigPart(e) {
 
+    $(window).scrollTop('0px')
+
     $('.centerLeftBottom').html('');
 
-    if ($('.addArticle')) {
-        $('.addArticle').remove();
-    }
-    if ($('.contentSmallPart')) {
-        $('.contentSmallPart').remove();
-    }
+    $('.addArticle').remove();
+
     $('.centerLeftTopButton>div:nth-child(2)').hide();
+
     if (!$('.navigation')[0]) {
         //不存在navigation
-        if ($(window).width() < 600) {
+        if (is_mobile) {
             //mobile
             $('.centerLeftTop').after(`<div style="background: #fdfdfd;padding: 2px;border-radius: 3px;width: 98%;margin: auto;position: sticky;top: 80px;z-index: 2;white-space: nowrap;overflow-x: scroll;" class="navigation"><span style="border-radius: 5px;background: #e7f9f5;color: #138bfb;margin: 3px 2px;padding: 0 5px;" bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span></div>`);
             //进行小模块的搜索请求
@@ -128,7 +138,7 @@ function bigPart(e) {
         }
     } else {
         //存在navigation
-        if ($(window).width() < 600) {
+        if (is_mobile) {
             //mobile
             $('.navigation-smallM').remove();
             $('.navigation-bigM').text($(e).find('.bigMname').text()).attr('bigMid', $(e).attr('bigmid'));
@@ -156,11 +166,9 @@ function bigPart(e) {
             $('.navigation-smallM').html(``);
         }
     }
-    if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-        $('.bigMmask').show();
-        $('.mask02').remove();
-    }
-    $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>')
+
+    $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
+
     $.ajax({
         type: "post",
         url: "mainApp/bigModule",
@@ -190,14 +198,13 @@ function bigPart(e) {
             $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
         }
     });
-    $(window).scrollTop('0px')
-    window.event.stopPropagation()
+    // window.event.stopPropagation()
 }
 
 //小模块点击事件
 function smp(e) {
     //mobile
-    if ($(window).width() < 600) {
+    if (is_mobile) {
         $('.smallm_chosen').css('color', '#2a4d6d');
         $(e).css('color', '#ff7272');
         $(e).addClass('smallm_chosen');
@@ -292,7 +299,7 @@ function smp(e) {
         }
     });
     $(window).scrollTop('0px')
-    window.event.stopPropagation()
+    // window.event.stopPropagation()
 }
 // 前端处理传回的token的方法 将token存入window.localStorage
 function tokenWork(data) {
@@ -532,13 +539,14 @@ function firstFlush_hidden(data) {
             });
 
             $(imgs[i]).click(function (e) {
+                e.stopPropagation()
 
                 $('html').css({
                     'overflow': 'hidden',
                     'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
                 });
 
-                $('body').append(`
+                let temp_html = `
                 <div class="img_bigshow_part">
                 <a class="img_bigshow_part_down" href="${$(imgs[i]).attr('src')}" download>
                 <svg t="1621226978872" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1902" width="200" height="200"><path d="M1024 645.248v330.752a48 48 0 0 1-48 48H48a48 48 0 0 1-48-48v-330.752a48 48 0 0 1 96 0V928h832v-282.752a48 48 0 0 1 96 0z m-545.152 145.984a47.936 47.936 0 0 0 67.904 0l299.904-299.84a48 48 0 1 0-67.968-67.904l-217.792 217.856V48a48.064 48.064 0 0 0-96.064 0v593.472L246.912 423.552a48 48 0 1 0-67.904 67.904l299.84 299.776z" p-id="1903" fill="#f1f3f4"></path></svg>
@@ -548,7 +556,8 @@ function firstFlush_hidden(data) {
                 </span>
                 ${$(imgs[i])[0].outerHTML}
                 </div>
-                `);
+                `
+                jump_window({}, temp_html)
 
                 //防止点击按钮造成页面弹出
                 $('.img_bigshow_part_down').click(function () {
@@ -625,6 +634,7 @@ function firstFlush_hidden(data) {
                     'overflow-y': 'auto',
                     'cursor': 'pointer'
                 });
+
             });
 
             imgs[i].onload = function () {
@@ -700,7 +710,7 @@ function readAllButton(e) {
 
     let num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.top')[0].clientHeight;
 
-    if (screen.width < 600) {
+    if (is_mobile) {
         //mobile
         num -= $('.centerLeftTop')[0].clientHeight
         let temp = $('.navigation')
@@ -786,7 +796,6 @@ function contentExploreButton_button(e) {
     window.localStorage.removeItem('scrollTop')
     $(window).unbind('scroll.a');
 }
-
 
 //代码复制按钮
 function codeCopy(e) {
@@ -903,29 +912,6 @@ function shuDong_smallPart_create(i, response, i2) {
     </div>
 </div>`);
     firstFlush_hidden(i2)
-}
-
-function smallCard_close(data) {
-    let toBottom = $(window).height() + $(window).scrollTop() - $(data).parent().siblings('.contentMoveArea').offset().top - $(data).parent().siblings('.contentMoveArea').height()
-    if (toBottom < 0 && $(data).parent().parent().height() > $(window).height()) {
-        $(data).parent().siblings('.contentMoveArea').find('.contentExploreButton').css({
-            'position': 'fixed',
-            'top': 'unset',
-            'bottom': '100px',
-            'right': 'unset',
-            'left': $('.contentSmallPart').offset().left + $('.contentSmallPart').width() - $(data).parent().siblings('.contentMoveArea').find('.contentExploreButton').width(),
-            'margin-left': 'unset'
-        });
-    } else {
-        $(data).parent().siblings('.contentMoveArea').find('.contentExploreButton').css({
-            'position': '',
-            'top': '',
-            'bottom': '',
-            'right': '',
-            'left': '',
-            'margin-left': ''
-        });
-    }
 }
 
 //点赞
@@ -1782,7 +1768,6 @@ function bigMmask(e) {
     window.event.stopPropagation()
 }
 
-
 //二级评论
 function secondComment(e) {
     $(e).parents('.Comments').find('.Comments_small_comment').css('color', '')
@@ -1850,7 +1835,6 @@ function secCommmentSubmit(e) {
     });
 }
 
-
 //点击进入小头像进入用户主页模块
 function toUserMainPage(e) {
     if (!$('.toPerson>img')[0]) {
@@ -1872,7 +1856,6 @@ function toUserMainPage(e) {
         window.event.stopPropagation()
     });
 }
-
 
 //恢复被删除的文章
 function backRemove(e) {
@@ -1896,7 +1879,6 @@ function backRemove(e) {
         });
     }
 }
-
 
 //搜索过程对搜索结果的高亮
 function searchHlt(goal, target) {
@@ -1933,17 +1915,11 @@ function search_history(e) {
     }
 
     $(window).scrollTop('0px');
-
-    $('.mask').remove();
-    $('.mask02').remove();
-    $('.searchpart_mobile').css('visibility', 'hidden');
-    $('.searchPartInput_searchlist').css('visibility', 'hidden');
     $(window).unbind('keydown');
-    $('.searchPartInput').css('visibility', 'visible');
-    $('.searchPartInput_searchlist').scrollTop(0);
 
     $('.centerLeftBottom').html('');
     $('.centerLeftBottom').prepend(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
+
     $.ajax({
         type: "post",
         url: "/mainApp/search",
@@ -1996,6 +1972,7 @@ function search_history(e) {
 
             });
 
+            //用户
             if (response.user_search.length !== 0) {
                 $('.navigation').after(`
                 <div class="contentSmallPart centerLeftBottom_user_line">用户</div>
@@ -2021,6 +1998,7 @@ function search_history(e) {
                 }
             }
 
+            //文章
             if (response.article_search.length !== 0) {
                 $('.centerLeftBottom_show').append(`
                 <div class="centerLeftBottom_article_line contentSmallPart">文章</div>
@@ -2047,8 +2025,7 @@ function search_history(e) {
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.article_search[i].writerWord}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.article_search[i].articleTime)}</span>
-                                
-                                                                <div class="contentposition">
+                                <div class="contentposition">
                                     <span>
                                         ${response.article_search[i].articleBigM=='树洞'?'树洞':response.article_search[i].articleBigM}
                                     </span>
@@ -2093,9 +2070,12 @@ function search_history(e) {
                 name: $(e).text().trim()
             })
             window.localStorage.search = JSON.stringify(data)
-            $('.searchPartInput_searchlist_sma_clear').after(`
-            <div onclick="search_history(this)" class="pcTouch searchPartInput_searchlist_sma">${xssFilter($(e).text().trim())}</div>
-            `);
+
+
+            $('#jump_window').html('');
+            $('.searchPartInput>span').attr('style', '')
+            $("#searchPartInput_search>svg>path").attr('fill', '#bfbfbf');
+            $('body').unbind();
 
         }
     });
@@ -2103,29 +2083,59 @@ function search_history(e) {
 }
 
 // 通知点击事件
-function noticeClick(event) {
+function noticeClick(e) {
+
+    e.stopPropagation()
+
     if (!$('.toPerson>img')[0]) {
         //未登录
         noLogin()
         return
     }
 
-    $('.notice').append(`
-    <div class="notice_part">
-        <section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>
-    </div>
-    <div class="mask02"></div>
-    `);
+    let temp_html = `
+                    <span class="notice_part_span"></span>
+                    <div class="notice_part">
+                     <section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>
+                     </div>`
+    if (is_mobile) {
+        temp_html = `
+        <div style="z-index: 2;" class='mask'></div>
+        <div class="notice_part">
+        <section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>
+        </div>
+        `
+    }
+
+    let temp_css = {
+        'position': 'fixed',
+        'top': `${$('.top').height()}px`,
+        'right': '0',
+        'z-index': '1'
+    }
+    if (is_mobile) {
+        temp_css = {}
+    }
+
+    jump_window(temp_css, temp_html)
+
+    let temp_left = $('.notice')[0].getBoundingClientRect().right - $('.notice').width() / 2 - 10
+
+    if (!is_mobile) {
+        $('.notice_part_span').css({
+            'position': 'fixed',
+            'left': `${temp_left}px`
+        });
+    } else {
+        $('.notice_part').css('top', `${$('.top').height()}px`);
+        $('.mask').click(function (e) {
+            $('#jump_window').html('');
+        });
+    }
+
     $('.notice_part').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
-    });
-    $('.mask02').click(function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        $(this).remove();
-        $('.notice_part').remove();
-        $('.head').css('z-index', '');
     });
 
     $('.head').css('z-index', 0);
@@ -2144,14 +2154,14 @@ function noticeClick(event) {
             }
             $('#notice_number').html(response.length);
             $('.notice_part').append(`
-            <div style='display:none;' class="notice_part_small notice_part_top">
+            <div class="notice_part_small notice_part_top">
               <span>通知(${response.length})</span>
               <span>
                 <div onclick="notSingleCheck(this)">全部已读</div>
               </span>
             </div>
             </div>
-            <div style='display:none;' class="notice_part_small notice_part_bottom"></div>
+            <div class="notice_part_small notice_part_bottom"></div>
             `);
             for (let i = 0; i < response.length; i++) {
                 $('.notice_part_bottom').append(`
@@ -2166,7 +2176,6 @@ function noticeClick(event) {
                     'type': response[i].type,
                 });
             }
-            $('.notice_part_small').show();
             $('.commentSection_wait').remove();
         }
     });
@@ -2227,27 +2236,11 @@ async function notSingleCheck(e) {
                 return
             }
             if (response.isCheck == true) {
-                $('.notice_part_bottom_small').remove();
-                $('.notice_part_top>span:nth-child(1)').html(`通知(0)`);
-                $('#notice_number').html('0');
-
-                $('.head-part02').css('visibility', 'hidden');
-                $('.mask02').remove();
-                $('.notice_part').remove();
+                $('#jump_window').html('').attr('style', '');
             }
         }
     });
 }
-
-// 单个已读按钮(信箱)
-function SingleCheck_email(e, event) {
-    if (e == undefined) {
-        return
-    }
-    return
-}
-
-
 
 // 全部已读按钮(信箱)
 async function notSingleCheck_email(e) {
@@ -2271,10 +2264,7 @@ async function notSingleCheck_email(e) {
                 return
             }
             if (response.isCheck == true) {
-                $('#message_number').html('');
-                $('.message_part').remove();
-                $('.head-part02').css('visibility', 'hidden');
-                $('.mask02').remove();
+                $('#jump_window').html('').attr('style', '');
             }
         }
     });
@@ -2310,34 +2300,60 @@ function messageCreate(data) {
     return a
 }
 // 信箱点击事件
-function messageClick(event) {
+function messageClick(e) {
+
+    e.stopPropagation()
+
     if (!$('.toPerson>img')[0]) {
         //未登录
         noLogin()
         return
     }
 
-    $('.message').append(`
-    <div class="message_part">
-        <section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>
-    </div>
-    <div class="mask02"></div>
-    `);
+    let temp_html = `
+    <span class="message_part_span"></span>
+    <div class="message_part"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div>`
+    if (is_mobile) {
+        temp_html = `
+        <div style="z-index: 2;" class='mask'></div>
+        <div class="message_part">
+        <section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>
+        </div>
+        `
+    }
+    let temp_css = {
+        'position': 'fixed',
+        'top': `${$('.top').height()}px`,
+        'right': '0',
+        'z-index': '1'
+    }
+    if (is_mobile) {
+        temp_css = {}
+    }
+
+    jump_window(temp_css, temp_html)
+
+    let temp_left = $('.message')[0].getBoundingClientRect().right - $('.message').width() / 2 - 10
+
+    if (!is_mobile) {
+        $('.message_part_span').css({
+            'position': 'fixed',
+            'left': `${temp_left}px`
+        });
+    } else {
+        $('.message_part').css('top', `${$('.top').height()}px`);
+        $('.mask').click(function (e) {
+            $('#jump_window').html('');
+        });
+    }
+
     $('.message_part').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
     });
-    $('.mask02').click(function (e) {
-        let num = $('.message_part_bottom_small[type=like]').length + $('.message_part_bottom_small[type=unlike]').length + $('.message_part_bottom_small[type=collect]').length
-        let temp = $('.message_part_bottom_small').length - num
-        $('#message_number').html(temp == 0 ? '' : temp);
-        e.preventDefault();
-        e.stopPropagation();
-        $(this).remove();
-        $('.message_part').remove();
-        $('.head').css('z-index', '');
-    });
+
     $('.head').css('z-index', 0);
+
     $.ajax({
         type: "post",
         url: "/mainApp/webEmail",
@@ -2420,18 +2436,6 @@ function readNoticeDetail(e) {
     });
 }
 
-//手机端热板的展开
-function moblie_hot(e) {
-    if ($(e).attr('isOpen') == 'false') {
-        $('.centerRight').show();
-        $(e).attr('isOpen', 'true');
-    } else {
-        $('.centerRight').hide();
-        $(e).attr('isOpen', 'false');
-    }
-    window.event.stopPropagation()
-}
-
 // ui设计按钮
 function uiSetFree(e) {
     window.event.stopPropagation()
@@ -2457,7 +2461,6 @@ function uiSetFree(e) {
     diyFontsize('unset', '.innerContent', '283px', '-33px', 'unset', 'unset', '25px', '-2px', '31px', '323deg', '13px', '37px', '-12px')
     diyFontsize('unset', '.chart>div>span:nth-child(2)', '118px', 'unset', 'unset', 'unset', '25px', '-2px', '31px', '323deg', '13px', '37px', '-12px')
 }
-
 
 // 进行背景颜色diy的函数
 function diyBackColor(zIndex, flag, posX, posY, posX2, posY2, noline_width, noline_left, noline_top, noline_reg, line_width, line_top, line_left, type) {
@@ -2744,26 +2747,15 @@ function escape2Html(str) {
     });
 }
 
+// 这也是改用了非mask方案的一个重要demo 之后的弹窗编写主要遵循一下实例
 function noLogin() {
-    $('#search_base_value').css('visibility', 'hidden');
+    window.event.stopPropagation()
 
-    $('body').after('<div class="mask"></div>');
-    $('.mask').after('<div class="logReg"><div><div class="waitChange"><div class="logByAcc" name="账号登录？"><div><div><div><span>账号：</span><span><div><input type="text" id="userName"></div></span></div></div></div><div><div><div><span>密码：</span><span><div><input type="password"  id="passWord"></div></span><a href="/findPassword">忘记密码？</a></div></div></div></div></div><div class="ChangeButton"><div><span>邮箱登录？</span><span>/</span><span>注册？</span></div></div></div><div><div id="logRegButton">登 录</div></div></div>');
-    $('html').css({
-        'overflow': 'hidden',
-        'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
-    });
-    $('.mask').click(function () {
+    let temp_html = `<div class="logReg"><div><div class="waitChange"><div class="logByAcc" name="账号登录？"><div><div><div><span>账号：</span><span><div><input type="text" id="userName"></div></span></div></div></div><div><div><div><span>密码：</span><span><div><input type="password"  id="passWord"></div></span><a href="/findPassword">忘记密码？</a></div></div></div></div></div><div class="ChangeButton"><div><span>邮箱登录？</span><span>/</span><span>注册？</span></div></div></div><div><div id="logRegButton">登 录</div></div></div>`
 
-        $('#search_base_value').css('visibility', 'unset');
+    jump_window({}, temp_html)
 
-        $('.mask').remove();
-        $('.logReg').remove();
-        $('html').css({
-            'overflow': 'unset',
-            'margin-right': 'unset'
-        });
-    });
+    //以下为弹窗内部实际业务代码 与 弹窗代码结构无关
 
     //登录 注册功能切换模块
     $('.ChangeButton>div>span:nth-child(1),.ChangeButton>div>span:nth-child(3)').click(function () {
@@ -2854,6 +2846,7 @@ function noLogin() {
                 break;
         }
     });
+
     $('#logRegButton').click(function () {
         if ($('#passWord').val() == '' || $('#regYanZhen').val() == '' || $('#logEmailNum').val() == '' || $('#userName').val() == '' || $('#logEmail').val() == '' || $('#email').val() == '') {
             alert('请检查相关登录信息是否完整')
@@ -2909,7 +2902,6 @@ function noLogin() {
                 break;
         }
     });
-    window.event.stopPropagation()
 }
 
 //前端进行xss过滤之基础
@@ -3026,4 +3018,26 @@ function searchCommen(i) {
         default:
             break;
     }
+}
+
+//弹窗结构函数  该函数并不会与弹窗内部实际代码产生关系
+function jump_window(cssObj, html, callback = () => {}) {
+
+    $('body').unbind().click(function () {
+        $('#jump_window').attr('style', '');
+        $('#jump_window').html('');
+        $('body').unbind();
+    });
+
+    $('#jump_window').html(html);
+
+    $('#jump_window').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation()
+    });
+
+    $('#jump_window').attr('style', '').css(cssObj);
+
+    //默认回调函数  可省略不设置回调函数
+    callback()
 }

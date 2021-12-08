@@ -167,6 +167,22 @@ ol {
     z-index: 1;
 }
 
+.mask::before {
+    color: #959c9b;
+    font-size: 15px;
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    z-index: 2;
+    content: "点击任意空白处即可退出浏览";
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
 .mask02 {
     cursor: pointer;
     opacity: 0.5;
@@ -345,7 +361,6 @@ body {
     display: block;
     position: relative;
     top: 0.5px;
-    left: 2px;
     border-radius: 8px;
     height: 35px;
     background-color: #ffffff;
@@ -1116,25 +1131,30 @@ body {
     border-top: 0;
 }
 
-.chart>div>span:nth-child(1) {
+.chart>div>span:nth-child(1),
+.hot_mobile>span:nth-child(1) {
     font-size: 20px;
     font-weight: bold;
     color: rgb(91 181 152);
 }
 
-.chart>div:nth-child(2)>span:nth-child(1) {
+.chart>div:nth-child(2)>span:nth-child(1),
+.hot_mobile:nth-child(2)>span:nth-child(1) {
     color: #fe2d46;
 }
 
-.chart>div:nth-child(3)>span:nth-child(1) {
+.chart>div:nth-child(3)>span:nth-child(1),
+.hot_mobile:nth-child(3)>span:nth-child(1) {
     color: #ff6600;
 }
 
-.chart>div:nth-child(4)>span:nth-child(1) {
+.chart>div:nth-child(4)>span:nth-child(1),
+.hot_mobile:nth-child(4)>span:nth-child(1) {
     color: #faaa10;
 }
 
-.chart>div>span:nth-child(2) {
+.chart>div>span:nth-child(2),
+.hot_mobile>span:nth-child(2) {
     word-break: break-all;
     text-overflow: ellipsis;
     font-weight: 600;
@@ -1670,7 +1690,6 @@ pre {
     max-height: 300px;
     overflow-y: auto;
     position: relative;
-    visibility: hidden;
 }
 
 .searchPartInput_searchlist_sma {
@@ -2022,16 +2041,39 @@ pre {
 
 .notice_part,
 .message_part {
-    position: absolute;
     width: 300px;
     background-color: #95deff;
     border-radius: 10px;
     z-index: 19;
     font-size: 20px;
-    right: -125px;
-    top: 50px;
     border: 1.5px solid #7eb5ce;
     cursor: default;
+}
+
+.notice_part_span::before {
+    position: absolute;
+    margin: 0 auto;
+    top: -7px;
+    display: block;
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-bottom: 7px solid #95deff;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+
+.message_part_span::before {
+    position: absolute;
+    margin: 0 auto;
+    top: -7px;
+    display: block;
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-bottom: 7px solid #95deff;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
 }
 
 .message_part_bottom_small,
@@ -2195,36 +2237,6 @@ pre {
     margin: 3px 0;
     padding: 0px 4px;
     position: relative;
-}
-
-.notice_part::before {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    top: -7px;
-    display: block;
-    content: "";
-    width: 0px;
-    height: 0px;
-    border-bottom: 7px solid #95deff;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-}
-
-.message_part::before {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    top: -7px;
-    display: block;
-    content: "";
-    width: 0px;
-    height: 0px;
-    border-bottom: 7px solid #95deff;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
 }
 
 .message_part_top,
@@ -2699,19 +2711,6 @@ span.uiSetFree_buttton_check {
         width: 300px;
         height: 50px;
         display: flex;
-    }
-
-    .searchpart_mobile::before {
-        color: #ffffff;
-        font-size: 12px;
-        font-weight: bold;
-        text-align: center;
-        position: fixed;
-        top: 50px;
-        width: 100%;
-        left: 0;
-        display: block;
-        content: "点击任意处即可取消";
     }
 
     .searchpart_mobile>span {

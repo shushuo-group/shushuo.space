@@ -44,13 +44,14 @@ $(document).ready(async function () {
             }
 
             $(imgs[i]).click(function (e) {
+                e.stopPropagation()
 
                 $('html').css({
                     'overflow': 'hidden',
                     'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
                 });
 
-                $('body').append(`
+                let temp_html = `
                 <div class="img_bigshow_part">
                 <a class="img_bigshow_part_down" href="${$(imgs[i]).attr('src')}" download>
                 <svg t="1621226978872" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1902" width="200" height="200"><path d="M1024 645.248v330.752a48 48 0 0 1-48 48H48a48 48 0 0 1-48-48v-330.752a48 48 0 0 1 96 0V928h832v-282.752a48 48 0 0 1 96 0z m-545.152 145.984a47.936 47.936 0 0 0 67.904 0l299.904-299.84a48 48 0 1 0-67.968-67.904l-217.792 217.856V48a48.064 48.064 0 0 0-96.064 0v593.472L246.912 423.552a48 48 0 1 0-67.904 67.904l299.84 299.776z" p-id="1903" fill="#f1f3f4"></path></svg>
@@ -60,7 +61,8 @@ $(document).ready(async function () {
                 </span>
                 ${$(imgs[i])[0].outerHTML}
                 </div>
-                `);
+                `
+                jump_window({},temp_html)
 
                 //防止点击按钮造成页面弹出
                 $('.img_bigshow_part_down').click(function (e) {
