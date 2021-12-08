@@ -715,6 +715,11 @@ $(document).ready(async function () {
                             $('#jump_window').html('');
                             $('body').unbind();
 
+                            if (!is_mobile) {
+                                $('.searchPartInput>span').attr('style', '');
+                                $('.searchPartInputIconKEY').attr('fill', '#bfbfbf');
+                            }
+
                             $.ajax({
                                 type: "post",
                                 url: "/mainApp/searchRemove",
