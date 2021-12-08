@@ -748,3 +748,19 @@ code {
 }
 
 /*内容加载模块*/
+
+.commentSection_wait {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    font-weight: bold;
+    color: #7f7b7b;
+    left: 0px;
+}
+
+.img_uploading {
+    text-align: center;
+    color: #717171;
+    font-weight: bold;
+}

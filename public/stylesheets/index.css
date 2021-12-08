@@ -86,12 +86,6 @@ video {
     box-sizing: border-box;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 .webInfors_webNumber_number>a {
     color: unset;
 }
@@ -292,7 +286,6 @@ body {
     flex: 2;
     min-width: 230px;
 }
-
 
 .top>span:nth-child(2)>span>a[isNotActive] {
     border-bottom: 0;
@@ -2046,7 +2039,7 @@ pre {
     border-radius: 10px;
     z-index: 19;
     font-size: 20px;
-    border: 1.5px solid #7eb5ce;
+    border: 1.5px solid transparent;
     cursor: default;
 }
 
@@ -2247,6 +2240,7 @@ pre {
     flex-direction: row;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    position: relative;
 }
 
 .message_part_bottom,
@@ -2438,6 +2432,26 @@ span.uiSetFree_buttton_check {
 .loading .loading_description {
     min-height: 4rem;
     border-radius: 4px;
+}
+
+.stopFlush {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 9px;
+    color: #8e8e8e;
+    position: unset;
+    border-radius: unset;
+    margin: unset;
+    width: unset;
+    background-color: unset;
+    overflow: unset;
+    box-shadow: unset;
+    word-break: unset;
+    margin-bottom: 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /*内容加载模块*/

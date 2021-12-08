@@ -224,9 +224,12 @@ $(document).ready(function () {
                 }
 
                 $('.headpicSvg').click(function (e) {
+                    window.event.stopPropagation();
+
                     if ($('.headpic>img')) {
                         $('.headpicSvg').hide();
                     }
+
                     async function base64toFile(dataurl, filename = 'file') {
                         //定义了一个转换64编码的函数
                         let arr = dataurl.split(',')
@@ -242,27 +245,30 @@ $(document).ready(function () {
                             type: mime
                         })
                     }
-                    $('.bottom').after('<div class="mask"></div>');
 
-                    $('.mask').after(`
-                <div class="AvatarOperationArea"><div class="AOA-top"><div class="AOA-top-left"><div class="AOA-top-left-part"><div class="ATLP-Basic"><div class="ATLP-Basic-mask"></div><img src="">
-                </div></div></div><span class="AOA-top-line"></span><div class="AOA-top-right"><div class="AOA-top-right-part"><div class="ATRP-container"><img src=""></div></div></div></div><div class="AOA-bottom"><div class="AOA-bottom-left"><button class="AOA-bottom-left-bottom">选择图片</button><input class="AOA-bottom-left-input" type="file" accept="image/png" style="display: none;"></div><div class="AOA-bottom-right"><input class="AOA-bottom-right-input" type="submit"></div></div></div>`);
+                    let temp_html = `
+                    <div class="mask"></div>
+                    <div class="AvatarOperationArea"><div class="AOA-top"><div class="AOA-top-left"><div class="AOA-top-left-part"><div class="ATLP-Basic"><div class="ATLP-Basic-mask"></div><img src="">
+                    </div></div></div><span class="AOA-top-line"></span><div class="AOA-top-right"><div class="AOA-top-right-part"><div class="ATRP-container"><img src=""></div></div></div></div><div class="AOA-bottom"><div class="AOA-bottom-left"><button class="AOA-bottom-left-bottom">选择图片</button><input class="AOA-bottom-left-input" type="file" accept="image/png" style="display: none;"></div><div class="AOA-bottom-right"><input class="AOA-bottom-right-input" type="submit"></div></div></div>
+                    `
+
+                    jump_window({}, temp_html)
+
+                    $('body').unbind();
+                    $('#jump_window').unbind();
+
                     $('.AOA-bottom-left-bottom').click(function () {
                         $('.AOA-bottom-left-input').click();
                     });
-                    $('html').css({
-                        overflow: 'hidden',
-                        'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
+
+                    $('.mask').click(function () {
+                        $('#jump_window').html('');
+                        $('body').unbind();
                     });
-                    $('.mask').click(function (e) {
-                        $('.mask').remove();
-                        $('.AvatarOperationArea').remove();
-                        $('html').css({
-                            overflow: 'unset',
-                            'margin-right': 'unset'
-                        });
-                    });
+
                     $('.AOA-bottom-left-input').change(function (e) {
+                        e.stopPropagation();
+
                         var reader = new FileReader()
                         reader.readAsDataURL(this.files[0])
                         reader.onload = function () {
@@ -483,6 +489,7 @@ $(document).ready(function () {
                             }
                         }
                     });
+
                     $('.AOA-bottom-right-input').click(function (e) {
                         var getImage = function (b64) {
                             var image = new Image();
@@ -519,8 +526,9 @@ $(document).ready(function () {
                                         if ($('.headpic>img')[0]) {
                                             $('.headpic>img').remove();
                                         }
-                                        $('.mask').remove();
-                                        $('.AvatarOperationArea').remove();
+
+                                        $('body').unbind();
+                                        $('#jump_window').html('');
 
                                         $('.headpicSvg').attr('viewBox', "0 0 70 70");
                                         $('.headpicSvg>path').remove();
@@ -592,6 +600,7 @@ $(document).ready(function () {
                             }
                         }
                     });
+
                 });
 
                 //个人信息点击事件

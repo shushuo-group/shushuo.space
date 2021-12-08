@@ -198,7 +198,6 @@ function bigPart(e) {
             $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
         }
     });
-    // window.event.stopPropagation()
 }
 
 //小模块点击事件
@@ -299,7 +298,6 @@ function smp(e) {
         }
     });
     $(window).scrollTop('0px')
-    // window.event.stopPropagation()
 }
 // 前端处理传回的token的方法 将token存入window.localStorage
 function tokenWork(data) {
@@ -334,23 +332,7 @@ function slideFlushBytime(slideWay, bigMidData, smallMidData) {
         },
         success: function (response) {
             if (response.articles.length == 0) {
-                $('.centerLeftBottom').append(`<div style="
-                text-align: center;
-                font-weight: bold;
-                margin-bottom: 9px;
-                color: #8e8e8e;
-                position: unset;
-                border-radius: unset;
-                margin: unset;
-                width: unset;
-                background-color: unset;
-                overflow: unset;
-                -webkit-box-shadow: unset;
-                box-shadow: unset;
-                word-break: unset;
-                margin-bottom: 10px;
-                user-select: none;
-            " class="contentSmallPart stopFlush">天呐，帖子竟然被你刷完了！！！</div>`)
+                $('.centerLeftBottom').append(`<div class="contentSmallPart stopFlush">天呐，帖子竟然被你刷完了！！！</div>`)
             }
 
             $('.centerLeftBottom>.commentSection_wait').remove();
@@ -383,23 +365,7 @@ function slideFlushBytime_shuDong(slideWay, bigMidData, smallMidData) {
         },
         success: function (response) {
             if (response.articles.length == 0) {
-                $('.centerLeftBottom').append(`<div style="
-                text-align: center;
-                font-weight: bold;
-                margin-bottom: 9px;
-                color: #8e8e8e;
-                position: unset;
-                border-radius: unset;
-                margin: unset;
-                width: unset;
-                background-color: unset;
-                overflow: unset;
-                -webkit-box-shadow: unset;
-                box-shadow: unset;
-                word-break: unset;
-                margin-bottom: 10px;
-                user-select: none;
-            " class="contentSmallPart stopFlush">天呐，帖子竟然被你刷完了！！！</div>`)
+                $('.centerLeftBottom').append(`<div class="contentSmallPart stopFlush">天呐，帖子竟然被你刷完了！！！</div>`)
             }
 
             $('.centerLeftBottom>.commentSection_wait').remove();
@@ -1227,11 +1193,12 @@ function share(e) {
 
 //举报按钮
 function report(e) {
+    window.event.stopPropagation()
     if ($('.toPerson>img')[0]) {
-
         //已登录
-        $('body').after('<div class="mask"></div>');
-        $('.mask').after(`<div class="report_part">
+        let temp_html = `
+        <div class="mask"></div>
+        <div class="report_part">
         <div class="report_part_article">
             <div class="report_part_article_part">
                 <div id="article" articleId="${$(e).parents('.contentSmallPart').find('.contentSmallPartTop').attr('articleId')}">文章标题：</div>
@@ -1247,11 +1214,15 @@ function report(e) {
         <div class="report_part_submit">
             <button style="cursor:pointer;" id="report_submit">确认发送</button>
         </div>
-    </div>`);
-        $('html').css({
-            'overflow': 'hidden',
-            'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
-        });
+    </div>
+        `
+        jump_window({}, temp_html, function () {
+            $('.mask').click(function (e) { 
+                $('body').unbind();
+                $('#jump_window').html('');
+            });
+        })
+
         $('#report_submit').click(function () {
             $.ajax({
                 type: "post",
@@ -1268,12 +1239,9 @@ function report(e) {
                         return
                     }
                     if (response.isReport == true) {
-                        $('.mask').remove();
-                        $('.report_part').remove();
-                        $('html').css({
-                            'overflow': 'unset',
-                            'margin-right': 'unset'
-                        });
+                        $('body').unbind();
+                        $('#jump_window').html('');
+
                         $(e).find('path').attr('fill', '#f44336');
                         $(e).append('<div style="position: fixed;z-index: 10000000000; top: 53px; right: 0; width: auto; background-color: rgb(255 77 77); font-size: 12px; text-align: center; line-height: 30px; height: 30px; font-weight: bold; color: #feeded; border-radius: 5px;">已举报成功<div>');
                         setTimeout(() => {
@@ -1283,14 +1251,7 @@ function report(e) {
                 }
             });
         });
-        $('.mask').click(function () {
-            $('.mask').remove();
-            $('.report_part').remove();
-            $('html').css({
-                'overflow': 'unset',
-                'margin-right': 'unset'
-            });
-        });
+
     } else {
 
         //未登录
@@ -1299,11 +1260,12 @@ function report(e) {
 }
 //举报按钮
 function report_person(e) {
+    window.event.stopPropagation()
     if ($('#userHead>img')[0]) {
-
         //已登录
-        $('body').after('<div class="mask"></div>');
-        $('.mask').after(`<div class="report_part">
+        let temp_html = `
+        <div class="mask"></div>
+        <div class="report_part">
         <div class="report_part_article">
             <div class="report_part_article_part">
                 <div id="article" articleId="${$(e).parents('.contentSmallPart').find('.contentSmallPartTop').attr('articleId')}">文章标题：</div>
@@ -1319,11 +1281,16 @@ function report_person(e) {
         <div class="report_part_submit">
             <button style="cursor:pointer;" id="report_submit">确认发送</button>
         </div>
-    </div>`);
-        $('html').css({
-            'overflow': 'hidden',
-            'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
-        });
+    </div>
+        `
+
+        jump_window({}, temp_html, function () {
+            $('.mask').click(function (e) {
+                $('body').unbind();
+                $('#jump_window').html('');
+            });
+        })
+
         $('#report_submit').click(function () {
             $.ajax({
                 type: "post",
@@ -1340,12 +1307,8 @@ function report_person(e) {
                         return
                     }
                     if (response.isReport == true) {
-                        $('.mask').remove();
-                        $('.report_part').remove();
-                        $('html').css({
-                            'overflow': 'unset',
-                            'margin-right': 'unset'
-                        });
+                        $('body').unbind();
+                        $('#jump_window').html('');
                         $(e).find('path').attr('fill', '#f44336');
                         $(e).append('<div style="position: fixed;z-index: 10000000000; top: 53px; right: 0; width: auto; background-color: rgb(255 77 77); font-size: 12px; text-align: center; line-height: 30px; height: 30px; font-weight: bold; color: #feeded; border-radius: 5px;">已举报成功<div>');
                         setTimeout(() => {
@@ -1355,16 +1318,8 @@ function report_person(e) {
                 }
             });
         });
-        $('.mask').click(function () {
-            $('.mask').remove();
-            $('.report_part').remove();
-            $('html').css({
-                'overflow': 'unset',
-                'margin-right': 'unset'
-            });
-        });
-    } else {
 
+    } else {
         //未登录
         noLogin()
     }
@@ -1429,7 +1384,6 @@ function remark(e) {
                             <span class="Comments_small_name">${xssFilter(response.comment[i].comUser)}：</span>
                             <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.comment[i].content)}</div>
                             <div commentId="${response.comment[i].id}" class="firstComment">
-                                <span style='display:none;' class="Comments_small_like">点赞(0)</span>
                                 <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
                                 <span class="Comments_small_time">${timeSet(response.comment[i].time)}</span>
                             </div>
@@ -1501,7 +1455,6 @@ function commmentSubmit(e) {
                 <span class="Comments_small_name">${xssFilter($('.toPerson').attr('userName'))}：</span>
                 <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subcontent)}</div>
                 <div commentId="${response.commentId}" class="firstComment">
-                    <span style='display:none;' class="Comments_small_like">点赞(0)</span>
                     <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
                     <span class="Comments_small_time">${timeSet(response.time)}</span>
                 </div>
@@ -1551,7 +1504,6 @@ function commmentSubmit_article(e) {
                 <span class="Comments_small_name">${xssFilter($('#userHead').find('img').attr('username'))}：</span>
                 <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subcontent)}</div>
                 <div commentId="${response.commentId}" class="firstComment">
-                    <span style='display:none;' class="Comments_small_like">点赞(0)</span>
                     <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
                     <span class="Comments_small_time">${timeSet(response.time)}</span>
                 </div>
@@ -2126,6 +2078,8 @@ function noticeClick(e) {
             'position': 'fixed',
             'left': `${temp_left}px`
         });
+        $('#jump_window').css('left', `${temp_left-$('#jump_window').width()+20}px`);
+        $('.notice_part').css('border-top-right-radius', '0');
     } else {
         $('.notice_part').css('top', `${$('.top').height()}px`);
         $('.mask').click(function (e) {
@@ -2163,6 +2117,9 @@ function noticeClick(e) {
             </div>
             <div class="notice_part_small notice_part_bottom"></div>
             `);
+            if (!is_mobile) {
+                $('.notice_part_top').css('border-top-right-radius', '0');
+            }
             for (let i = 0; i < response.length; i++) {
                 $('.notice_part_bottom').append(`
                 <div class="pcTouch02 notice_part_bottom_small">
@@ -2324,7 +2281,6 @@ function messageClick(e) {
     let temp_css = {
         'position': 'fixed',
         'top': `${$('.top').height()}px`,
-        'right': '0',
         'z-index': '1'
     }
     if (is_mobile) {
@@ -2340,6 +2296,8 @@ function messageClick(e) {
             'position': 'fixed',
             'left': `${temp_left}px`
         });
+        $('#jump_window').css('left', `${temp_left-$('#jump_window').width()+20}px`);
+        $('.message_part').css('border-top-right-radius', '0');
     } else {
         $('.message_part').css('top', `${$('.top').height()}px`);
         $('.mask').click(function (e) {
@@ -2379,6 +2337,10 @@ function messageClick(e) {
             </div>
             <div style='display:none;' class="message_part_small message_part_bottom"></div>
             `);
+
+            if (!is_mobile) {
+                $('.message_part_top').css('border-top-right-radius', '0');
+            }
 
             for (let i = 0; i < response.length; i++) {
                 $('.message_part_bottom').prepend(`
@@ -2637,8 +2599,8 @@ async function uiSetFree_buttton_check(e) {
 
         //未登录
         noLogin()
-        $('.mask').css('z-index', '2');
         return
+
     }
     // 进行ajax上传对应所设置的ui代码块
     let subCss = '' //待上传存储的自定义css
@@ -2699,8 +2661,8 @@ function uiSetFree_buttton_default(e) {
 
         //未登录
         noLogin()
-        $('.mask').css('z-index', '2');
         return
+
     }
     $.ajax({
         type: "post",
@@ -2916,11 +2878,11 @@ function xssFilter(e) {
 //跳转提醒
 function jumpWeb(e) {
 
-    $('body').after('<div class="mask"></div>');
+    window.event.stopPropagation()
 
-    $('.mask').after(`
-    <div class="jumpWebPart" style="
-    ">
+    let temp_html = `
+    <div class="mask"></div>
+    <div class="jumpWebPart">
             <div class="jumpWebPart_loading-others">
                 <div class="jumpWebPart_loading-others_part01">请注意您的账号和财产安全</div>
                 <div class="jumpWebPart_loading-others_part02">
@@ -2928,25 +2890,25 @@ function jumpWeb(e) {
                     <a>${$(e).attr('data')}</a>
                 </div>
                 <div class="jumpWebPart_loading-others_part03">
-                    <a href="${$(e).attr('data')}" target="_blank" data-report-click="{&quot;spm&quot;:&quot;1032.2214.3001.5250&quot;}">继 续</a>
+                    <a>继 续</a>
                 </div>
             </div>
-        </div>
-    `);
+    </div>
+    `
 
-    $('html').css({
-        'overflow': 'hidden',
-        'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
-    });
-
-    $('.mask').click(function () {
-        $('.mask').remove();
-        $('.jumpWebPart').remove();
-        $('html').css({
-            'overflow': 'unset',
-            'margin-right': 'unset'
+    jump_window({}, temp_html, function () {
+        $('.jumpWebPart_loading-others_part03>a').click(function () {
+            window.open(`${$(e).attr('data')}`)
+            $('#jump_window').html('');
+            $('body').unbind();
         });
-    });
+
+        $('.mask').click(function (e) {
+            $('#jump_window').html('');
+            $('body').unbind();
+        });
+    })
+
 }
 
 //评论区小优化
@@ -2997,7 +2959,7 @@ function searchCommen(i) {
         case false:
             if ($('.article_small_color:nth(' + i + ')').find('img').length == 0) {
                 $('.article_small_color:nth(' + i + ')').find('.article_small').html(`
-                    <div  style="width:0;" class="article_small_imgpart">
+                    <div style="width:0;" class="article_small_imgpart">
                     </div>
                     <div style="width:100%;" class="article_small_wordpart">
                         ${xssFilter($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText)}
@@ -3024,6 +2986,7 @@ function searchCommen(i) {
 function jump_window(cssObj, html, callback = () => {}) {
 
     $('body').unbind().click(function () {
+        window.event.stopPropagation()
         $('#jump_window').attr('style', '');
         $('#jump_window').html('');
         $('body').unbind();
@@ -3031,13 +2994,13 @@ function jump_window(cssObj, html, callback = () => {}) {
 
     $('#jump_window').html(html);
 
-    $('#jump_window').click(function (e) {
-        e.preventDefault();
-        e.stopPropagation()
+    $('#jump_window').click(function () {
+        window.event.stopPropagation()
     });
 
     $('#jump_window').attr('style', '').css(cssObj);
 
     //默认回调函数  可省略不设置回调函数
     callback()
+
 }

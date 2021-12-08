@@ -1198,7 +1198,7 @@ $(document).ready(async function () {
                     $('.centerLeftTopButton_smallbuttons:nth(' + i + ')').find('.smallbuttons_white').after(`<span id="${response.largeModule[i].smallM[j].smallMid}" onclick="smp(this)" class="smp pcTouch">${response.largeModule[i].smallM[j].smallMname}</span>`)
                 }
 
-                // 每个大模块内部添加一个小模块并且进行事件绑定
+                // 每个大模块内部添加一个小模块并且进行事件绑定 (设置 display:none 暂时取消此功能 但是接口未摧毁 以后有待完善)
                 $('.centerLeftTopButton_smallbuttons:nth(' + i + ')').append('<span  onclick="centerLeftTopButtonAdd(this)" class="centerLeftTopButtonAdd"  style="display:none;"><svg t="1612847930683" class="pcTouch icon" viewBox="0 0 1024 1024" version="1.1"  p-id="5052"><path d="M0 128C0 57.6 57.6 0 128 0h768c70.4 0 128 57.6 128 128v768c0 70.4-57.6 128-128 128H128C57.6 1024 0 966.4 0 896V128z m64 0v768c0 32 25.6 64 64 64h768c32 0 64-25.6 64-64V128c0-32-25.6-64-64-64H128c-38.4 0-64 25.6-64 64z" fill="#8a8a8a" p-id="5053"></path><path d="M256 512.8c0-19.2 12.8-32 32-32h447.2c19.2 0 32 12.8 32 32s-12.8 32-32 32h-448c-19.2 0-31.2-12.8-31.2-32z" fill="#8a8a8a" p-id="5054"></path><path d="M511.2 256.8c19.2 0 32 12.8 32 32V736c0 19.2-12.8 32-32 32s-32-12.8-32-32V288.8c0-19.2 12.8-32 32-32z" fill="#8a8a8a" p-id="5055"></path></svg></span>')
             }
 

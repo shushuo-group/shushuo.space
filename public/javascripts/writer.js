@@ -127,15 +127,7 @@ $(document).ready(async function () {
                     }
                 }
                 $('.w-e-toolbar').append(`
-                <div class="commentSection_wait" style="
-                position: absolute;
-                bottom: 0;
-                text-align: center;
-                width: 100%;
-                font-weight: bold;
-                color: #7f7b7b;
-                left: 0px;
-                ">正在上传中...</div>
+                <div class="commentSection_wait">正在上传中...</div>
                 `);
 
                 compressGif(resultFiles[0], 20)
@@ -144,15 +136,7 @@ $(document).ready(async function () {
             canvasDataURL(resultFiles[0], function (blob) {
 
                 $('.w-e-toolbar').append(`
-                <div class="commentSection_wait" style="
-                position: absolute;
-                bottom: 0;
-                text-align: center;
-                width: 100%;
-                font-weight: bold;
-                color: #7f7b7b;
-                left: 0px;
-                ">正在上传中...</div>
+                <div class="commentSection_wait">正在上传中...</div>
                 `);
 
                 var compresFile = new File([blob], resultFiles[0].name, {
@@ -292,11 +276,7 @@ $(document).ready(async function () {
                     for (let i = 0; i < imgs.length; i++) {
                         $(imgs[i]).attr('onerror', 'picError(this)');
 
-                        $(imgs[i]).parent().append(`<div style="
-                        text-align: center;
-                        color: #717171;
-                        font-weight: bold;
-                        ">图片正在加载中...</div>`);
+                        $(imgs[i]).parent().append(`<div class="img_uploading">图片正在加载中...</div>`);
                         imgs[i].onload = function () {
                             $(imgs[i]).siblings('div').remove();
                             $(imgs[i]).show();
