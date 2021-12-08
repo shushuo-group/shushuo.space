@@ -2751,7 +2751,7 @@ function escape2Html(str) {
 function noLogin() {
     window.event.stopPropagation()
 
-    let temp_html = `<div class="logReg"><div><div class="waitChange"><div class="logByAcc" name="账号登录？"><div><div><div><span>账号：</span><span><div><input type="text" id="userName"></div></span></div></div></div><div><div><div><span>密码：</span><span><div><input type="password"  id="passWord"></div></span><a href="/findPassword">忘记密码？</a></div></div></div></div></div><div class="ChangeButton"><div><span>邮箱登录？</span><span>/</span><span>注册？</span></div></div></div><div><div id="logRegButton">登 录</div></div></div>`
+    let temp_html = `<div class="logReg"><div><div class="waitChange"><div class="logByAcc" name="账号登录？"><div><div><div><span>账号：</span><span><div><input type="text" id="userName"></div></span></div></div></div><div><div><div><span>密码：</span><span><div><input type="password" autocomplete="new-password"  id="passWord"></div></span><a href="/findPassword">忘记密码？</a></div></div></div></div></div><div class="ChangeButton"><div><span>邮箱登录？</span><span>/</span><span>注册？</span></div></div></div><div><div id="logRegButton">登 录</div></div></div>`
 
     jump_window({}, temp_html)
 
@@ -2840,7 +2840,7 @@ function noLogin() {
             case '账号登录？':
                 this.innerText = $('.waitChange>div').attr('name')
                 $('.waitChange>div').remove();
-                $('.waitChange').prepend(`<div class="logByAcc" name="账号登录？"><div><div><div><span>账号：</span><span><div><input type="text" id="userName"></div></span></div></div></div><div><div><div><span>密码：</span><span><div><input type="password"  id="passWord"></div></span><a href="/findPassword">忘记密码？</a></div></div></div></div>`);
+                $('.waitChange').prepend(`<div class="logByAcc" name="账号登录？"><div><div><div><span>账号：</span><span><div><input type="text" id="userName"></div></span></div></div></div><div><div><div><span>密码：</span><span><div><input autocomplete="new-password" type="password"  id="passWord"></div></span><a href="/findPassword">忘记密码？</a></div></div></div></div>`);
                 break;
             default:
                 break;
