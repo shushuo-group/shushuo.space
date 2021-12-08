@@ -385,7 +385,7 @@ $(document).ready(async function () {
                                 <span id="message_number"></span>
                                 信&nbsp;&nbsp;箱
                             </span>
-                                <span style="color: #004eff;" onclick="window.open('/person?userId=6092e2b5e0506dcb6ad54bb2')">个 人 主 页</span>
+                                <span style="color: #004eff;" onclick="window.open('/person?userId=${response.user.data_id}')">个 人 主 页</span>
                                 <span id="outLogin" class="pcTouch">退 出 登 录</span>
                             </div>`
                             jump_window({}, temp_html)
