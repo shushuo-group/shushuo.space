@@ -312,78 +312,95 @@ $(document).ready(function () {
                                         top: '0'
                                     });
                                     $('.ATLP-Basic-cut').css('left', $('.AOA-top-left-part')[0].clientWidth / 2 - $('.ATLP-Basic-cut')[0].offsetWidth / 2);
-                                    // pc
-                                    $('.ATLP-Basic-cut').mousedown(function (e) {
-                                        var posX1 = e.pageY
-                                        var prop = $('.ATRP-container>img')[0].height / $('.ATLP-Basic>img')[0].height
-                                        var picPosX1 = $('.ATLP-Basic-cut')[0].offsetTop
-                                        var picPosX2 = $('.ATRP-container>img')[0].offsetTop
-                                        var Xmin = 0
-                                        var Xmax = $('.AOA-top-left-part')[0].clientHeight - $('.ATLP-Basic>img')[0].width
-                                        var XRmin = -$('.ATRP-container>img')[0].height + $('.ATRP-container')[0].clientHeight
-                                        var XRmax = 0
-                                        $('body').css('cursor', 'move');
-                                        $(window).mousemove(function (e) {
-                                            var pos1 = e.pageY - posX1 + picPosX1
-                                            var pos2 = picPosX2 - ((e.pageY - posX1) * prop)
-                                            $('.ATLP-Basic-cut').css("top", pos1);
-                                            //放慢移动的速度
-                                            $('.ATLP-Basic-cut-copy').css("top", -pos1);
-                                            //放慢移动的速度
-                                            $('.ATRP-container>img').css("top", pos2);
-                                            if (pos1 < Xmin || pos1 == Xmin) {
-                                                $('.ATLP-Basic-cut').css("top", Xmin);
-                                                $('.ATLP-Basic-cut-copy').css("top", -Xmin);
-                                                $('.ATRP-container>img').css("top", XRmax);
-                                                return
-                                            }
-                                            if (pos1 > Xmax || pos1 == Xmax) {
-                                                $('.ATLP-Basic-cut').css("top", Xmax);
-                                                $('.ATLP-Basic-cut-copy').css("top", -Xmax);
-                                                $('.ATRP-container>img').css("top", XRmin);
-                                            }
+
+                                    // no touch
+                                    if (!is_touch) {
+                                        $('.ATLP-Basic-cut').mousedown(function (e) {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            let posX1 = e.pageY
+                                            let prop = $('.ATRP-container>img')[0].height / $('.ATLP-Basic>img')[0].height
+                                            let picPosX1 = $('.ATLP-Basic-cut')[0].offsetTop
+                                            let picPosX2 = $('.ATRP-container>img')[0].offsetTop
+                                            let Xmin = 0
+                                            let Xmax = $('.AOA-top-left-part')[0].clientHeight - $('.ATLP-Basic>img')[0].width
+                                            let XRmin = -$('.ATRP-container>img')[0].height + $('.ATRP-container')[0].clientHeight
+                                            let XRmax = 0
+                                            $('body').css('cursor', 'move');
+                                            $(window).mousemove(function (e) {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                let pos1 = e.pageY - posX1 + picPosX1
+                                                let pos2 = picPosX2 - ((e.pageY - posX1) * prop)
+                                                $('.ATLP-Basic-cut').css("top", pos1);
+                                                //放慢移动的速度
+                                                $('.ATLP-Basic-cut-copy').css("top", -pos1);
+                                                //放慢移动的速度
+                                                $('.ATRP-container>img').css("top", pos2);
+                                                if (pos1 < Xmin || pos1 == Xmin) {
+                                                    $('.ATLP-Basic-cut').css("top", Xmin);
+                                                    $('.ATLP-Basic-cut-copy').css("top", -Xmin);
+                                                    $('.ATRP-container>img').css("top", XRmax);
+                                                    return
+                                                }
+                                                if (pos1 > Xmax || pos1 == Xmax) {
+                                                    $('.ATLP-Basic-cut').css("top", Xmax);
+                                                    $('.ATLP-Basic-cut-copy').css("top", -Xmax);
+                                                    $('.ATRP-container>img').css("top", XRmin);
+                                                }
+                                            });
+                                            $(window).mouseup(function () {
+                                                e.stopPropagation();
+                                                e.preventDefault(); 
+                                                $(window).unbind('mousemove');
+                                                $('body').css('cursor', 'unset');
+                                            });
                                         });
-                                        $(window).mouseup(function () {
-                                            $(window).unbind('mousemove');
-                                            $('body').css('cursor', 'unset');
+                                    }
+
+                                    // touch
+                                    if (is_touch) {
+                                        $('.ATLP-Basic-cut').on('touchstart', function (e) {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            let posX1 = e.touches[0].pageY
+                                            let prop = $('.ATRP-container>img')[0].height / $('.ATLP-Basic>img')[0].height
+                                            let picPosX1 = $('.ATLP-Basic-cut')[0].offsetTop
+                                            let picPosX2 = $('.ATRP-container>img')[0].offsetTop
+                                            let Xmin = 0
+                                            let Xmax = $('.AOA-top-left-part')[0].clientHeight - $('.ATLP-Basic>img')[0].width
+                                            let XRmin = -$('.ATRP-container>img')[0].height + $('.ATRP-container')[0].clientHeight
+                                            let XRmax = 0
+                                            $(window).on('touchmove', function (e) {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                let pos1 = e.touches[0].pageY - posX1 + picPosX1
+                                                let pos2 = picPosX2 - ((e.touches[0].pageY - posX1) * prop)
+                                                $('.ATLP-Basic-cut').css("top", pos1);
+                                                //放慢移动的速度
+                                                $('.ATLP-Basic-cut-copy').css("top", -pos1);
+                                                //放慢移动的速度
+                                                $('.ATRP-container>img').css("top", pos2);
+                                                if (pos1 < Xmin || pos1 == Xmin) {
+                                                    $('.ATLP-Basic-cut').css("top", Xmin);
+                                                    $('.ATLP-Basic-cut-copy').css("top", -Xmin);
+                                                    $('.ATRP-container>img').css("top", XRmax);
+                                                    return
+                                                }
+                                                if (pos1 > Xmax || pos1 == Xmax) {
+                                                    $('.ATLP-Basic-cut').css("top", Xmax);
+                                                    $('.ATLP-Basic-cut-copy').css("top", -Xmax);
+                                                    $('.ATRP-container>img').css("top", XRmin);
+                                                }
+                                            });
+                                            $(window).on('touchend', function (e) {
+                                                e.stopPropagation()
+                                                e.preventDefault();
+                                                $(window).unbind('touchmove');
+                                            });
                                         });
-                                    });
-                                    // mobile
-                                    $('.ATLP-Basic-cut').on('touchstart', function (e) {
-                                        var posX1 = e.touches[0].pageY
-                                        var prop = $('.ATRP-container>img')[0].height / $('.ATLP-Basic>img')[0].height
-                                        var picPosX1 = $('.ATLP-Basic-cut')[0].offsetTop
-                                        var picPosX2 = $('.ATRP-container>img')[0].offsetTop
-                                        var Xmin = 0
-                                        var Xmax = $('.AOA-top-left-part')[0].clientHeight - $('.ATLP-Basic>img')[0].width
-                                        var XRmin = -$('.ATRP-container>img')[0].height + $('.ATRP-container')[0].clientHeight
-                                        var XRmax = 0
-                                        $('body').css('cursor', 'move');
-                                        $(window).on('touchmove', function (e) {
-                                            var pos1 = e.touches[0].pageY - posX1 + picPosX1
-                                            var pos2 = picPosX2 - ((e.touches[0].pageY - posX1) * prop)
-                                            $('.ATLP-Basic-cut').css("top", pos1);
-                                            //放慢移动的速度
-                                            $('.ATLP-Basic-cut-copy').css("top", -pos1);
-                                            //放慢移动的速度
-                                            $('.ATRP-container>img').css("top", pos2);
-                                            if (pos1 < Xmin || pos1 == Xmin) {
-                                                $('.ATLP-Basic-cut').css("top", Xmin);
-                                                $('.ATLP-Basic-cut-copy').css("top", -Xmin);
-                                                $('.ATRP-container>img').css("top", XRmax);
-                                                return
-                                            }
-                                            if (pos1 > Xmax || pos1 == Xmax) {
-                                                $('.ATLP-Basic-cut').css("top", Xmax);
-                                                $('.ATLP-Basic-cut-copy').css("top", -Xmax);
-                                                $('.ATRP-container>img').css("top", XRmin);
-                                            }
-                                        });
-                                        $(window).on('touchend', function () {
-                                            $(window).unbind('touchmove');
-                                            $('body').css('cursor', 'unset');
-                                        });
-                                    });
+                                    }
+
                                 } else {
                                     //横盒子
                                     $('.ATLP-Basic>img').css({
@@ -413,78 +430,94 @@ $(document).ready(function () {
                                         height: $('.ATLP-Basic>img')[0].height,
                                         display: "unset"
                                     });
-                                    // pc
-                                    $('.ATLP-Basic-cut').mousedown(function (e) {
-                                        var prop = $('.ATRP-container>img')[0].width / $('.ATLP-Basic>img')[0].width
-                                        var posX1 = e.pageX
-                                        var picPosX1 = this.offsetLeft
-                                        var picPosX2 = $('.ATRP-container>img')[0].offsetLeft
-                                        var Xmin = 0
-                                        var Xmax = $('.AOA-top-left-part')[0].clientWidth - $('.ATLP-Basic-cut')[0].clientWidth
-                                        var XRmin = -$('.ATRP-container>img')[0].width + $('.ATRP-container')[0].clientWidth
-                                        var XRmax = 0
-                                        $('body').css('cursor', 'move');
-                                        $(window).mousemove(function (e) {
-                                            var pos1 = e.pageX - posX1 + picPosX1
-                                            var pos2 = -(e.pageX - posX1) * prop + picPosX2
-                                            $('.ATLP-Basic-cut').css("left", pos1);
-                                            //放慢移动的速度
-                                            $('.ATLP-Basic-cut-copy').css("left", -pos1);
-                                            //放慢移动的速度
-                                            $('.ATRP-container>img').css("left", pos2);
-                                            if (pos1 < Xmin || pos1 == Xmin) {
-                                                $('.ATLP-Basic-cut').css("left", Xmin);
-                                                $('.ATLP-Basic-cut-copy').css("left", -Xmin);
-                                                $('.ATRP-container>img').css("left", XRmax);
-                                                return
-                                            }
-                                            if (pos1 > Xmax || pos1 == Xmax) {
-                                                $('.ATLP-Basic-cut').css("left", Xmax);
-                                                $('.ATLP-Basic-cut-copy').css("left", -Xmax);
-                                                $('.ATRP-container>img').css("left", XRmin);
-                                            }
+
+                                    // no touch
+                                    if (!is_touch) {
+                                        $('.ATLP-Basic-cut').mousedown(function (e) {
+                                            e.stopPropagation()
+                                            e.preventDefault();
+                                            let prop = $('.ATRP-container>img')[0].width / $('.ATLP-Basic>img')[0].width
+                                            let posX1 = e.pageX
+                                            let picPosX1 = this.offsetLeft
+                                            let picPosX2 = $('.ATRP-container>img')[0].offsetLeft
+                                            let Xmin = 0
+                                            let Xmax = $('.AOA-top-left-part')[0].clientWidth - $('.ATLP-Basic-cut')[0].clientWidth
+                                            let XRmin = -$('.ATRP-container>img')[0].width + $('.ATRP-container')[0].clientWidth
+                                            let XRmax = 0
+                                            $(window).mousemove(function (e) {
+                                                e.stopPropagation()
+                                                e.preventDefault();
+                                                let pos1 = e.pageX - posX1 + picPosX1
+                                                let pos2 = -(e.pageX - posX1) * prop + picPosX2
+                                                $('.ATLP-Basic-cut').css("left", pos1);
+                                                //放慢移动的速度
+                                                $('.ATLP-Basic-cut-copy').css("left", -pos1);
+                                                //放慢移动的速度
+                                                $('.ATRP-container>img').css("left", pos2);
+                                                if (pos1 < Xmin || pos1 == Xmin) {
+                                                    $('.ATLP-Basic-cut').css("left", Xmin);
+                                                    $('.ATLP-Basic-cut-copy').css("left", -Xmin);
+                                                    $('.ATRP-container>img').css("left", XRmax);
+                                                    return
+                                                }
+                                                if (pos1 > Xmax || pos1 == Xmax) {
+                                                    $('.ATLP-Basic-cut').css("left", Xmax);
+                                                    $('.ATLP-Basic-cut-copy').css("left", -Xmax);
+                                                    $('.ATRP-container>img').css("left", XRmin);
+                                                }
+                                            });
+                                            $(window).mouseup(function () {
+                                                e.stopPropagation()
+                                                e.preventDefault();
+                                                $(window).unbind('mousemove');
+                                                $('body').css('cursor', 'unset');
+                                            });
                                         });
-                                        $(window).mouseup(function () {
-                                            $(window).unbind('mousemove');
-                                            $('body').css('cursor', 'unset');
+                                    }
+
+                                    // touch
+                                    if (is_touch) {
+                                        $('.ATLP-Basic-cut').on('touchstart', function (e) {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            let prop = $('.ATRP-container>img')[0].width / $('.ATLP-Basic>img')[0].width
+                                            let posX1 = e.touches[0].pageX
+                                            let picPosX1 = this.offsetLeft
+                                            let picPosX2 = $('.ATRP-container>img')[0].offsetLeft
+                                            let Xmin = 0
+                                            let Xmax = $('.AOA-top-left-part')[0].clientWidth - $('.ATLP-Basic-cut')[0].clientWidth
+                                            let XRmin = -$('.ATRP-container>img')[0].width + $('.ATRP-container')[0].clientWidth
+                                            let XRmax = 0
+                                            $(window).on('touchmove', function (e) {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                let pos1 = e.touches[0].pageX - posX1 + picPosX1
+                                                let pos2 = -(e.touches[0].pageX - posX1) * prop + picPosX2
+                                                $('.ATLP-Basic-cut').css("left", pos1);
+                                                //放慢移动的速度
+                                                $('.ATLP-Basic-cut-copy').css("left", -pos1);
+                                                //放慢移动的速度
+                                                $('.ATRP-container>img').css("left", pos2);
+                                                if (pos1 < Xmin || pos1 == Xmin) {
+                                                    $('.ATLP-Basic-cut').css("left", Xmin);
+                                                    $('.ATLP-Basic-cut-copy').css("left", -Xmin);
+                                                    $('.ATRP-container>img').css("left", XRmax);
+                                                    return
+                                                }
+                                                if (pos1 > Xmax || pos1 == Xmax) {
+                                                    $('.ATLP-Basic-cut').css("left", Xmax);
+                                                    $('.ATLP-Basic-cut-copy').css("left", -Xmax);
+                                                    $('.ATRP-container>img').css("left", XRmin);
+                                                }
+                                            });
+                                            $(window).on('touchend', function () {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                $(window).unbind('touchmove');
+                                            });
                                         });
-                                    });
-                                    // mobile
-                                    $('.ATLP-Basic-cut').on('touchstart', function (e) {
-                                        var prop = $('.ATRP-container>img')[0].width / $('.ATLP-Basic>img')[0].width
-                                        var posX1 = e.touches[0].pageX
-                                        var picPosX1 = this.offsetLeft
-                                        var picPosX2 = $('.ATRP-container>img')[0].offsetLeft
-                                        var Xmin = 0
-                                        var Xmax = $('.AOA-top-left-part')[0].clientWidth - $('.ATLP-Basic-cut')[0].clientWidth
-                                        var XRmin = -$('.ATRP-container>img')[0].width + $('.ATRP-container')[0].clientWidth
-                                        var XRmax = 0
-                                        $('body').css('cursor', 'move');
-                                        $(window).on('touchmove', function (e) {
-                                            var pos1 = e.touches[0].pageX - posX1 + picPosX1
-                                            var pos2 = -(e.touches[0].pageX - posX1) * prop + picPosX2
-                                            $('.ATLP-Basic-cut').css("left", pos1);
-                                            //放慢移动的速度
-                                            $('.ATLP-Basic-cut-copy').css("left", -pos1);
-                                            //放慢移动的速度
-                                            $('.ATRP-container>img').css("left", pos2);
-                                            if (pos1 < Xmin || pos1 == Xmin) {
-                                                $('.ATLP-Basic-cut').css("left", Xmin);
-                                                $('.ATLP-Basic-cut-copy').css("left", -Xmin);
-                                                $('.ATRP-container>img').css("left", XRmax);
-                                                return
-                                            }
-                                            if (pos1 > Xmax || pos1 == Xmax) {
-                                                $('.ATLP-Basic-cut').css("left", Xmax);
-                                                $('.ATLP-Basic-cut-copy').css("left", -Xmax);
-                                                $('.ATRP-container>img').css("left", XRmin);
-                                            }
-                                        });
-                                        $(window).on('touchend', function () {
-                                            $(window).unbind('touchmove');
-                                            $('body').css('cursor', 'unset');
-                                        });
-                                    });
+                                    }
+
                                 }
                             }
                         }

@@ -8,7 +8,8 @@ $(document).ready(async function () {
     </div>
     `);
     // 针对所有触屏设备(pc,phone,ipad)
-    if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
+    
+    if (is_touch) {
         $('.head').css({
             'position': 'fixed',
             'right': '0'

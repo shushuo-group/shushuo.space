@@ -3,7 +3,7 @@
  * @Description: All commen tools
  */
 
-// 争对小屏幕触屏设备(phone)
+// 争对小屏幕(phone)
 let arr = [screen.width, screen.height]
 arr = arr.sort()
 
@@ -12,6 +12,11 @@ let is_mobile = false
 // is_mobile == true ? 小屏幕设备 ： 大屏幕设备
 if (arr[0] < 600) {
     is_mobile = true
+}
+
+let is_touch = false
+if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
+    is_touch = true
 }
 
 //增加小模块的申请模块
