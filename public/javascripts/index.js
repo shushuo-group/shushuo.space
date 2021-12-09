@@ -1465,7 +1465,7 @@ $(document).ready(async function () {
             //未登录
             noLogin()
         } else {
-            location.href = 'https://www.shushuo.space/writer'
+            window.open('https://www.shushuo.space/writer')
         }
     });
 

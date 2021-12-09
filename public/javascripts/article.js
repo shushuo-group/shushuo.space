@@ -62,7 +62,7 @@ $(document).ready(async function () {
                 ${$(imgs[i])[0].outerHTML}
                 </div>
                 `
-                jump_window({},temp_html)
+                jump_window({}, temp_html)
 
                 //防止点击按钮造成页面弹出
                 $('.img_bigshow_part_down').click(function (e) {
@@ -379,7 +379,7 @@ $(document).ready(async function () {
                     <span accountId="${response.sendData.comments[i].accountId}" idname="${response.sendData.comments[i].comUser}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].comUser)}：</span>
                     <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].content)}</div>
                     <div commentId="${response.sendData.comments[i].id}" class="firstComment">
-                        <span class="Comments_small_comment" onclick="secondComment(this)">回复(${response.sendData.comments[i].secComments_number == undefined ? 0 : response.sendData.comments[i].secComments_number})</span>
+                        <span class="Comments_small_comment" onclick="secondComment(this)" style="cursor:pointer;">回复${response.sendData.comments[i].secComments_number == undefined ? '' : '('+response.sendData.comments[i].secComments_number+')'}</span>
                         <span time=${timeSolve(response.sendData.comments[i].time)} class="Comments_small_time">${timeSet(response.sendData.comments[i].time)}</span>
                     </div>
                 </div>
@@ -466,7 +466,7 @@ $(document).ready(async function () {
                     <span accountId="${response.sendData.comments[i].accountId}" idname="${response.sendData.comments[i].comUser}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].comUser)}：</span>
                     <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].content)}</div>
                     <div commentId="${response.sendData.comments[i].id}" class="firstComment">
-                        <span class="Comments_small_comment" onclick="secondComment(this)">回复(${response.sendData.comments[i].secComments_number == undefined ? 0 : response.sendData.comments[i].secComments_number})</span>
+                        <span class="Comments_small_comment" onclick="secondComment(this)" style="cursor:pointer;">回复${response.sendData.comments[i].secComments_number == undefined ? '' : '('+response.sendData.comments[i].secComments_number+')'}</span>
                         <span time="${timeSolve(response.sendData.comments[i].time)}" class="Comments_small_time">${timeSet(response.sendData.comments[i].time)}</span>
                     </div>
                 </div>

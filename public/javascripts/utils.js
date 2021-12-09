@@ -1222,7 +1222,7 @@ function report(e) {
     </div>
         `
         jump_window({}, temp_html, function () {
-            $('.mask').click(function (e) { 
+            $('.mask').click(function (e) {
                 $('body').unbind();
                 $('#jump_window').html('');
             });
@@ -1365,7 +1365,7 @@ function remark(e) {
             },
             success: function (response) {
 
-                $(e).parent().after('<div class="commentSection"><div class="commentSectionArea"><div class="othersComment"><div><span class="othersComment_number">0</span> 条评论</div><div class="Comments"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true" id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit(this)">发&nbsp布</span></div></div></div></div></div>')
+                $(e).parent().after(`<div class="commentSection"><div class="commentSectionArea"><div class="othersComment"><div><span class="othersComment_number">0</span> 条评论</div><div class="Comments"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true" id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit(this)">发&nbsp布</span></div></div></div></div></div>`)
 
                 $(e).parents('.contentSmallPart').find('#commentContent').keydown(function (e) {
                     if (e.keyCode === 13) {
@@ -1376,27 +1376,25 @@ function remark(e) {
 
                 if (response.comment.length == 0) {
                     //评论数为0
-                    $(e).parents('.contentSmallPart').find('.Comments').prepend('<div class="commentWhite">空空如也，快来评论吧！</div>');
+                    $(e).parents('.contentSmallPart').find('.Comments').prepend(`<div class="commentWhite">空空如也，快来评论吧！</div>`);
                 } else {
                     //二次评论计数器
                     let num1 = 0
 
                     for (let i = 0; i < response.comment.length; i++) {
-                        $(e).parents('.contentSmallPart').find('.Comments').append(
-                            `
+                        $(e).parents('.contentSmallPart').find('.Comments').append(`
                         <div class="Comments_small">
                             <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.comment[i].headimg == "NaN.png" ? "staticIMG/NaN.png" : response.comment[i].headimg}" id="${response.comment[i].comUserId}" class="Comments_small_head">
                             <span class="Comments_small_name">${xssFilter(response.comment[i].comUser)}：</span>
                             <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.comment[i].content)}</div>
                             <div commentId="${response.comment[i].id}" class="firstComment">
-                                <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
+                                <span class="Comments_small_comment" style="cursor:pointer;" onclick="secondComment(this)">回复</span>
                                 <span class="Comments_small_time">${timeSet(response.comment[i].time)}</span>
                             </div>
                         </div>
-                        `
-                        );
-                        //如过存在二次评论
-                        if (response.comment[i].secComments) {
+                        `);
+                        //如果存在二次评论
+                        if (response.comment[i].secComments !== undefined) {
                             num1 += response.comment[i].secComments_number
                             for (let j = 0; j < response.comment[i].secComments.length; j++) {
                                 $(e).parents('.contentSmallPart').find('.Comments_small:nth(' + i + ')').append(`
@@ -1460,7 +1458,7 @@ function commmentSubmit(e) {
                 <span class="Comments_small_name">${xssFilter($('.toPerson').attr('userName'))}：</span>
                 <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subcontent)}</div>
                 <div commentId="${response.commentId}" class="firstComment">
-                    <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
+                    <span class="Comments_small_comment" style="cursor:pointer;" onclick="secondComment(this)">回复</span>
                     <span class="Comments_small_time">${timeSet(response.time)}</span>
                 </div>
             </div>
@@ -1509,7 +1507,7 @@ function commmentSubmit_article(e) {
                 <span class="Comments_small_name">${xssFilter($('#userHead').find('img').attr('username'))}：</span>
                 <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subcontent)}</div>
                 <div commentId="${response.commentId}" class="firstComment">
-                    <span class="Comments_small_comment" onclick="secondComment(this)">回复(0)</span>
+                    <span class="Comments_small_comment" style="cursor:pointer;" onclick="secondComment(this)">回复</span>
                     <span class="Comments_small_time">${timeSet(response.time)}</span>
                 </div>
             </div>
@@ -1727,19 +1725,21 @@ function bigMmask(e) {
 
 //二级评论
 function secondComment(e) {
+
+    $(e).parents('.contentSmallPart').find('.Comments_small_comment').attr('is_chosen', 'false')
+
+    $(e).attr('is_chosen', 'true');
+
     $(e).parents('.Comments').find('.Comments_small_comment').css('color', '')
 
     $(e).css('color', '#138bfb');
 
-    $(e).parents('.commentSectionArea').find('#commentContent').attr('oninput', 'commentInput(this)')
-
-    $(e).parents('.commentSectionArea').find('#commentContent').html('')
-
-    $(e).parents('.commentSectionArea').find('#commentContent').attr('commentid', $(e).parent().attr('commentId'))
-
-    $(e).parents('.commentSectionArea').find('#commentContent').attr('flagnum', $(e).parent().siblings('.Comments_small_name').text().trim().length + 1)
-
-    $(e).parents('.commentSectionArea').find('#commentContent').html(`@${$(e).parent().siblings('.Comments_small_name').text().trim()}`);
+    $(e).parents('.commentSectionArea').find('#commentContent')
+        .attr('oninput', 'commentInput(this)')
+        .html('')
+        .attr('commentid', $(e).parent().attr('commentId'))
+        .attr('flagnum', $(e).parent().siblings('.Comments_small_name').text().trim().length + 1)
+        .html(`@${$(e).parent().siblings('.Comments_small_name').text().trim()}`);
 
     $(e).parents('.commentSectionArea').find('.commentSubmit').attr('onclick', 'secCommmentSubmit(this)');
 
@@ -1769,7 +1769,7 @@ function secCommmentSubmit(e) {
                 return
             }
             if (response.isSuccess == true) {
-                $(e).parents('.commentSectionArea').find('.Comments_small_comment[style="color: rgb(19, 139, 251);"]').parents('.Comments_small').append(`
+                $(e).parents('.commentSectionArea').find('.Comments_small_comment[is_chosen="true"]').parents('.Comments_small').append(`
                 <div class="Comments_small_second">
                         <img onerror=\'picError(this)\' src="/head/${response.comUserHead == "NaN.png" ? "staticIMG/NaN.png" : response.comUserHead}" class="Comments_small_head">
                         <span class="Comments_small_name">${xssFilter(response.comUserName)}：</span>
@@ -2205,7 +2205,7 @@ async function notSingleCheck(e) {
 }
 
 // 全部已读按钮(信箱)
-async function notSingleCheck_email(e) {
+async function notSingleCheck_email() {
     let infos = []
     for (let i = 0; i < $('.message_part_bottom_small[type=comment]').length; i++) {
         infos.push({
@@ -2226,7 +2226,10 @@ async function notSingleCheck_email(e) {
                 return
             }
             if (response.isCheck == true) {
-                $('#jump_window').html('').attr('style', '');
+                $('#jump_window').html('');
+                if (!is_mobile) {
+                    $('#message_number').html('');
+                }
             }
         }
     });

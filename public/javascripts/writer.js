@@ -13,7 +13,7 @@ $(document).ready(async function () {
                 location.href = 'https://www.shushuo.space/'
                 return
             }
-            $('.headImgPart').html(`<a href="/person"><img onerror=\'picError(this)\' class="head" src=/head/${response.userHeadimg == "NaN.png" ? "staticIMG/NaN.png" : response.userHeadimg}></a>`);
+            $('.headImgPart').html(`<a style="cursor:pointer;" onclick='window.open("/person?userId=${response.data_id}")'><img onerror=\'picError(this)\' class="head" src=/head/${response.userHeadimg == "NaN.png" ? "staticIMG/NaN.png" : response.userHeadimg}></a>`);
         }
     });
 
@@ -291,7 +291,7 @@ $(document).ready(async function () {
                         })
                     }
                     $('body').data('img', a);
-        
+
                     $('#submitButton').click(async function () {
                         window.onbeforeunload = null
                         for (let i = 0; i < $('img').length; i++) {
@@ -314,7 +314,7 @@ $(document).ready(async function () {
                                 }
                                 if (response.isUp == true) {
                                     alert('更改文章成功')
-        
+
                                     var imgold = $('body').data('img')
                                     var imgnew = $('body').data('img02')
                                     var img = imgold.concat(imgnew) //big
@@ -338,11 +338,11 @@ $(document).ready(async function () {
                                 }
                             }
                         });
-        
-        
-        
+
+
+
                     });
-        
+
                     //存入草稿
                     $('#writeDraft').click(async function (e) {
                         window.onbeforeunload = null
@@ -370,7 +370,7 @@ $(document).ready(async function () {
                                 if (response.isUp == true) {
                                     alert('存入草稿成功')
                                     location.href = 'https://www.shushuo.space/'
-        
+
                                     var imgold = $('body').data('img')
                                     var imgnew = $('body').data('img02')
                                     var img = imgold.concat(imgnew) //big
@@ -395,8 +395,8 @@ $(document).ready(async function () {
                                 }
                             }
                         });
-        
-        
+
+
                     });
                 }
             });
@@ -425,13 +425,13 @@ $(document).ready(async function () {
                     var a = []
                     for (let i = 0; i < $('img').length; i++) {
                         $($('img')[i]).attr('onerror', 'picError(this)');
-        
+
                         a.push({
                             imgSrc: $('img')[i].src
                         })
                     }
                     $('body').data('img', a);
-        
+
                     $('#submitButton').click(function (e) {
                         window.onbeforeunload = null;
                         if ($('#dating')[0].checked == false && $('#shudong')[0].checked == false) {
@@ -448,7 +448,7 @@ $(document).ready(async function () {
                             alert('请填写标题！')
                             return
                         }
-        
+
                         if ($('#shudong')[0].checked == true) {
                             if ($('#title')[0].value.length > titleMaxNumber) {
                                 alert('文章标题请勿超过30个字符')
@@ -537,7 +537,7 @@ $(document).ready(async function () {
                             });
                         }
                     });
-        
+
                     //存入草稿
                     $('#writeDraft').click(async function (e) {
                         window.onbeforeunload = null
@@ -582,16 +582,16 @@ $(document).ready(async function () {
                                             src: img[i].imgSrc
                                         })
                                     }
-        
+
                                     location.href = 'https://www.shushuo.space/'
-        
+
                                 } else {
                                     alert('上传失败')
                                 }
                             }
                         });
-        
-        
+
+
                     });
                 }
             });
