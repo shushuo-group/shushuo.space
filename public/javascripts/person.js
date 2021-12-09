@@ -327,7 +327,7 @@ $(document).ready(function () {
                                             let XRmin = -$('.ATRP-container>img')[0].height + $('.ATRP-container')[0].clientHeight
                                             let XRmax = 0
                                             $('body').css('cursor', 'move');
-                                            $(window).mousemove(function (e) {
+                                            $('.ATLP-Basic-cut').mousemove(function (e) {
                                                 e.stopPropagation();
                                                 e.preventDefault();
                                                 let pos1 = e.pageY - posX1 + picPosX1
@@ -349,10 +349,10 @@ $(document).ready(function () {
                                                     $('.ATRP-container>img').css("top", XRmin);
                                                 }
                                             });
-                                            $(window).mouseup(function () {
+                                            $('.ATLP-Basic-cut').mouseup(function () {
                                                 e.stopPropagation();
                                                 e.preventDefault(); 
-                                                $(window).unbind('mousemove');
+                                                $('.ATLP-Basic-cut').unbind('mousemove');
                                                 $('body').css('cursor', 'unset');
                                             });
                                         });
@@ -371,7 +371,7 @@ $(document).ready(function () {
                                             let Xmax = $('.AOA-top-left-part')[0].clientHeight - $('.ATLP-Basic>img')[0].width
                                             let XRmin = -$('.ATRP-container>img')[0].height + $('.ATRP-container')[0].clientHeight
                                             let XRmax = 0
-                                            $(window).on('touchmove', function (e) {
+                                            $('.ATLP-Basic-cut').on('touchmove', function (e) {
                                                 e.stopPropagation();
                                                 e.preventDefault();
                                                 let pos1 = e.touches[0].pageY - posX1 + picPosX1
@@ -393,10 +393,10 @@ $(document).ready(function () {
                                                     $('.ATRP-container>img').css("top", XRmin);
                                                 }
                                             });
-                                            $(window).on('touchend', function (e) {
+                                            $('.ATLP-Basic-cut').on('touchend', function (e) {
                                                 e.stopPropagation()
                                                 e.preventDefault();
-                                                $(window).unbind('touchmove');
+                                                $('.ATLP-Basic-cut').unbind('touchmove');
                                             });
                                         });
                                     }
@@ -444,7 +444,7 @@ $(document).ready(function () {
                                             let Xmax = $('.AOA-top-left-part')[0].clientWidth - $('.ATLP-Basic-cut')[0].clientWidth
                                             let XRmin = -$('.ATRP-container>img')[0].width + $('.ATRP-container')[0].clientWidth
                                             let XRmax = 0
-                                            $(window).mousemove(function (e) {
+                                            $('.ATLP-Basic-cut').mousemove(function (e) {
                                                 e.stopPropagation()
                                                 e.preventDefault();
                                                 let pos1 = e.pageX - posX1 + picPosX1
@@ -466,10 +466,10 @@ $(document).ready(function () {
                                                     $('.ATRP-container>img').css("left", XRmin);
                                                 }
                                             });
-                                            $(window).mouseup(function () {
+                                            $('.ATLP-Basic-cut').mouseup(function () {
                                                 e.stopPropagation()
                                                 e.preventDefault();
-                                                $(window).unbind('mousemove');
+                                                $('.ATLP-Basic-cut').unbind('mousemove');
                                                 $('body').css('cursor', 'unset');
                                             });
                                         });
@@ -488,7 +488,7 @@ $(document).ready(function () {
                                             let Xmax = $('.AOA-top-left-part')[0].clientWidth - $('.ATLP-Basic-cut')[0].clientWidth
                                             let XRmin = -$('.ATRP-container>img')[0].width + $('.ATRP-container')[0].clientWidth
                                             let XRmax = 0
-                                            $(window).on('touchmove', function (e) {
+                                            $('.ATLP-Basic-cut').on('touchmove', function (e) {
                                                 e.stopPropagation();
                                                 e.preventDefault();
                                                 let pos1 = e.touches[0].pageX - posX1 + picPosX1
@@ -510,10 +510,10 @@ $(document).ready(function () {
                                                     $('.ATRP-container>img').css("left", XRmin);
                                                 }
                                             });
-                                            $(window).on('touchend', function () {
+                                            $('.ATLP-Basic-cut').on('touchend', function () {
                                                 e.stopPropagation();
                                                 e.preventDefault();
-                                                $(window).unbind('touchmove');
+                                                $('.ATLP-Basic-cut').unbind('touchmove');
                                             });
                                         });
                                     }
