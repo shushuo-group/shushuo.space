@@ -1348,15 +1348,21 @@ function pasteRemoveCss(e) {
 }
 
 //评论收到按钮
-function remark(e) {
+async function remark(e) {
     if ($(e).attr('isopen') == 'false') {
 
         //打开评论区
         $(e).attr('isopen', 'true')
         $(e).find('path').attr('fill', '#138bfb')
 
+        $(e).parent().after(`<div class="commentSection"><div class="commentSectionArea">
+        <section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>
+        </div></div>
+        `)
+
         // 接着进行ajax事件
-        $.ajax({
+        let data = null
+        await $.ajax({
             type: "post",
             url: "/complete/commentGet",
             data: {
@@ -1364,59 +1370,63 @@ function remark(e) {
                 token: window.localStorage.token
             },
             success: function (response) {
-
-                $(e).parent().after(`<div class="commentSection"><div class="commentSectionArea"><div class="othersComment"><div><span class="othersComment_number">0</span> 条评论</div><div class="Comments"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true" id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit(this)">发&nbsp布</span></div></div></div></div></div>`)
-
-                $(e).parents('.contentSmallPart').find('#commentContent').keydown(function (e) {
-                    if (e.keyCode === 13) {
-                        document.execCommand('insertHTML', false, '<br></br>')
-                        return false
-                    }
-                });
-
-                if (response.comment.length == 0) {
-                    //评论数为0
-                    $(e).parents('.contentSmallPart').find('.Comments').prepend(`<div class="commentWhite">空空如也，快来评论吧！</div>`);
-                } else {
-                    //二次评论计数器
-                    let num1 = 0
-
-                    for (let i = 0; i < response.comment.length; i++) {
-                        $(e).parents('.contentSmallPart').find('.Comments').append(`
-                        <div class="Comments_small">
-                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.comment[i].headimg == "NaN.png" ? "staticIMG/NaN.png" : response.comment[i].headimg}" id="${response.comment[i].comUserId}" class="Comments_small_head">
-                            <span class="Comments_small_name">${xssFilter(response.comment[i].comUser)}：</span>
-                            <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.comment[i].content)}</div>
-                            <div commentId="${response.comment[i].id}" class="firstComment">
-                                <span class="Comments_small_comment" style="cursor:pointer;" onclick="secondComment(this)">回复</span>
-                                <span class="Comments_small_time">${timeSet(response.comment[i].time)}</span>
-                            </div>
-                        </div>
-                        `);
-                        //如果存在二次评论
-                        if (response.comment[i].secComments !== undefined) {
-                            num1 += response.comment[i].secComments_number
-                            for (let j = 0; j < response.comment[i].secComments.length; j++) {
-                                $(e).parents('.contentSmallPart').find('.Comments_small:nth(' + i + ')').append(`
-                                <div class="Comments_small_second">
-                                <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.comment[i].secComments[j].comUserHead == "NaN.png" ? "staticIMG/NaN.png" : response.comment[i].secComments[j].comUserHead}" id="${response.comment[i].secComments[j].comUserId}" class="Comments_small_head">
-                                <span class="Comments_small_name">${xssFilter(response.comment[i].secComments[j].comUserName)}：</span>
-                                <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.comment[i].secComments[j].content)}</div>
-                                <div commentid="${response.comment[i].secComments[j].id}" class="firstComment">
-                                <span class="Comments_small_time">${timeSet(response.comment[i].secComments[j].time)}</span>
-                                </div>
-                                </div>
-                                `)
-                            }
-                            $(e).parents('.contentSmallPart').find(`.Comments_small_comment:nth(${i})`).html(`回复(${response.comment[i].secComments_number})`);
-                        }
-                    }
-                    $(e).parents('.contentSmallPart').find('.othersComment_number').html(`${response.comment.length+num1}`);
-                }
-                // 去除缓存特效
-                $(e).parents('.contentSmallPart').find('.commentSection_wait').remove();
+                data = response
+                return
             }
         });
+
+        setTimeout(() => {
+            $(e).parents('.contentSmallPart').find('.commentSectionArea').html(`<div class="othersComment"><div><span class="othersComment_number">0</span> 条评论</div><div class="Comments"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true" id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit(this)">发&nbsp布</span></div></div></div>`)
+
+            $(e).parents('.contentSmallPart').find('#commentContent').keydown(function (e) {
+                if (e.keyCode === 13) {
+                    document.execCommand('insertHTML', false, '<br></br>')
+                    return false
+                }
+            });
+
+            if (data.comment.length == 0) {
+                //评论数为0
+                $(e).parents('.contentSmallPart').find('.Comments').prepend(`<div class="commentWhite">空空如也，快来评论吧！</div>`);
+            } else {
+                //二次评论计数器
+                let num1 = 0
+
+                for (let i = 0; i < data.comment.length; i++) {
+                    $(e).parents('.contentSmallPart').find('.Comments').append(`
+                    <div class="Comments_small">
+                        <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${data.comment[i].headimg == "NaN.png" ? "staticIMG/NaN.png" : data.comment[i].headimg}" id="${data.comment[i].comUserId}" class="Comments_small_head">
+                        <span class="Comments_small_name">${xssFilter(data.comment[i].comUser)}：</span>
+                        <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(data.comment[i].content)}</div>
+                        <div commentId="${data.comment[i].id}" class="firstComment">
+                            <span class="Comments_small_comment" style="cursor:pointer;" onclick="secondComment(this)">回复</span>
+                            <span class="Comments_small_time">${timeSet(data.comment[i].time)}</span>
+                        </div>
+                    </div>
+                    `);
+                    //如果存在二次评论
+                    if (data.comment[i].secComments !== undefined) {
+                        num1 += data.comment[i].secComments_number
+                        for (let j = 0; j < data.comment[i].secComments.length; j++) {
+                            $(e).parents('.contentSmallPart').find('.Comments_small:nth(' + i + ')').append(`
+                            <div class="Comments_small_second">
+                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${data.comment[i].secComments[j].comUserHead == "NaN.png" ? "staticIMG/NaN.png" : data.comment[i].secComments[j].comUserHead}" id="${data.comment[i].secComments[j].comUserId}" class="Comments_small_head">
+                            <span class="Comments_small_name">${xssFilter(data.comment[i].secComments[j].comUserName)}：</span>
+                            <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(data.comment[i].secComments[j].content)}</div>
+                            <div commentid="${data.comment[i].secComments[j].id}" class="firstComment">
+                            <span class="Comments_small_time">${timeSet(data.comment[i].secComments[j].time)}</span>
+                            </div>
+                            </div>
+                            `)
+                        }
+                        $(e).parents('.contentSmallPart').find(`.Comments_small_comment:nth(${i})`).html(`回复(${data.comment[i].secComments_number})`);
+                    }
+                }
+                $(e).parents('.contentSmallPart').find('.othersComment_number').html(`${data.comment.length+num1}`);
+            }
+            // 去除缓存特效
+            $(e).parents('.contentSmallPart').find('.commentSection_wait').remove();
+        }, 200);
 
     } else {
         //关闭评论区
