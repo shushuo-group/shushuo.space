@@ -116,7 +116,7 @@ function bigPart(e) {
 
     if (!$('.navigation')[0]) {
         //不存在navigation
-        if (is_mobile) {
+        if (is_touch) {
             //mobile
             $('.centerLeftTop').after(`<div style="background: #fdfdfd;padding: 2px;border-radius: 3px;width: 98%;margin: auto;position: sticky;top: 80px;z-index: 2;white-space: nowrap;overflow-x: scroll;" class="navigation"><span style="border-radius: 5px;background: #e7f9f5;color: #138bfb;margin: 3px 2px;padding: 0 5px;" bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span></div>`);
             //进行小模块的搜索请求
@@ -143,7 +143,7 @@ function bigPart(e) {
         }
     } else {
         //存在navigation
-        if (is_mobile) {
+        if (is_touch) {
             //mobile
             $('.navigation-smallM').remove();
             $('.navigation-bigM').text($(e).find('.bigMname').text()).attr('bigMid', $(e).attr('bigmid'));
@@ -208,7 +208,7 @@ function bigPart(e) {
 //小模块点击事件
 function smp(e) {
     //mobile
-    if (is_mobile) {
+    if (is_touch) {
         $('.smallm_chosen').css('color', '#2a4d6d');
         $(e).css('color', '#ff7272');
         $(e).addClass('smallm_chosen');
@@ -1721,16 +1721,18 @@ function timeSet(dataServe) {
 
 //适配手机端的点击功能
 function bigMmask(e) {
-    $(e).hide();
-    $(e).siblings('.centerLeftTopButton_smallbuttons').show().css('z-index', '3');
-    $('.centerLeftTop').after('<div class="mask02"></div>');
-    $('.mask02').click(function () {
-        $(e).show();
-        $(e).siblings('.centerLeftTopButton_smallbuttons').hide().css('z-index', '');
-        $('.mask02').remove();
+    if (!is_touch) {
+        $(e).hide();
+        $(e).siblings('.centerLeftTopButton_smallbuttons').show().css('z-index', '3');
+        $('.centerLeftTop').after('<div class="mask02"></div>');
+        $('.mask02').click(function () {
+            $(e).show();
+            $(e).siblings('.centerLeftTopButton_smallbuttons').hide().css('z-index', '');
+            $('.mask02').remove();
+            window.event.stopPropagation()
+        });
         window.event.stopPropagation()
-    });
-    window.event.stopPropagation()
+    }
 }
 
 //二级评论
