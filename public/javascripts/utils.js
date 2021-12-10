@@ -107,11 +107,7 @@ function centerLeftTopButtonAdd(e) {
 function bigPart(e) {
     window.event.stopPropagation()
 
-    $(window).scrollTop('0px')
-
     $('.centerLeftBottom').html('');
-
-    $('.addArticle').remove();
 
     $('.centerLeftTopButton>div:nth-child(2)').hide();
 
@@ -149,6 +145,7 @@ function bigPart(e) {
             $('.navigation-smallM').remove();
             $('.navigation-bigM').text($(e).find('.bigMname').text()).attr('bigMid', $(e).attr('bigmid'));
             //进行小模块的搜索请求
+
             let data = $('.navigation-bigM').text()
 
             $.ajax({
@@ -183,7 +180,7 @@ function bigPart(e) {
             bigModuleId: $(e).attr('bigmid'),
         },
         success: function (response) {
-            $('.centerLeftBottom>.commentSection_wait').remove();
+            $('.commentSection_wait').remove();
             if (response.articles.length == 0) {
                 $('.navigation').after(`<div class="addArticle"><a class="addArticle-a"><div class="addArticle-word">空空如也，来添加第一篇文章吧</div><svg class="addArticle-icon" t="1617944956553" viewBox="0 0 1147 1024" version="1.1"  p-id="4251" width="200" height="200"><path fill="#707070" d="M0 956.865864 1146.877993 956.865864 1146.877993 1020.7232 0 1020.7232 0 956.865864ZM0 912.775537 300.529213 827.452006 85.868257 614.103613 0 912.775537ZM802.673951 328.370422 588.010209 115.019284 115.744481 584.378491 330.405437 797.708861 802.673951 328.370422ZM902.442885 149.154775 768.272343 15.818629C746.042941-6.277693 708.804076-5.074616 685.091594 18.484019L620.682076 82.476319 835.34721 295.826104 899.75255 231.814349C923.465032 208.254362 924.668109 171.253883 902.442885 149.154775Z" p-id="4252"></path></svg></a></div>`);
                 // 进行创作中心入口的提示用户登录操作
@@ -197,6 +194,7 @@ function bigPart(e) {
                 });
                 return
             }
+            $(window).scrollTop('0px')
             for (let i = 0; i < response.articles.length; i++) {
                 square_smallPart_create(i, response, i)
             }
@@ -215,8 +213,8 @@ function smp(e) {
         $('.smallm_chosen').css('color', '#2a4d6d');
         $(e).css('color', '#ff7272');
         $(e).addClass('smallm_chosen');
-        $('.contentSmallPart').remove();
-        $('.addArticle').remove();
+        $('.centerLeftBottom').html('');
+        $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
         $.ajax({
             type: "post",
             url: "mainApp/smallModule",
@@ -226,6 +224,7 @@ function smp(e) {
                 token: window.localStorage.token
             },
             success: function (response) {
+                $('.commentSection_wait').remove();
                 if (response.articles.length == 0) {
                     $('.navigation').after(`<div class="addArticle"><a class="addArticle-a"><div class="addArticle-word">空空如也，来添加第一篇文章吧</div><svg class="addArticle-icon" t="1617944956553" viewBox="0 0 1147 1024" version="1.1"  p-id="4251" width="200" height="200"><path fill="#707070" d="M0 956.865864 1146.877993 956.865864 1146.877993 1020.7232 0 1020.7232 0 956.865864ZM0 912.775537 300.529213 827.452006 85.868257 614.103613 0 912.775537ZM802.673951 328.370422 588.010209 115.019284 115.744481 584.378491 330.405437 797.708861 802.673951 328.370422ZM902.442885 149.154775 768.272343 15.818629C746.042941-6.277693 708.804076-5.074616 685.091594 18.484019L620.682076 82.476319 835.34721 295.826104 899.75255 231.814349C923.465032 208.254362 924.668109 171.253883 902.442885 149.154775Z" p-id="4252"></path></svg></a></div>`);
                     // 进行创作中心入口的提示用户登录操作
@@ -239,12 +238,12 @@ function smp(e) {
                     });
                     return
                 }
+                $(window).scrollTop('0px')
                 for (let i = 0; i < response.articles.length; i++) {
                     square_smallPart_create(i, response, i)
                 }
                 //首次刷新的时候加上一个待接点
                 $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
-                $(window).scrollTop('0px')
             }
         });
         return
@@ -275,8 +274,7 @@ function smp(e) {
                 token: window.localStorage.token
             },
             success: function (response) {
-                console.log(response);
-                $('.centerLeftBottom>.commentSection_wait').remove();
+                $('.commentSection_wait').remove();
                 if (response.articles.length == 0) {
                     $('.navigation').after(`<div class="addArticle"><a class="addArticle-a"><div class="addArticle-word">空空如也，来添加第一篇文章吧</div><svg class="addArticle-icon" t="1617944956553" viewBox="0 0 1147 1024" version="1.1"  p-id="4251" width="200" height="200"><path fill="#707070" d="M0 956.865864 1146.877993 956.865864 1146.877993 1020.7232 0 1020.7232 0 956.865864ZM0 912.775537 300.529213 827.452006 85.868257 614.103613 0 912.775537ZM802.673951 328.370422 588.010209 115.019284 115.744481 584.378491 330.405437 797.708861 802.673951 328.370422ZM902.442885 149.154775 768.272343 15.818629C746.042941-6.277693 708.804076-5.074616 685.091594 18.484019L620.682076 82.476319 835.34721 295.826104 899.75255 231.814349C923.465032 208.254362 924.668109 171.253883 902.442885 149.154775Z" p-id="4252"></path></svg></a></div>`);
                     // 进行创作中心入口的提示用户登录操作
@@ -290,12 +288,12 @@ function smp(e) {
                     });
                     return
                 }
+                $(window).scrollTop('0px')
                 for (let i = 0; i < response.articles.length; i++) {
                     square_smallPart_create(i, response, i)
                 }
                 //首次刷新的时候加上一个待接点
                 $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
-                $(window).scrollTop('0px')
             }
         });
     }
