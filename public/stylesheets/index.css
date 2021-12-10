@@ -878,7 +878,6 @@ body {
 
 .commentSection {
     position: relative;
-    min-height: 80px;
     background: #fdfdfd;
 }
 
@@ -887,7 +886,6 @@ body {
     border-radius: 5px;
     margin: 0 auto;
     position: relative;
-    min-height: 70px;
     background-color: #fdfdfd;
     overflow: hidden;
 }
