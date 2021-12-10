@@ -105,6 +105,7 @@ function centerLeftTopButtonAdd(e) {
 
 //大模块点击事件
 function bigPart(e) {
+    window.event.stopPropagation()
 
     $(window).scrollTop('0px')
 
@@ -117,7 +118,7 @@ function bigPart(e) {
     if (!$('.navigation')[0]) {
         //不存在navigation
         if (is_touch) {
-            //mobile
+            // 触屏设备
             $('.centerLeftTop').after(`<div style="background: #fdfdfd;padding: 2px;border-radius: 3px;width: 98%;margin: auto;position: sticky;top: 80px;z-index: 2;white-space: nowrap;overflow-x: scroll;" class="navigation"><span style="border-radius: 5px;background: #e7f9f5;color: #138bfb;margin: 3px 2px;padding: 0 5px;" bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span></div>`);
             //进行小模块的搜索请求
             let data = $('.navigation-bigM').text()
@@ -138,13 +139,13 @@ function bigPart(e) {
             });
 
         } else {
-            //pc
+            // 非触屏设备
             $('.centerLeftTop').append(`<div style="margin: 0 3px;" class="navigation"><span bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span>><span class="navigation-smallM"></span></div>`);
         }
     } else {
         //存在navigation
         if (is_touch) {
-            //mobile
+            // 触屏设备
             $('.navigation-smallM').remove();
             $('.navigation-bigM').text($(e).find('.bigMname').text()).attr('bigMid', $(e).attr('bigmid'));
             //进行小模块的搜索请求
@@ -165,7 +166,7 @@ function bigPart(e) {
                 }
             });
         } else {
-            //pc
+            // 非触屏设备
             $('.navigation-bigM').attr('bigMid', `${$(e).attr('bigmid')}`);
             $('.navigation-bigM').html(`${$(e).find('.bigMname').text()}`);
             $('.navigation-smallM').html(``);
@@ -203,10 +204,12 @@ function bigPart(e) {
             $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
         }
     });
+
 }
 
 //小模块点击事件
 function smp(e) {
+    window.event.stopPropagation()
     //mobile
     if (is_touch) {
         $('.smallm_chosen').css('color', '#2a4d6d');
@@ -244,34 +247,23 @@ function smp(e) {
             }
         });
         return
+    } else {
+        $('.centerLeftTopButton_smallbuttons').hide();
+        $('.navigation').remove();
+        $('.centerLeftTop').append(`
+        <div style="margin: 0 3px;" class="navigation">
+            <span bigmid="${$(e).parents('.centerLeftTopButton').attr('bigmid')}" class="navigation-bigM">${$(e).parents('.centerLeftTopButton').find('.bigMname').text()}</span>
+            >
+            <span smallMId="${$(e).attr('id')}" class="navigation-smallM">${$(e).text()}</span>
+        </div>
+        `);
     }
 
     $('.centerLeftBottom').html('');
-
     $('.backPast').hide();
-    if ($('.addArticle')) {
-        $('.addArticle').remove();
-    }
-    if ($('.contentSmallPart')) {
-        $('.contentSmallPart').remove();
-    }
-    $('.centerLeftTopButton>div:nth-child(2)').hide();
-    if (!$('.navigation')[0]) {
-        //初始时不存在
-        $('.centerLeftTop').append(`<div style="margin: 0 3px;" class="navigation"><span bigmid="${$(e).parents('.centerLeftTopButton').attr('bigmid')}" class="navigation-bigM">${$(e).parents('.centerLeftTopButton').find('.bigMname').text()}</span>><span smallMId="${e.id}" class="navigation-smallM">${e.innerText}</span></div>`);
-    } else {
-        //初始时存在
-        $('.navigation-bigM').attr('bigmid', `${$(e).parents('.centerLeftTopButton').attr('bigmid')}`);
-        $('.navigation-smallM').attr('smallmid', `${e.id}`);
-        $('.navigation-bigM').html(`${$(e).parents('.centerLeftTopButton').find('.bigMname').text()}`);
-        $('.navigation-smallM').html(`${e.innerText}`);
-    }
-    if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-        $('.bigMmask').show();
-        $('.mask02').remove();
-    }
 
-    $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>')
+    $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
+
     $.ajax({
         type: "post",
         url: "mainApp/smallModule",
