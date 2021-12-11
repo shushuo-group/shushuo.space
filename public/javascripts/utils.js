@@ -1,23 +1,7 @@
-/*
- * @Author: Ge junjie
- * @Description: All commen tools
+/**
+ * author: Jun_jie Ge
+ * email:1109189702@qq.com
  */
-
-// 争对小屏幕(phone)
-let arr = [screen.width, screen.height]
-arr = arr.sort()
-
-let is_mobile = false
-
-// is_mobile == true ? 小屏幕设备 ： 大屏幕设备
-if (arr[0] < 600) {
-    is_mobile = true
-}
-
-let is_touch = false
-if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
-    is_touch = true
-}
 
 //增加小模块的申请模块
 function centerLeftTopButtonAdd(e) {
@@ -113,7 +97,7 @@ function bigPart(e) {
 
     if (!$('.navigation')[0]) {
         //不存在navigation
-        if (is_touch) {
+        if (is_touch_client) {
             // 触屏设备
             $('.centerLeftTop').after(`<div style="background: #fdfdfd;padding: 2px;border-radius: 3px;width: 98%;margin: auto;position: sticky;top: 80px;z-index: 2;white-space: nowrap;overflow-x: scroll;" class="navigation"><span style="border-radius: 5px;background: #e7f9f5;color: #138bfb;margin: 3px 2px;padding: 0 5px;" bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span></div>`);
             //进行小模块的搜索请求
@@ -140,7 +124,7 @@ function bigPart(e) {
         }
     } else {
         //存在navigation
-        if (is_touch) {
+        if (is_touch_client) {
             // 触屏设备
             $('.navigation-smallM').remove();
             $('.navigation-bigM').text($(e).find('.bigMname').text()).attr('bigMid', $(e).attr('bigmid'));
@@ -208,7 +192,7 @@ function bigPart(e) {
 //小模块点击事件
 function smp(e) {
     window.event.stopPropagation()
-    if (is_touch) {
+    if (is_touch_client) {
         // 触屏设备
         $('.smallm_chosen').css('color', '#2a4d6d');
         $(e).css('color', '#ff7272');
@@ -678,7 +662,7 @@ function readAllButton(e) {
 
     let num = scroll01 + $(e).parents('.contentSmallPart')[0].getBoundingClientRect().top - $('.top')[0].clientHeight;
 
-    if (is_mobile) {
+    if (is_small_client) {
         //mobile
         num -= $('.centerLeftTop')[0].clientHeight
         let temp = $('.navigation')
@@ -1718,7 +1702,7 @@ function timeSet(dataServe) {
 
 //适配手机端的点击功能
 function bigMmask(e) {
-    if (!is_touch) {
+    if (!is_touch_client) {
         $(e).hide();
         $(e).siblings('.centerLeftTopButton_smallbuttons').show().css('z-index', '3');
         $('.centerLeftTop').after('<div class="mask02"></div>');
@@ -2064,7 +2048,7 @@ function noticeClick(e) {
                     <div class="notice_part">
                      <section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>
                      </div>`
-    if (is_mobile) {
+    if (is_small_client) {
         temp_html = `
         <div style="z-index: 2;" class='mask'></div>
         <div class="notice_part">
@@ -2079,7 +2063,7 @@ function noticeClick(e) {
         'right': '0',
         'z-index': '1'
     }
-    if (is_mobile) {
+    if (is_small_client) {
         temp_css = {}
     }
 
@@ -2087,7 +2071,7 @@ function noticeClick(e) {
 
     let temp_left = $('.notice')[0].getBoundingClientRect().right - $('.notice').width() / 2 - 10
 
-    if (!is_mobile) {
+    if (!is_small_client) {
         $('.notice_part_span').css({
             'position': 'fixed',
             'left': `${temp_left}px`
@@ -2131,7 +2115,7 @@ function noticeClick(e) {
             </div>
             <div class="notice_part_small notice_part_bottom"></div>
             `);
-            if (!is_mobile) {
+            if (!is_small_client) {
                 $('.notice_part_top').css('border-top-right-radius', '0');
             }
             for (let i = 0; i < response.length; i++) {
@@ -2236,7 +2220,7 @@ async function notSingleCheck_email() {
             }
             if (response.isCheck == true) {
                 $('#jump_window').html('');
-                if (!is_mobile) {
+                if (!is_small_client) {
                     $('#message_number').html('');
                 }
             }
@@ -2287,7 +2271,7 @@ function messageClick(e) {
     let temp_html = `
     <span class="message_part_span"></span>
     <div class="message_part"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div>`
-    if (is_mobile) {
+    if (is_small_client) {
         temp_html = `
         <div style="z-index: 2;" class='mask'></div>
         <div class="message_part">
@@ -2300,7 +2284,7 @@ function messageClick(e) {
         'top': `${$('.top').height()}px`,
         'z-index': '1'
     }
-    if (is_mobile) {
+    if (is_small_client) {
         temp_css = {}
     }
 
@@ -2308,7 +2292,7 @@ function messageClick(e) {
 
     let temp_left = $('.message')[0].getBoundingClientRect().right - $('.message').width() / 2 - 10
 
-    if (!is_mobile) {
+    if (!is_small_client) {
         $('.message_part_span').css({
             'position': 'fixed',
             'left': `${temp_left}px`
@@ -2355,7 +2339,7 @@ function messageClick(e) {
             <div style='display:none;' class="message_part_small message_part_bottom"></div>
             `);
 
-            if (!is_mobile) {
+            if (!is_small_client) {
                 $('.message_part_top').css('border-top-right-radius', '0');
             }
 

@@ -1,3 +1,8 @@
+/**
+ * author: Jun_jie Ge
+ * email:1109189702@qq.com
+ */
+
 $(document).ready(async function () {
     $('#getCheckNum').click(function () {
         if ($('#userEmail').val() == '') {

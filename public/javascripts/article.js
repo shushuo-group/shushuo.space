@@ -1,3 +1,8 @@
+/**
+ * author: Jun_jie Ge
+ * email:1109189702@qq.com
+ */
+
 $(document).ready(async function () {
     //代码块复制及编辑以及增加了左侧序号
     function codeRepeat() {

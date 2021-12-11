@@ -1,0 +1,138 @@
+.commentSection {
+    position: relative;
+    background: #fdfdfd;
+}
+
+.commentSectionArea {
+    border: 3px solid #90ccf7;
+    border-radius: 5px;
+    margin: 0 auto;
+    position: relative;
+    background-color: #fdfdfd;
+    overflow: hidden;
+}
+
+.othersComment>div:nth-child(1) {
+    min-height: 20px;
+    font-size: 12px;
+}
+
+.othersComment>div:nth-child(1)>span {
+    font-size: 15px;
+    color: #03a9f4;
+}
+
+.Comments {
+    min-height: 20px;
+}
+
+.Comments_small {
+    border-bottom: 2px dotted #c3c3c3;
+    margin: 0 1px;
+}
+
+.Comments_small_second {
+    width: 98%;
+    position: relative;
+    left: 2%;
+}
+
+.Comments_small_head {
+    width: 20px;
+    border-radius: 2px;
+    position: relative;
+    top: 2px;
+    left: 2px;
+    height: 20px;
+}
+
+.firstComment {
+    text-align: right;
+    margin: 0 2px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.Comments_small_like {
+    cursor: pointer;
+}
+
+.Comments_small_comment {
+    cursor: pointer;
+}
+
+.Comments_small_name {
+    font-weight: bold;
+}
+
+.othersComment {
+    width: 100%;
+    min-height: 45px;
+}
+
+.CommentInputArea {
+    width: 100%;
+    overflow: hidden;
+    min-height: 25px;
+    font-size: 0;
+    display: flex;
+}
+
+.CommentInputArea>div {
+    display: inline-block;
+    flex: 1;
+}
+
+.CommentInputArea>div:nth-child(1) {
+    font-size: 12px;
+}
+
+.CommentInputArea>div:nth-child(1)>span {
+    display: block;
+    width: 99%;
+    margin: 2px auto;
+    border: 1px solid #138bfb;
+}
+
+.CommentInputArea>div:nth-child(1)>span>span {
+    display: block;
+    outline: 0;
+    width: 99%;
+    margin: 0 auto;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.CommentInputArea>div:nth-child(2) {
+    font-size: 12px;
+    max-width: 100px;
+    position: relative;
+}
+
+.CommentInputArea>div:nth-child(2)>div {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+    margin: 0 auto;
+}
+
+.CommentInputArea>div:nth-child(2)>div>span {
+    font-weight: 600;
+    text-align: center;
+    background-color: #03a9f4;
+    display: block;
+    width: 45px;
+    height: 18px;
+    line-height: 18px;
+    color: #fff;
+    margin: 0 auto;
+    position: relative;
+    top: 3.5px;
+    border-radius: 3px;
+    cursor: pointer;
+}

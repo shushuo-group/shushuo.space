@@ -1,3 +1,8 @@
+/**
+ * author: Jun_jie Ge
+ * email:1109189702@qq.com
+ */
+
 html,
 body,
 div,
@@ -92,7 +97,7 @@ img {
     -ms-user-select: none;
     user-select: none;
     cursor: zoom-in;
-    margin: auto;
+    /* margin: auto; */
     position: relative;
     display: block;
     left: 0px;
@@ -683,6 +688,10 @@ body {
     line-height: 2;
 }
 
+.innerContent img {
+    margin: auto;
+}
+
 .contentExploreMask {
     cursor: initial;
     text-align: center;
@@ -759,151 +768,6 @@ body {
     display: inline-block;
     font-size: 12px;
     color: #9e9e9e;
-}
-
-.commentSection {
-    background-color: #e7f9f5;
-    position: relative;
-    min-height: 80px;
-}
-
-.commentSectionArea {
-    border: 1px solid #90ccf7;
-    border-radius: 5px;
-    bottom: 3px;
-    width: 99%;
-    min-height: 70px;
-    background-color: #fdfdfd;
-    overflow: hidden;
-    margin: auto;
-    margin-bottom: 4px;
-}
-
-.othersComment>div:nth-child(1) {
-    min-height: 40px;
-    border-bottom: 1px dotted #000;
-    font-size: 20px;
-}
-
-.othersComment>div:nth-child(1)>span {
-    font-size: 20px;
-    color: #03a9f4;
-}
-
-.Comments {
-    min-height: 20px;
-    line-height: 20px;
-}
-
-.Comments_small {
-    border-bottom: 2px dotted #c3c3c3;
-    margin: 0 1px;
-}
-
-.Comments_small_second {
-    width: 98%;
-    position: relative;
-    left: 2%;
-    background: #fdfdfd;
-    border-radius: 5px;
-}
-
-.Comments_small_head {
-    width: 30px;
-    height: 30px;
-    border-radius: 2px;
-    position: relative;
-    top: 0;
-    left: 0;
-    margin: unset;
-    cursor: pointer;
-}
-
-.firstComment {
-    text-align: right;
-    margin: 0 2px;
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.Comments_small_name {
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.othersComment {
-    width: 100%;
-    min-height: 45px;
-}
-
-.CommentInputArea {
-    width: 100%;
-    overflow: hidden;
-    min-height: 25px;
-    font-size: 0;
-    display: flex;
-}
-
-.CommentInputArea>div {
-    display: inline-block;
-    flex: 1;
-}
-
-.CommentInputArea>div:nth-child(1) {
-    font-size: 12px;
-}
-
-.CommentInputArea>div:nth-child(1)>span {
-    display: block;
-    width: 99%;
-    margin: 2px auto;
-    border: 1px solid #138bfb;
-    min-height: 20px;
-    font-size: 20px;
-}
-
-.CommentInputArea>div:nth-child(1)>span>span {
-    display: block;
-    outline: 0;
-    width: 100%;
-    width: 99%;
-    margin: 0 auto;
-    line-height: 1.5;
-    cursor: pointer;
-}
-
-.CommentInputArea>div:nth-child(2) {
-    font-size: 12px;
-    max-width: 100px;
-    position: relative;
-}
-
-.CommentInputArea>div:nth-child(2)>div {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 25px;
-    margin: 0 auto;
-}
-
-.CommentInputArea>div:nth-child(2)>div>span {
-    font-weight: 600;
-    text-align: center;
-    background-color: #03a9f4;
-    display: block;
-    width: 45px;
-    height: 18px;
-    line-height: 18px;
-    color: #fff;
-    margin: 0 auto;
-    position: relative;
-    top: 3.5px;
-    border-radius: 3px;
-    cursor: pointer;
 }
 
 .centerRight {

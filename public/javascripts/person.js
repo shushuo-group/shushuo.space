@@ -1,3 +1,8 @@
+/**
+ * author: Jun_jie Ge
+ * email:1109189702@qq.com
+ */
+
 $(document).ready(function () {
     //href规则化
     let search_data = {}
@@ -314,7 +319,7 @@ $(document).ready(function () {
                                     $('.ATLP-Basic-cut').css('left', $('.AOA-top-left-part')[0].clientWidth / 2 - $('.ATLP-Basic-cut')[0].offsetWidth / 2);
 
                                     // no touch
-                                    if (!is_touch) {
+                                    if (!is_touch_client) {
                                         $('.ATLP-Basic-cut').mousedown(function (e) {
                                             e.stopPropagation();
                                             e.preventDefault();
@@ -359,7 +364,7 @@ $(document).ready(function () {
                                     }
 
                                     // touch
-                                    if (is_touch) {
+                                    if (is_touch_client) {
                                         $('.ATLP-Basic-cut').on('touchstart', function (e) {
                                             e.stopPropagation();
                                             e.preventDefault();
@@ -432,7 +437,7 @@ $(document).ready(function () {
                                     });
 
                                     // no touch
-                                    if (!is_touch) {
+                                    if (!is_touch_client) {
                                         $('.ATLP-Basic-cut').mousedown(function (e) {
                                             e.stopPropagation()
                                             e.preventDefault();
@@ -476,7 +481,7 @@ $(document).ready(function () {
                                     }
 
                                     // touch
-                                    if (is_touch) {
+                                    if (is_touch_client) {
                                         $('.ATLP-Basic-cut').on('touchstart', function (e) {
                                             e.stopPropagation();
                                             e.preventDefault();
