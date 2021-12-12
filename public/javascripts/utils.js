@@ -173,7 +173,7 @@ function bigPart(e) {
                         //未登录
                         noLogin()
                     } else {
-                        location.href = 'https://www.shushuo.spacewriter'
+                        location.href = 'https://www.shushuo.space/writer'
                     }
                 });
                 return
@@ -217,7 +217,7 @@ function smp(e) {
                             //未登录
                             noLogin()
                         } else {
-                            location.href = 'https://www.shushuo.spacewriter'
+                            location.href = 'https://www.shushuo.space/writer'
                         }
                     });
                     return
@@ -267,7 +267,7 @@ function smp(e) {
                             //未登录
                             noLogin()
                         } else {
-                            location.href = 'https://www.shushuo.spacewriter'
+                            location.href = 'https://www.shushuo.space/writer'
                         }
                     });
                     return
@@ -289,7 +289,7 @@ function smp(e) {
 function tokenWork(data) {
     if (data.isLogin == true || data.isReg == true || data.isCheck == true) {
         window.localStorage.token = data.token
-        location.href = 'https://www.shushuo.space'
+        location.href = 'https://www.shushuo.space/'
     }
 }
 // 前端处理传回的token的方法 将token存入window.localStorage
@@ -468,7 +468,7 @@ function firstFlush_hidden(data) {
 
             $(imgs[i]).attr('onerror', "picError(this)");
 
-            let temp = 'https://www.shushuo.space'
+            let temp = 'https://www.shushuo.space/'
             let temp_str = $(imgs[i]).attr('src').substr(0, temp.length)
             let temp_pic_zip_dir = '/zipped_pic/'
 
@@ -1159,7 +1159,7 @@ function collect_person(e) {
 function share(e) {
     $(e).append(`<input readonly="readonly" style="text-indent: 0;background: transparent;border: 0 none;resize:none;outline:none;-webkit-appearance:none;line-height: normal;position: fixed;width: 1px;top: 0;height: 1px;">`);
     let temp = $(e).find('input')[0];
-    temp.value = `https://www.shushuo.spacearticle?articleId=${$(e).parents('.contentSmallPart').find('.contentSmallPartTop').attr('articleId')}`
+    temp.value = `https://www.shushuo.space/article?articleId=${$(e).parents('.contentSmallPart').find('.contentSmallPartTop').attr('articleId')}`
     temp.select();
     document.execCommand("Copy");
     $(e).find('input').remove();
@@ -1521,7 +1521,7 @@ function toPerson(e) {
 
 //person页面详情点击按钮
 function getDetail(e) {
-    window.open(`https://www.shushuo.spacearticle?articleId=${$(e).parents('.article_smallCard').attr('articleid')}`)
+    window.open(`https://www.shushuo.space/article?articleId=${$(e).parents('.article_smallCard').attr('articleid')}`)
 }
 
 //草稿箱的删除功能
@@ -1555,7 +1555,7 @@ function draftBox_delete(e) {
             },
             success: function (response) {
                 if (response.isLogin == false) {
-                    location.href = 'https://www.shushuo.space'
+                    location.href = 'https://www.shushuo.space/'
                     return
                 }
                 if (response.isDelete == true) {
@@ -1602,7 +1602,7 @@ function articleaction_delete(e) {
             },
             success: function (response) {
                 if (response.isLogin == false) {
-                    location.href = 'https://www.shushuo.space'
+                    location.href = 'https://www.shushuo.space/'
                     return
                 }
                 if (response.isDelete == true) {
@@ -1651,7 +1651,7 @@ function commentaction_delete(e) {
             },
             success: function (response) {
                 if (response.isLogin == false) {
-                    location.href = 'https://www.shushuo.space'
+                    location.href = 'https://www.shushuo.space/'
                     return
                 }
                 if (response.isDelete == true) {
@@ -1769,7 +1769,7 @@ function secCommmentSubmit(e) {
                 $('.centerRightTopPart3_number').html(`${Number($('.centerRightTopPart3_number').text()) + 1}`);
             }
             $(e).parents('.commentSectionArea').find('#commentContent').html('')
-            if (window.location.href == 'https://www.shushuo.space') {
+            if (window.location.href == 'https://www.shushuo.space/') {
                 $(e).attr('onclick', 'commmentSubmit(this)');
             } else {
                 $(e).attr('onclick', 'commmentSubmit_article(this)');
@@ -1812,7 +1812,7 @@ function backRemove(e) {
             },
             success: function (response) {
                 if (response.isLogin == false) {
-                    location.href = 'https://www.shushuo.space'
+                    location.href = 'https://www.shushuo.space/'
                     return
                 }
                 if (response.isBack == true) {
@@ -1982,7 +1982,7 @@ function search_history(e) {
                                 ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
                             </div>
                         </div>
-                        <a target="_blank" href="https://www.shushuo.spacearticle?articleId=${response.article_search[i].articleId}">
+                        <a target="_blank" href="https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}">
                             <div style="display: block;" class="content">
                                 <div class="article_small">
                                     ${response.article_search[i].articleContent}
@@ -2094,7 +2094,7 @@ function noticeClick(e) {
         },
         success: function (response) {
             if (response.isLogin == false) {
-                window.location.href = 'https://www.shushuo.space'
+                window.location.href = 'https://www.shushuo.space/'
                 return
             }
             $('#notice_number').html(response.length);
@@ -2142,7 +2142,7 @@ function singleCheck(e) {
         },
         success: function (response) {
             if (response.isLogin == false) {
-                window.location.href = 'https://www.shushuo.space'
+                window.location.href = 'https://www.shushuo.space/'
                 return
             }
             if (response.isCheck == true) {
@@ -2180,7 +2180,7 @@ async function notSingleCheck(e) {
         },
         success: function (response) {
             if (response.isLogin == false) {
-                window.location.href = 'https://www.shushuo.space'
+                window.location.href = 'https://www.shushuo.space/'
                 return
             }
             if (response.isCheck == true) {
@@ -2208,7 +2208,7 @@ async function notSingleCheck_email() {
         },
         success: function (response) {
             if (response.isLogin == false) {
-                window.location.href = 'https://www.shushuo.space'
+                window.location.href = 'https://www.shushuo.space/'
                 return
             }
             if (response.isCheck == true) {
@@ -2315,7 +2315,7 @@ function messageClick(e) {
         },
         success: function (response) {
             if (response.isLogin == false) {
-                window.location.href = 'https://www.shushuo.space'
+                window.location.href = 'https://www.shushuo.space/'
                 return
             }
 

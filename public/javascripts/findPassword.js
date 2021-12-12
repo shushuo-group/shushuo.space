@@ -48,7 +48,7 @@ $(document).ready(async function () {
                     return
                 }
                 if (response.token !== undefined) {
-                    location.href = 'https://www.shushuo.space'
+                    location.href = 'https://www.shushuo.space/'
                 }
             }
         });

@@ -262,7 +262,7 @@ $(document).ready(async function () {
                                 ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
                             </div>
                         </div>
-                        <div onclick='window.open("https://www.shushuo.spacearticle?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
+                        <div onclick='window.open("https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
                             <div style="display: block;" class="content">
                                 <div class="article_small" style="display:none;">
                                     ${response.article_search[i].articleContent}
@@ -375,7 +375,7 @@ $(document).ready(async function () {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 localStorage.clear();
-                                location.href = 'https://www.shushuo.space'
+                                location.href = 'https://www.shushuo.space/'
                             });
 
                         });
@@ -406,7 +406,7 @@ $(document).ready(async function () {
                                 },
                                 success: function (response) {
                                     if (response.isLogin == false) {
-                                        window.location.href = 'https://www.shushuo.space'
+                                        window.location.href = 'https://www.shushuo.space/'
                                         return
                                     }
                                     if (response.number == 0) {
@@ -421,7 +421,7 @@ $(document).ready(async function () {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 localStorage.clear();
-                                location.href = 'https://www.shushuo.space'
+                                location.href = 'https://www.shushuo.space/'
                             });
 
                         });
@@ -447,7 +447,7 @@ $(document).ready(async function () {
                     e.preventDefault();
                     e.stopPropagation();
                     localStorage.clear();
-                    location.href = 'https://www.shushuo.space'
+                    location.href = 'https://www.shushuo.space/'
                 });
 
                 // 登录状态下的搜索(just for pc & ipad , not support for ipad)
@@ -652,7 +652,7 @@ $(document).ready(async function () {
                                                 ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
                                             </div>
                                         </div>
-                                        <a target="_blank" href="https://www.shushuo.spacearticle?articleId=${response.article_search[i].articleId}">
+                                        <a target="_blank" href="https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}">
                                             <div class="content" style="display:block;">
                                                 <div class="article_small">
                                                     ${response.article_search[i].articleContent}
@@ -738,7 +738,7 @@ $(document).ready(async function () {
                     },
                     success: function (response) {
                         if (response.isLogin == false) {
-                            window.location.href = 'https://www.shushuo.space'
+                            window.location.href = 'https://www.shushuo.space/'
                             return
                         }
                         if (response.number == 0) {
@@ -760,7 +760,7 @@ $(document).ready(async function () {
                     },
                     success: function (response) {
                         if (response.isLogin == false) {
-                            window.location.href = 'https://www.shushuo.space'
+                            window.location.href = 'https://www.shushuo.space/'
                             return
                         }
                         if (response.number == 0) {
@@ -920,7 +920,7 @@ $(document).ready(async function () {
                                                 ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
                                             </div>
                                         </div>
-                                        <a target="_blank" href="https://www.shushuo.spacearticle?articleId=${response.article_search[i].articleId}">
+                                        <a target="_blank" href="https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}">
                                             <div class="content" style="display:block;">
                                                 <div class="article_small">
                                                     ${response.article_search[i].articleContent}
@@ -1125,7 +1125,7 @@ $(document).ready(async function () {
                             ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
                         </div>
                     </div>
-                    <div onclick='window.open("https://www.shushuo.spacearticle?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
+                    <div onclick='window.open("https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
                         <div style="display: block;" class="content">
                             <div class="article_small" style="display:none;">
                                 ${response.article_search[i].articleContent}
@@ -1446,7 +1446,7 @@ $(document).ready(async function () {
             //未登录
             noLogin()
         } else {
-            window.open('https://www.shushuo.spacewriter')
+            window.open('https://www.shushuo.space/writer')
         }
     });
 
@@ -1509,7 +1509,7 @@ $(document).ready(async function () {
                         $('.toArticleDetail:nth(' + i + ')').click(function (e) {
                             e.preventDefault();
                             e.stopPropagation();
-                            window.location.href = `https://www.shushuo.spacearticle?articleId=${response[i].id}`
+                            window.location.href = `https://www.shushuo.space/article?articleId=${response[i].id}`
                         });
                     }
 
