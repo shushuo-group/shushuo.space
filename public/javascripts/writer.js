@@ -106,7 +106,7 @@ $(document).ready(async function () {
                         //GIF
                         $.ajax({
                             type: "post",
-                            url: "http://localhost:6788/uploadfile/",
+                            url: "http://121.4.170.20:6788/uploadfile/",
                             data: data,
                             processData: false,
                             contentType: false,
@@ -156,7 +156,7 @@ $(document).ready(async function () {
                 //普通图片
                 $.ajax({
                     type: "post",
-                    url: "http://localhost:6788/uploadfile/",
+                    url: "http://121.4.170.20:6788/uploadfile/",
                     data: data,
                     processData: false,
                     contentType: false,
