@@ -472,14 +472,6 @@ function firstFlush_hidden(data) {
             let temp_str = $(imgs[i]).attr('src').substr(0, temp.length)
             let temp_pic_zip_dir = '/zipped_pic/'
 
-            // if (($(imgs[i]).attr('src').substr(0, temp_pic_zip_dir.length) !== temp_pic_zip_dir) && (temp !== temp_str)) {
-            //     //非法图片
-            //     $(imgs[i]).attr({
-            //         src: '0702',
-            //         means: '3rd'
-            //     });
-            // }
-
             $(imgs[i]).css({
                 'user-select': 'none',
                 'cursor': 'zoom-in',
