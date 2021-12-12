@@ -470,8 +470,9 @@ function firstFlush_hidden(data) {
 
             let temp = 'https://www.shushuo.space/'
             let temp_str = $(imgs[i]).attr('src').substr(0, temp.length)
+            let temp_pic_zip_dir = '/zipped_pic/'
 
-            if (($(imgs[i]).attr('src').substr(0, 5) !== '/pic/') && (temp !== temp_str)) {
+            if (($(imgs[i]).attr('src').substr(0, temp_pic_zip_dir.length) !== temp_pic_zip_dir) && (temp !== temp_str)) {
                 //非法图片
                 $(imgs[i]).attr({
                     src: '0702',
@@ -771,7 +772,7 @@ function square_smallPart_create(i, response, i2) {
     $('.centerLeftBottom').append(`<div class="contentSmallPart">
                         <div class="contentSmallPartTop" articleId="${response.articles[i].articleId}">
                             <div>
-                                <span id="${response.articles[i].writerId}" class="contentSmallPartTopSmall contentSmallPartHead" onclick="toUserMainPage(this)"><img onerror=\'picError(this)\' onerror=\'picError(this)\' src="/head/${response.articles[i].writerHead == "NaN.png" ? "staticIMG/NaN.png" : response.articles[i].writerHead}" alt=""></span>
+                                <span id="${response.articles[i].writerId}" class="contentSmallPartTopSmall contentSmallPartHead" onclick="toUserMainPage(this)"><img onerror=\'picError(this)\' onerror=\'picError(this)\' src="/zipped_pic/${response.articles[i].writerHead == "NaN.png" ? "NaN.png" : response.articles[i].writerHead}" alt=""></span>
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.articles[i].writerName)}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.articles[i].writerWord}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.articles[i].articleTime)}</span>
@@ -1376,7 +1377,7 @@ async function remark(e) {
                 for (let i = 0; i < data.comment.length; i++) {
                     $(e).parents('.contentSmallPart').find('.Comments').append(`
                     <div class="Comments_small">
-                        <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${data.comment[i].headimg == "NaN.png" ? "staticIMG/NaN.png" : data.comment[i].headimg}" id="${data.comment[i].comUserId}" class="Comments_small_head">
+                        <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${data.comment[i].headimg == "NaN.png" ? "NaN.png" : data.comment[i].headimg}" id="${data.comment[i].comUserId}" class="Comments_small_head">
                         <span class="Comments_small_name">${xssFilter(data.comment[i].comUser)}：</span>
                         <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(data.comment[i].content)}</div>
                         <div commentId="${data.comment[i].id}" class="firstComment">
@@ -1391,7 +1392,7 @@ async function remark(e) {
                         for (let j = 0; j < data.comment[i].secComments.length; j++) {
                             $(e).parents('.contentSmallPart').find('.Comments_small:nth(' + i + ')').append(`
                             <div class="Comments_small_second">
-                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${data.comment[i].secComments[j].comUserHead == "NaN.png" ? "staticIMG/NaN.png" : data.comment[i].secComments[j].comUserHead}" id="${data.comment[i].secComments[j].comUserId}" class="Comments_small_head">
+                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${data.comment[i].secComments[j].comUserHead == "NaN.png" ? "NaN.png" : data.comment[i].secComments[j].comUserHead}" id="${data.comment[i].secComments[j].comUserId}" class="Comments_small_head">
                             <span class="Comments_small_name">${xssFilter(data.comment[i].secComments[j].comUserName)}：</span>
                             <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(data.comment[i].secComments[j].content)}</div>
                             <div commentid="${data.comment[i].secComments[j].id}" class="firstComment">
@@ -1764,7 +1765,7 @@ function secCommmentSubmit(e) {
             if (response.isSuccess == true) {
                 $(e).parents('.commentSectionArea').find('.Comments_small_comment[is_chosen="true"]').parents('.Comments_small').append(`
                 <div class="Comments_small_second">
-                        <img onerror=\'picError(this)\' src="/head/${response.comUserHead == "NaN.png" ? "staticIMG/NaN.png" : response.comUserHead}" class="Comments_small_head">
+                        <img onerror=\'picError(this)\' src="/zipped_pic/${response.comUserHead == "NaN.png" ? "NaN.png" : response.comUserHead}" class="Comments_small_head">
                         <span class="Comments_small_name">${xssFilter(response.comUserName)}：</span>
                         <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subContent)}</div>
                         <div commentid="${response.id}" class="firstComment">
@@ -1934,7 +1935,7 @@ function search_history(e) {
                         <div class="user_small_main">
                             <span>
                                 <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                    <img onerror=\'picError(this)\' src="/head/${response.user_search[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
+                                    <img onerror=\'picError(this)\' src="/zipped_pic/${response.user_search[i].headImg == "NaN.png" ? "NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
                                 </a>
                             </span>
                             <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -1956,7 +1957,7 @@ function search_history(e) {
 
                 function a(data) {
                     if (response.article_search[data].writerHead == 'NaN.png') {
-                        let b = 'staticIMG/NaN.png'
+                        let b = 'NaN.png'
                         return b
                     } else {
                         return response.article_search[data].writerHead
@@ -1969,7 +1970,7 @@ function search_history(e) {
                             <div>
                                 <span id="6097c9f92347ed2f9cdd4d18">
                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\' src='/head/"+a(i)+"'>"}
+                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\' src='/zipped_pic/"+a(i)+"'>"}
                                     </a>
                                 </span>
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>

@@ -18,7 +18,7 @@ $(document).ready(async function () {
                 location.href = 'https://www.shushuo.space/'
                 return
             }
-            $('.headImgPart').html(`<a style="cursor:pointer;" onclick='window.open("/person?userId=${response.data_id}")'><img onerror=\'picError(this)\' class="head" src=/head/${response.userHeadimg == "NaN.png" ? "staticIMG/NaN.png" : response.userHeadimg}></a>`);
+            $('.headImgPart').html(`<a style="cursor:pointer;" onclick='window.open("/person?userId=${response.data_id}")'><img onerror=\'picError(this)\' class="head" src=/zipped_pic/${response.userHeadimg == "NaN.png" ? "NaN.png" : response.userHeadimg}></a>`);
         }
     });
 
@@ -100,31 +100,33 @@ $(document).ready(async function () {
                         });
                         var data = new FormData();
                         data.append('file', Blob2ImageFileForWXBrowser);
+                        data.append('token', window.localStorage.token);
 
 
+                        //GIF
                         $.ajax({
                             type: "post",
-                            url: "/uploadMedia/sendImg",
+                            url: "http://localhost:6788/uploadfile/",
                             data: data,
                             processData: false,
                             contentType: false,
                             success: function (response) {
-                                insertImgFn(`/pic/${response.data[0].url}`)
+                                insertImgFn(`/zipped_pic/${response.path}`)
 
                                 $('.commentSection_wait').remove();
 
-                                $('img[src="/pic/' + response.data[0].url + '"]').css({
+                                $('img[src="/pic/' + response.path + '"]').css({
                                     'margin': '0 auto',
                                     'margin-top': '10px',
                                     'display': 'block'
                                 });
-                                $('img[src="/pic/' + response.data[0].url + '"]').attr('width', '50%');
+                                $('img[src="/pic/' + response.path + '"]').attr('width', '50%');
 
                                 editor.txt.append('<p><br></p>')
 
                                 var a = $('body').data('img02')
                                 a.push({
-                                    imgSrc: 'https://www.shushuo.space/pic/' + response.data[0].url
+                                    imgSrc: 'https://www.shushuo.space/pic/' + response.path
                                 })
                                 $('body').data('img02', a)
                             }
@@ -149,30 +151,33 @@ $(document).ready(async function () {
                 })
                 var data = new FormData();
                 data.append('file', compresFile);
+                data.append('token', window.localStorage.token);
+
+                //普通图片
                 $.ajax({
                     type: "post",
-                    url: "/uploadMedia/sendImg",
+                    url: "http://localhost:6788/uploadfile/",
                     data: data,
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        insertImgFn(`/pic/${response.data[0].url}`)
+                        insertImgFn(`/zipped_pic/${response.path}`)
 
                         $('.commentSection_wait').remove();
 
-                        $('img[src="/pic/' + response.data[0].url + '"]').css({
+                        $('img[src="/pic/' + response.path + '"]').css({
                             'margin': '0 auto',
                             'margin-top': '10px',
                             'display': 'block'
                         });
-                        $('img[src="/pic/' + response.data[0].url + '"]').attr('width', '50%');
+                        $('img[src="/pic/' + response.path + '"]').attr('width', '50%');
 
 
                         editor.txt.append('<p><br></p>')
 
                         var a = $('body').data('img02')
                         a.push({
-                            imgSrc: 'https://www.shushuo.space/pic/' + response.data[0].url
+                            imgSrc: 'https://www.shushuo.space/pic/' + response.path
                         })
                         $('body').data('img02', a)
                     }

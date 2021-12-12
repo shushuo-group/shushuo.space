@@ -64,9 +64,9 @@ $(document).ready(function () {
                     }
                 })
                 if (response.user.headImg == 'NaN.png') {
-                    $('.headpic').append('<img onerror=\'picError(this)\' src="/head/staticIMG/' + response.user.headImg + '">');
+                    $('.headpic').append('<img onerror=\'picError(this)\' src="/zipped_pic/' + response.user.headImg + '">');
                 } else {
-                    $('.headpic').append('<img onerror=\'picError(this)\' src="/head/' + response.user.headImg + '">');
+                    $('.headpic').append(`<img onerror=\'picError(this)\' src="/zipped_pic/${response.user.headImg}">`);
                 }
 
                 $('.articles').addClass('select');
@@ -356,7 +356,7 @@ $(document).ready(function () {
                                             });
                                             $('.ATLP-Basic-cut').mouseup(function () {
                                                 e.stopPropagation();
-                                                e.preventDefault(); 
+                                                e.preventDefault();
                                                 $('.ATLP-Basic-cut').unbind('mousemove');
                                                 $('body').css('cursor', 'unset');
                                             });
@@ -546,19 +546,19 @@ $(document).ready(function () {
                             var h = clone[1].yy - clone[0].y;
                             var cutImage = content.getImageData(clone[0].x, clone[0].y, w, h);
                             var newImage = createNewCanvas(cutImage, w, h);
-                            var upgheadImg = await base64toFile(newImage, window.localStorage.token)
-                            //文件名携带了本地token信息
+                            var upgheadImg = await base64toFile(newImage)
                             var data = new FormData();
                             data.append('file', upgheadImg);
-                            $('.AOA-bottom').prepend('<section style="position: absolute;bottom: 30px;" class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>');
+                            data.append('token', window.localStorage.token);
+                            $('.AOA-bottom').prepend('<section style="position: absolute;bottom: 30px;" class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>');
                             $.ajax({
                                 type: "post",
-                                url: "/uploadMedia/sendHeadImg",
+                                url: "http://localhost:6788/uploadfile/",
                                 data: data,
                                 processData: false,
                                 contentType: false,
                                 success: function (response) {
-                                    if (response.isUpload == true) {
+                                    if (response.path) {
                                         $('.AOA-bottom>.commentSection_wait').remove();
 
                                         if ($('.headpic>img')[0]) {
@@ -577,7 +577,7 @@ $(document).ready(function () {
                                             'z-index': '5',
                                             'background-color': 'rgba(0,0,0,.5)'
                                         });
-                                        $('.headpic').append('<img onerror=\'picError(this)\' src="/head/' + response.userHeadName + '">');
+                                        $('.headpic').append(`<img onerror=\'picError(this)\' src="/zipped_pic/${response.path}">`);
                                         $('.headpic').hover(function () {
                                             // over
                                             if ($('.headpic>img')[0]) {
@@ -589,6 +589,20 @@ $(document).ready(function () {
                                                 $('.headpicSvg').hide();
                                             }
                                         })
+
+                                        let temp_data = response.path
+                                        $.ajax({
+                                            type: "post",
+                                            url: "/uploadMedia/sendHeadImg",
+                                            data: {
+                                                'pic_dir': temp_data,
+                                                'token': window.localStorage.token
+                                            },
+                                            success: function (response) {
+                                                console.log(response);
+                                            }
+                                        });
+
                                     }
                                 }
                             });
@@ -1027,7 +1041,7 @@ $(document).ready(function () {
                         userId: window.location.search.split('=')[1]
                     },
                     success: function (response) {
-                        $('.headpic').append('<img onerror=\'picError(this)\' src="/head/' + response + '">');
+                        $('.headpic').append('<img onerror=\'picError(this)\' src="/zipped_pic/' + response + '">');
                     }
                 });
 

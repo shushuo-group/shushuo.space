@@ -29,8 +29,9 @@ $(document).ready(async function () {
 
             let temp = 'https://www.shushuo.space/'
             let temp_str = $(imgs[i]).attr('src').substr(0, temp.length)
+            let temp_pic_zip_dir = '/zipped_pic/'
 
-            if (($(imgs[i]).attr('src').substr(0, 5) !== '/pic/') && (temp !== temp_str)) {
+            if (($(imgs[i]).attr('src').substr(0, temp_pic_zip_dir.length) !== temp_pic_zip_dir) && (temp !== temp_str)) {
                 //非法图片
                 $(imgs[i]).attr({
                     src: '0702',
@@ -191,7 +192,7 @@ $(document).ready(async function () {
                 //登录成功
                 $('#loginButton').remove();
                 $('#userHead').append(`
-                <img onerror=\'picError(this)\' onclick="window.open('/person?userId=${response.data_id}')" username="${response.userName}" src="/head/${response.userHeadimg == "NaN.png" ? "staticIMG/NaN.png" : response.userHeadimg}">
+                <img onerror=\'picError(this)\' onclick="window.open('/person?userId=${response.data_id}')" username="${response.userName}" src="/zipped_pic/${response.userHeadimg == "NaN.png" ? "NaN.png" : response.userHeadimg}">
                 `);
             } else {
                 localStorage.clear();
@@ -380,7 +381,7 @@ $(document).ready(async function () {
                 for (let i = 0; i < response.sendData.comments.length; i++) {
                     $('.Comments').append(`
                     <div class="Comments_small">
-                    <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.sendData.headImgs[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
+                    <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${response.sendData.headImgs[i].headImg == "NaN.png" ? "NaN.png" : response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
                     <span accountId="${response.sendData.comments[i].accountId}" idname="${response.sendData.comments[i].comUser}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].comUser)}：</span>
                     <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].content)}</div>
                     <div commentId="${response.sendData.comments[i].id}" class="firstComment">
@@ -394,7 +395,7 @@ $(document).ready(async function () {
                         for (let j = 0; j < response.sendData.comments[i].secComments.length; j++) {
                             $('.Comments_small:nth(' + i + ')').append(`
                             <div class="Comments_small_second">
-                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.sendData.comments[i].secComments[j].comUserHead == "NaN.png" ? "staticIMG/NaN.png" : response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
+                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${response.sendData.comments[i].secComments[j].comUserHead == "NaN.png" ? "NaN.png" : response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
                             <span accountId="${response.sendData.comments[i].secComments[j].accountId}" idname="${response.sendData.comments[i].secComments[j].comUserName}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].secComments[j].comUserName)}：</span>
                             <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].secComments[j].content)}</div>
                             <div commentid="${response.sendData.comments[i].secComments[j].id}" class="firstComment">
@@ -420,7 +421,7 @@ $(document).ready(async function () {
                 <div class="contentSmallPart waitAfter">
                         <div class="contentSmallPartTop" articleid="${window.location.search.split('=')[1]}">
                             <div>
-                                <span class="contentSmallPartTopSmall contentSmallPartHead"><a onclick="head_to_detail(this)" id="${response.sendData.writerId}"><img onerror=\'picError(this)\' src="/head/${response.sendData.writerHead == "NaN.png" ? "staticIMG/NaN.png" : response.sendData.writerHead}"></a></span>
+                                <span class="contentSmallPartTopSmall contentSmallPartHead"><a onclick="head_to_detail(this)" id="${response.sendData.writerId}"><img onerror=\'picError(this)\' src="/zipped_pic/${response.sendData.writerHead == "NaN.png" ? "NaN.png" : response.sendData.writerHead}"></a></span>
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.sendData.writerName)}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.sendData.writerSign}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.sendData.time)}</span>
@@ -467,7 +468,7 @@ $(document).ready(async function () {
                 for (let i = 0; i < response.sendData.comments.length; i++) {
                     $('.Comments').append(`
                     <div class="Comments_small">
-                    <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.sendData.headImgs[i].headImg == "NaN.png" ? "staticIMG/NaN.png" : response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
+                    <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${response.sendData.headImgs[i].headImg == "NaN.png" ? "NaN.png" : response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
                     <span accountId="${response.sendData.comments[i].accountId}" idname="${response.sendData.comments[i].comUser}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].comUser)}：</span>
                     <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].content)}</div>
                     <div commentId="${response.sendData.comments[i].id}" class="firstComment">
@@ -482,7 +483,7 @@ $(document).ready(async function () {
 
                             $('.Comments_small:nth(' + i + ')').append(`
                             <div class="Comments_small_second">
-                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/head/${response.sendData.comments[i].secComments[j].comUserHead == "NaN.png" ? "staticIMG/NaN.png" : response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
+                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${response.sendData.comments[i].secComments[j].comUserHead == "NaN.png" ? "NaN.png" : response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
                             <span accountId="${response.sendData.comments[i].secComments[j].accountId}" idname="${response.sendData.comments[i].secComments[j].comUserName}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].secComments[j].comUserName)}：</span>
                             <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].secComments[j].content)}</div>
                             <div commentid="${response.sendData.comments[i].secComments[j].id}" class="firstComment">

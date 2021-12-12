@@ -64,7 +64,7 @@ router.post('/sendToken_travel', async function (req, res, next) {
 
     let data = user.headImg
     if (data === 'NaN.png') {
-        data = 'staticIMG/NaN.png'
+        data = 'NaN.png'
     }
 
     res.send(data)

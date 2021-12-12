@@ -72,13 +72,10 @@ let upload = multer({
     storage: storage
 });
 
-router.post('/sendHeadImg', upload.single('file'), async function (req, res, next) {
-    let file = req.file;
-    //文件名携带了token
-    let fileName = file.originalname.substr(0, file.originalname.length - 4)
-    let tokenString = jwt.verify(fileName, 'www.shushuo.space is built by Mr.Ge');
+//此api原先被安排成进行头像上传 先转为头像的数据库写入
+router.post('/sendHeadImg', async function (req, res, next) {
     let user = await db.user.findOne({
-        userEmail: tokenString.Email
+        token: req.body.token
     })
     // 接收文件成功后返回数据给前端
     if (user == null) {
@@ -86,10 +83,19 @@ router.post('/sendHeadImg', upload.single('file'), async function (req, res, nex
             isUpload: false
         })
     } else {
-        let userHeadimgName = user.headImg
+
+        db.user.updateOne({
+            token: req.body.token
+        }, {
+            headImg: req.body.pic_dir
+        }, (err, doc) => {
+            if (err) {
+                write.logerr(err)
+            }
+        })
+
         res.send({
-            isUpload: true,
-            userHeadName: userHeadimgName
+            isUpload: true
         })
     }
 });
