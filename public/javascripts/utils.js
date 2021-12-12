@@ -2941,7 +2941,7 @@ function searchCommen(i) {
             //有图（显示第一张图片即可）
             $('.article_small_color:nth(' + i + ')').find('.article_small').html(`
                 <div class="article_small_imgpart">
-                    <img onerror=\'picError(this)\'  class="article_small_imgpart_img" src="${$('.article_small_color:nth(' + i + ')').find('img')[1].src.substr(0, location.href.length)==location.href?$('.article_small_color:nth(' + i + ')').find('img')[1].src:0702}">
+                    <img onerror=\'picError(this)\'  class="article_small_imgpart_img" src="${$('.article_small_color:nth(' + i + ')').find('img')[1].src}">
                 </div>
                 <div class="article_small_wordpart">
                     ${xssFilter($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText)}
@@ -2963,7 +2963,7 @@ function searchCommen(i) {
             }
             $('.article_small_color:nth(' + i + ')').find('.article_small').html(`
     <div class="article_small_imgpart">
-        <img onerror=\'picError(this)\'  class="article_small_imgpart_img" src="${$('.article_small_color:nth(' + i + ')').find('img')[0].src.substr(0, location.href.length)==location.href?$('.article_small_color:nth(' + i + ')').find('img')[0].src:0702}">
+        <img onerror=\'picError(this)\'  class="article_small_imgpart_img" src="${$('.article_small_color:nth(' + i + ')').find('img')[0].src}">
     </div>
     <div class="article_small_wordpart">
         ${xssFilter($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText)}
