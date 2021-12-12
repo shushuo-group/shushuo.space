@@ -27,7 +27,7 @@ $(document).ready(async function () {
 
             $(imgs[i]).attr('onerror', "picError(this)");
 
-            let temp = 'https://www.shushuo.space/'
+            let temp = 'https://www.shushuo.space'
             let temp_str = $(imgs[i]).attr('src').substr(0, temp.length)
             let temp_pic_zip_dir = '/zipped_pic/'
 

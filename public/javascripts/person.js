@@ -16,7 +16,7 @@ $(document).ready(function () {
     if (window.location.search.length === 0) {
         //不允许这样的href进行个人页面的访问  运行的href格式应该明确包括了userId
         alert('权限失效，将为您跳转至首页...')
-        location.href = 'https://www.shushuo.space/'
+        location.href = 'https://www.shushuo.space'
     }
 
     //本人主页面
@@ -32,7 +32,7 @@ $(document).ready(function () {
             //进入这种页面必须是在登录状态下
             if (response.isLogin == false) {
                 alert('权限失效，将为您跳转至首页...')
-                location.href = 'https://www.shushuo.space/'
+                location.href = 'https://www.shushuo.space'
             }
 
             //以区分游客抑或本人
@@ -86,7 +86,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 if (response.isLogin == false) {
                                     alert('权限失效，将为您跳转至首页...')
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
                                 }
                                 $('.navigation').after(`<div class="likeArticle centerBottom-main"></div>`);
                                 for (let i = 0; i < response.data.length; i++) {
@@ -116,7 +116,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 if (response.isLogin == false) {
                                     alert('权限失效，将为您跳转至首页...')
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
                                 }
                                 $('.navigation').after(`<div class="collectArticle centerBottom-main"></div>`);
                                 for (let i = 0; i < response.data.length; i++) {
@@ -147,7 +147,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 if (response.isLogin == false) {
                                     alert('权限失效，将为您跳转至首页...')
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
                                 }
                                 $('.navigation').after(`<div class="commentArticle centerBottom-main"></div>`);
                                 for (let i = 0; i < response.data.length; i++) {
@@ -178,7 +178,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 if (response.isLogin == false) {
                                     alert('权限失效，将为您跳转至首页...')
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
                                 }
                                 $('.navigation').after(`<div class="personArticle centerBottom-main"></div>`);
                                 for (let i = 0; i < response.data.length; i++) {
@@ -553,7 +553,7 @@ $(document).ready(function () {
                             $('.AOA-bottom').prepend('<section style="position: absolute;bottom: 30px;" class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>');
                             $.ajax({
                                 type: "post",
-                                url: "https://www.shushuo.space/:6788/uploadfile/",
+                                url: "https://www.shushuo.space:6788/uploadfile/",
                                 data: data,
                                 processData: false,
                                 contentType: false,
@@ -674,7 +674,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space/'
+                                location.href = 'https://www.shushuo.space'
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -750,7 +750,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space/'
+                                location.href = 'https://www.shushuo.space'
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -789,7 +789,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space/'
+                                location.href = 'https://www.shushuo.space'
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -828,7 +828,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space/'
+                                location.href = 'https://www.shushuo.space'
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -868,7 +868,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space/'
+                                location.href = 'https://www.shushuo.space'
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -923,7 +923,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space/'
+                                location.href = 'https://www.shushuo.space'
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -963,7 +963,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space/'
+                                location.href = 'https://www.shushuo.space'
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -1057,7 +1057,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         if (response.isLogin == false) {
-                            location.href = 'https://www.shushuo.space/'
+                            location.href = 'https://www.shushuo.space'
                             return
                         }
                         $('.navigation').after(`<div class="personArticle centerBottom-main"></div>`);
@@ -1091,7 +1091,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space/'
+                                location.href = 'https://www.shushuo.space'
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -1127,7 +1127,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space/'
+                                location.href = 'https://www.shushuo.space'
                                 return
                             }
                             $('.commentSection_wait').remove();

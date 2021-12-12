@@ -15,7 +15,7 @@ $(document).ready(async function () {
         success: function (response) {
             if (response.isLogin == false) {
                 //识别未登录
-                location.href = 'https://www.shushuo.space/'
+                location.href = 'https://www.shushuo.space'
                 return
             }
             $('.headImgPart').html(`<a style="cursor:pointer;" onclick='window.open("/person?userId=${response.data_id}")'><img onerror=\'picError(this)\' class="head" src=/zipped_pic/${response.userHeadimg == "NaN.png" ? "NaN.png" : response.userHeadimg}></a>`);
@@ -106,7 +106,7 @@ $(document).ready(async function () {
                         //GIF
                         $.ajax({
                             type: "post",
-                            url: "https://www.shushuo.space/:6788/uploadfile/",
+                            url: "https://www.shushuo.space:6788/uploadfile/",
                             data: data,
                             processData: false,
                             contentType: false,
@@ -126,7 +126,7 @@ $(document).ready(async function () {
 
                                 var a = $('body').data('img02')
                                 a.push({
-                                    imgSrc: 'https://www.shushuo.space/pic/' + response.path
+                                    imgSrc: 'https://www.shushuo.spacepic/' + response.path
                                 })
                                 $('body').data('img02', a)
                             }
@@ -156,7 +156,7 @@ $(document).ready(async function () {
                 //普通图片
                 $.ajax({
                     type: "post",
-                    url: "https://www.shushuo.space/:6788/uploadfile/",
+                    url: "https://www.shushuo.space:6788/uploadfile/",
                     data: data,
                     processData: false,
                     contentType: false,
@@ -177,7 +177,7 @@ $(document).ready(async function () {
 
                         var a = $('body').data('img02')
                         a.push({
-                            imgSrc: 'https://www.shushuo.space/pic/' + response.path
+                            imgSrc: 'https://www.shushuo.spacepic/' + response.path
                         })
                         $('body').data('img02', a)
                     }
@@ -274,7 +274,7 @@ $(document).ready(async function () {
                 success: function (response) {
                     if (response.isLogin == true) {
                         alert('操作失败')
-                        location.href = "https://www.shushuo.space/"
+                        location.href = "https://www.shushuo.space"
                         return
                     }
                     $('#title').val(`${response.title}`);
@@ -319,7 +319,7 @@ $(document).ready(async function () {
                             },
                             success: function (response) {
                                 if (response.isLogin == false) { //识别未登录
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
                                     return
                                 }
                                 if (response.isUp == true) {
@@ -344,7 +344,7 @@ $(document).ready(async function () {
                                         })
                                     }
 
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
                                 }
                             }
                         });
@@ -374,12 +374,12 @@ $(document).ready(async function () {
                             },
                             success: function (response) {
                                 if (response.isLogin == false) { //识别未登录
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
                                     return
                                 }
                                 if (response.isUp == true) {
                                     alert('存入草稿成功')
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
 
                                     var imgold = $('body').data('img')
                                     var imgnew = $('body').data('img02')
@@ -424,7 +424,7 @@ $(document).ready(async function () {
                 success: function (response) {
                     if (response.isLogin == true) {
                         alert('操作失败')
-                        location.href = "https://www.shushuo.space/"
+                        location.href = "https://www.shushuo.space"
                         return
                     }
                     $('#title').val(`${response.title}`);
@@ -486,12 +486,12 @@ $(document).ready(async function () {
                                 success: function (response) {
                                     if (response.isLogin == false) {
                                         //识别未登录
-                                        location.href = 'https://www.shushuo.space/'
+                                        location.href = 'https://www.shushuo.space'
                                         return
                                     }
                                     if (response.isUp == true) {
                                         alert('存入树洞成功')
-                                        location.href = 'https://www.shushuo.space/'
+                                        location.href = 'https://www.shushuo.space'
                                     }
                                 }
                             });
@@ -517,7 +517,7 @@ $(document).ready(async function () {
                                 },
                                 success: function (response) {
                                     if (response.isLogin == false) { //识别未登录
-                                        location.href = 'https://www.shushuo.space/'
+                                        location.href = 'https://www.shushuo.space'
                                         return
                                     }
                                     if (response.isUp == true) {
@@ -541,7 +541,7 @@ $(document).ready(async function () {
                                             })
                                         }
 
-                                        location.href = 'https://www.shushuo.space/'
+                                        location.href = 'https://www.shushuo.space'
                                     }
                                 }
                             });
@@ -569,7 +569,7 @@ $(document).ready(async function () {
                             },
                             success: function (response) {
                                 if (response.isLogin == false) { //识别未登录
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
                                     return
                                 }
                                 if (response.isUp == true) {
@@ -593,7 +593,7 @@ $(document).ready(async function () {
                                         })
                                     }
 
-                                    location.href = 'https://www.shushuo.space/'
+                                    location.href = 'https://www.shushuo.space'
 
                                 } else {
                                     alert('上传失败')
@@ -654,7 +654,7 @@ $(document).ready(async function () {
                     success: function (response) {
                         if (response.isLogin == false) {
                             //识别未登录
-                            location.href = 'https://www.shushuo.space/'
+                            location.href = 'https://www.shushuo.space'
                             return
                         }
                         if (response.isUp == true) {
@@ -684,7 +684,7 @@ $(document).ready(async function () {
                     },
                     success: function (response) {
                         if (response.isLogin == false) { //识别未登录
-                            location.href = 'https://www.shushuo.space/'
+                            location.href = 'https://www.shushuo.space'
                             return
                         }
                         if (response.isUp == true) {
@@ -717,12 +717,12 @@ $(document).ready(async function () {
                 },
                 success: function (response) {
                     if (response.isLogin == false) { //识别未登录
-                        location.href = 'https://www.shushuo.space/'
+                        location.href = 'https://www.shushuo.space'
                         return
                     }
                     if (response.isUp == true) {
                         alert('存入草稿成功')
-                        location.href = 'https://www.shushuo.space/'
+                        location.href = 'https://www.shushuo.space'
                     } else {
                         alert('上传失败')
                     }
