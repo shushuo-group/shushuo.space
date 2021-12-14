@@ -13,7 +13,7 @@ $(document).ready(async function () {
     </div>
     `);
     // 针对所有触屏设备(pc,phone,ipad)
-    
+
     if (is_touch_client) {
         $('.head').css({
             'position': 'fixed',
@@ -30,7 +30,7 @@ $(document).ready(async function () {
     }
 
     if (is_small_client) {
-        $('body').after(`<div id="preventTran" style="position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden; background-color: rgb(46, 46, 46); text-align: center; z-index: 99999; visibility: hidden;"><img onerror=\'picError(this)\' src="data:image/png;base64,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" style="margin: 60px auto 30px;"><p style="width: 100%; height: auto; font-size: 22px; color: rgb(98, 98, 98); line-height: 34px; text-align: center;">为了您的良好体验<br>请将手机竖屏操作</p></div>`);
+        $('body').after(`<div id="preventTran" style="position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden; background-color: rgb(46, 46, 46); text-align: center; z-index: 99999; visibility: hidden;"><img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="data:image/png;base64,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" style="margin: 60px auto 30px;"><p style="width: 100%; height: auto; font-size: 22px; color: rgb(98, 98, 98); line-height: 34px; text-align: center;">为了您的良好体验<br>请将手机竖屏操作</p></div>`);
         if (window.orientation == 90 || window.orientation == -90) {
             $('#preventTran').css('visibility', 'visible');
         } else {
@@ -205,7 +205,7 @@ $(document).ready(async function () {
                         <div class="user_small_main">
                             <span>
                                 <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                    <img onerror=\'picError(this)\'  src="/zipped_pic/${response.user_search[i].headImg == "NaN.png" ? "NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
+                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${response.user_search[i].headImg}" class="user_small_main_img">
                                 </a>
                             </span>
                             <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -241,7 +241,7 @@ $(document).ready(async function () {
                             <div>
                                 <span id="6097c9f92347ed2f9cdd4d18">
                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/zipped_pic/"+a(i)+"'>"}
+                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
                                     </a>
                                 </span>
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
@@ -262,7 +262,7 @@ $(document).ready(async function () {
                                 ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
                             </div>
                         </div>
-                        <div onclick='window.open("https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
+                        <div onclick='window.open("${web_url}article?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
                             <div style="display: block;" class="content">
                                 <div class="article_small" style="display:none;">
                                     ${response.article_search[i].articleContent}
@@ -339,9 +339,9 @@ $(document).ready(async function () {
 
 
                 if (response.user.headImg == 'NaN.png') {
-                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  src="/zipped_pic/' + response.user.headImg + '">');
+                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="'+ zip_dir + response.user.headImg + '">');
                 } else {
-                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  src="/zipped_pic/' + response.user.headImg + '">');
+                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="'+ zip_dir + response.user.headImg + '">');
                 }
 
                 // 登录状态下即会有退出登录按钮
@@ -375,7 +375,7 @@ $(document).ready(async function () {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 localStorage.clear();
-                                location.href = 'https://www.shushuo.space/'
+                                window.location.href = web_url
                             });
 
                         });
@@ -406,7 +406,7 @@ $(document).ready(async function () {
                                 },
                                 success: function (response) {
                                     if (response.isLogin == false) {
-                                        window.location.href = 'https://www.shushuo.space/'
+                                        window.location.href = web_url
                                         return
                                     }
                                     if (response.number == 0) {
@@ -421,7 +421,7 @@ $(document).ready(async function () {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 localStorage.clear();
-                                location.href = 'https://www.shushuo.space/'
+                                window.location.href = web_url
                             });
 
                         });
@@ -447,7 +447,7 @@ $(document).ready(async function () {
                     e.preventDefault();
                     e.stopPropagation();
                     localStorage.clear();
-                    location.href = 'https://www.shushuo.space/'
+                    window.location.href = web_url
                 });
 
                 // 登录状态下的搜索(just for pc & ipad , not support for ipad)
@@ -595,7 +595,7 @@ $(document).ready(async function () {
                                         <div class="user_small_main">
                                             <span>
                                                 <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                                    <img onerror=\'picError(this)\'  src="/zipped_pic/${response.user_search[i].headImg == "NaN.png" ? "NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
+                                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${response.user_search[i].headImg}" class="user_small_main_img">
                                                 </a>
                                             </span>
                                             <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -631,7 +631,7 @@ $(document).ready(async function () {
                                             <div>
                                                 <span id="6097c9f92347ed2f9cdd4d18">
                                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/zipped_pic/"+a(i)+"'>"}
+                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
                                                     </a>
                                                 </span>
                                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
@@ -652,7 +652,7 @@ $(document).ready(async function () {
                                                 ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
                                             </div>
                                         </div>
-                                        <a target="_blank" href="https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}">
+                                        <a target="_blank" href="${web_url}article?articleId=${response.article_search[i].articleId}">
                                             <div class="content" style="display:block;">
                                                 <div class="article_small">
                                                     ${response.article_search[i].articleContent}
@@ -738,7 +738,7 @@ $(document).ready(async function () {
                     },
                     success: function (response) {
                         if (response.isLogin == false) {
-                            window.location.href = 'https://www.shushuo.space/'
+                            window.location.href = web_url
                             return
                         }
                         if (response.number == 0) {
@@ -760,7 +760,7 @@ $(document).ready(async function () {
                     },
                     success: function (response) {
                         if (response.isLogin == false) {
-                            window.location.href = 'https://www.shushuo.space/'
+                            window.location.href = web_url
                             return
                         }
                         if (response.number == 0) {
@@ -863,7 +863,7 @@ $(document).ready(async function () {
                                         <div class="user_small_main">
                                             <span>
                                                 <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                                    <img onerror=\'picError(this)\'  src="/zipped_pic/${response.user_search[i].headImg == "NaN.png" ? "NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
+                                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${response.user_search[i].headImg}" class="user_small_main_img">
                                                 </a>
                                             </span>
                                             <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -899,7 +899,7 @@ $(document).ready(async function () {
                                             <div>
                                                 <span id="6097c9f92347ed2f9cdd4d18">
                                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/zipped_pic/"+a(i)+"'>"}
+                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
                                                     </a>
                                                 </span>
                                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
@@ -920,7 +920,7 @@ $(document).ready(async function () {
                                                 ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
                                             </div>
                                         </div>
-                                        <a target="_blank" href="https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}">
+                                        <a target="_blank" href="${web_url}article?articleId=${response.article_search[i].articleId}">
                                             <div class="content" style="display:block;">
                                                 <div class="article_small">
                                                     ${response.article_search[i].articleContent}
@@ -1068,7 +1068,7 @@ $(document).ready(async function () {
                     <div class="user_small_main">
                         <span>
                             <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                <img onerror=\'picError(this)\'  src="/zipped_pic/${response.user_search[i].headImg == "NaN.png" ? "NaN.png" : response.user_search[i].headImg}" class="user_small_main_img">
+                                <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${response.user_search[i].headImg}" class="user_small_main_img">
                             </a>
                         </span>
                         <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -1104,7 +1104,7 @@ $(document).ready(async function () {
                         <div>
                             <span id="6097c9f92347ed2f9cdd4d18">
                                 <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                   ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='/zipped_pic/"+a(i)+"'>"}
+                                   ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
                                 </a>
                             </span>
                             <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
@@ -1125,7 +1125,7 @@ $(document).ready(async function () {
                             ${searchHlt(response.article_search[i].articleName,$('#search_base_value').val())}
                         </div>
                     </div>
-                    <div onclick='window.open("https://www.shushuo.space/article?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
+                    <div onclick='window.open("${web_url}article?articleId=${response.article_search[i].articleId}")' style='cursor:pointer;min-height: 100px;'>
                         <div style="display: block;" class="content">
                             <div class="article_small" style="display:none;">
                                 ${response.article_search[i].articleContent}
@@ -1446,7 +1446,7 @@ $(document).ready(async function () {
             //未登录
             noLogin()
         } else {
-            window.open('https://www.shushuo.space/writer')
+            window.open(`${web_url}writer`)
         }
     });
 
@@ -1509,7 +1509,7 @@ $(document).ready(async function () {
                         $('.toArticleDetail:nth(' + i + ')').click(function (e) {
                             e.preventDefault();
                             e.stopPropagation();
-                            window.location.href = `https://www.shushuo.space/article?articleId=${response[i].id}`
+                            window.location.href = `${web_url}article?articleId=${response[i].id}`
                         });
                     }
 

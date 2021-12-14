@@ -45,7 +45,7 @@ router.post('/articleDetail', async function (req, res, next) {
     if (article.isOk === false) {
         //此处isOk为false则说明其为被删除的文章
         res.send({
-            code:500
+            code: 500
         })
         return
     }
@@ -408,6 +408,7 @@ router.post('/commentDelete', async function (req, res, next) {
 
 //草稿箱_编辑_获取文章信息
 router.post('/articleDetail02', async function (req, res, next) {
+
     if (req.body.token == undefined) {
         res.send({
             isLogin: false
@@ -428,6 +429,13 @@ router.post('/articleDetail02', async function (req, res, next) {
     let article = await db.article.findOne({
         _id: req.body.articleId,
         isPublic: false
+    }, {
+        writerEmail: 1,
+        _id: 1,
+        name: 1,
+        content: 1,
+        bigmid: 1,
+        smallmid: 1
     })
     if (article == null) {
         res.send({
@@ -436,13 +444,16 @@ router.post('/articleDetail02', async function (req, res, next) {
         return
     }
     if (article.writerEmail !== userMove.userEmail) { //确认操作者不是本人
+        res.send({
+            isLogin: false
+        })
         return
     }
+
     let data = {
         id: article._id,
         title: article.name,
-        conntent: article.content,
-        time: article.time
+        conntent: article.content
     }
     res.send(data)
 })
@@ -473,6 +484,8 @@ router.post('/articleDetail03', async function (req, res, next) {
         _id: 1,
         name: 1,
         content: 1,
+        bigmid: 1,
+        smallmid: 1
     })
     if (article == null) {
         res.send({
@@ -483,10 +496,29 @@ router.post('/articleDetail03', async function (req, res, next) {
     if (article.writerEmail !== userMove.userEmail) { //确认操作者不是本人
         return
     }
+    let small = 0
+    let big = 0
+    if (article.smallmid !== 'shuDong') {
+
+        big = await db.largeModule.findOne({
+            _id: article.bigmid
+        }, {
+            name: 1
+        })
+
+        small = await db.smallModule.findOne({
+            _id: article.smallmid
+        }, {
+            name: 1
+        })
+
+    }
     let data = {
         id: article._id,
         title: article.name,
-        conntent: article.content
+        conntent: article.content,
+        small: small,
+        big: big
     }
     res.send(data)
 })

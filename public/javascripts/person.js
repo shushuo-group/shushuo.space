@@ -6,7 +6,7 @@
 $(document).ready(function () {
     //href规则化
     let search_data = {}
-    let temp_search_data = location.search.split('?')[1].split('&&')
+    let temp_search_data = window.location.search.split('?')[1].split('&&')
     for (let i = 0; i < temp_search_data.length; i++) {
         let key = temp_search_data[i].split('=')[0]
         let value = temp_search_data[i].split('=')[1]
@@ -16,7 +16,7 @@ $(document).ready(function () {
     if (window.location.search.length === 0) {
         //不允许这样的href进行个人页面的访问  运行的href格式应该明确包括了userId
         alert('权限失效，将为您跳转至首页...')
-        location.href = 'https://www.shushuo.space//'
+        window.location.href = web_url
     }
 
     //本人主页面
@@ -32,7 +32,7 @@ $(document).ready(function () {
             //进入这种页面必须是在登录状态下
             if (response.isLogin == false) {
                 alert('权限失效，将为您跳转至首页...')
-                location.href = 'https://www.shushuo.space//'
+                window.location.href = web_url
             }
 
             //以区分游客抑或本人
@@ -64,9 +64,9 @@ $(document).ready(function () {
                     }
                 })
                 if (response.user.headImg == 'NaN.png') {
-                    $('.headpic').append('<img onerror=\'picError(this)\' src="/zipped_pic/' + response.user.headImg + '">');
+                    $('.headpic').append('<img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="' + zip_dir + response.user.headImg + '">');
                 } else {
-                    $('.headpic').append(`<img onerror=\'picError(this)\' src="/zipped_pic/${response.user.headImg}">`);
+                    $('.headpic').append(`<img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${zip_dir}${response.user.headImg}">`);
                 }
 
                 $('.articles').addClass('select');
@@ -86,7 +86,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 if (response.isLogin == false) {
                                     alert('权限失效，将为您跳转至首页...')
-                                    location.href = 'https://www.shushuo.space//'
+                                    window.location.href = web_url
                                 }
                                 $('.navigation').after(`<div class="likeArticle centerBottom-main"></div>`);
                                 for (let i = 0; i < response.data.length; i++) {
@@ -116,7 +116,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 if (response.isLogin == false) {
                                     alert('权限失效，将为您跳转至首页...')
-                                    location.href = 'https://www.shushuo.space//'
+                                    window.location.href = web_url
                                 }
                                 $('.navigation').after(`<div class="collectArticle centerBottom-main"></div>`);
                                 for (let i = 0; i < response.data.length; i++) {
@@ -147,7 +147,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 if (response.isLogin == false) {
                                     alert('权限失效，将为您跳转至首页...')
-                                    location.href = 'https://www.shushuo.space//'
+                                    window.location.href = web_url
                                 }
                                 $('.navigation').after(`<div class="commentArticle centerBottom-main"></div>`);
                                 for (let i = 0; i < response.data.length; i++) {
@@ -178,7 +178,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 if (response.isLogin == false) {
                                     alert('权限失效，将为您跳转至首页...')
-                                    location.href = 'https://www.shushuo.space//'
+                                    window.location.href = web_url
                                 }
                                 $('.navigation').after(`<div class="personArticle centerBottom-main"></div>`);
                                 for (let i = 0; i < response.data.length; i++) {
@@ -577,7 +577,7 @@ $(document).ready(function () {
                                             'z-index': '5',
                                             'background-color': 'rgba(0,0,0,.5)'
                                         });
-                                        $('.headpic').append(`<img onerror=\'picError(this)\' src="/zipped_pic/${response.path}">`);
+                                        $('.headpic').append(`<img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${zip_dir}${response.path}">`);
                                         $('.headpic').hover(function () {
                                             // over
                                             if ($('.headpic>img')[0]) {
@@ -599,7 +599,7 @@ $(document).ready(function () {
                                                 'token': window.localStorage.token
                                             },
                                             success: function (response) {
-                                                console.log(response);
+                                                return
                                             }
                                         });
 
@@ -674,7 +674,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space//'
+                                window.location.href = web_url
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -750,7 +750,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space//'
+                                window.location.href = web_url
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -789,7 +789,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space//'
+                                window.location.href = web_url
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -828,7 +828,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space//'
+                                window.location.href = web_url
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -868,7 +868,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space//'
+                                window.location.href = web_url
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -901,7 +901,6 @@ $(document).ready(function () {
 
                     $('.navigation').html('Coding...');
                     return
-                    $('.navigation').after(`<section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>`);
                 });
 
                 //草稿箱点击事件
@@ -923,7 +922,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space//'
+                                window.location.href = web_url
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -963,7 +962,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space//'
+                                window.location.href = web_url
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -1041,7 +1040,7 @@ $(document).ready(function () {
                         userId: window.location.search.split('=')[1]
                     },
                     success: function (response) {
-                        $('.headpic').append('<img onerror=\'picError(this)\' src="/zipped_pic/' + response + '">');
+                        $('.headpic').append('<img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="' + zip_dir + response + '">');
                     }
                 });
 
@@ -1057,7 +1056,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
                         if (response.isLogin == false) {
-                            location.href = 'https://www.shushuo.space//'
+                            window.location.href = web_url
                             return
                         }
                         $('.navigation').after(`<div class="personArticle centerBottom-main"></div>`);
@@ -1091,7 +1090,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space//'
+                                window.location.href = web_url
                                 return
                             }
                             $('.commentSection_wait').remove();
@@ -1127,7 +1126,7 @@ $(document).ready(function () {
                         },
                         success: function (response) {
                             if (response.isLogin == false) {
-                                location.href = 'https://www.shushuo.space//'
+                                window.location.href = web_url
                                 return
                             }
                             $('.commentSection_wait').remove();

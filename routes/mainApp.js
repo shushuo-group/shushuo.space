@@ -928,25 +928,6 @@ router.post('/webEmailCheck', async function (req, res, next) {
     })
 })
 
-router.post('/webEmailCheck_single', async function (req, res, next) {
-    db.webUserComments.updateOne({
-        _id: req.body.id,
-        isCheck: false
-    }, {
-        isCheck: true,
-        Checkdate: date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')
-    }, (err, doc) => {
-        if (err) {
-            write.logerr(err)
-        }
-        if (doc.nModified == 1) {
-            res.send({
-                isCheck: true
-            })
-        }
-    })
-})
-
 router.post('/webEmail', async function (req, res, next) {
     let user = await db.user.findOne({
         token: req.body.token

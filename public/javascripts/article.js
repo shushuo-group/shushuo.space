@@ -14,7 +14,8 @@ $(document).ready(async function () {
         if (links.length !== 0) {
             for (let i = 0; i < links.length; i++) {
                 $(links[i]).attr('target', '_blank');
-                if (links[i].href.substr(0, location.href.length) !== location.href) {
+                $(links[i]).css('color', '#002bff');
+                if (links[i].href.substr(0, web_url.length) !== web_url) {
                     $(links[i]).attr('data', links[i].href);
                     $(links[i]).attr('onclick', 'jumpWeb(this)');
                     $(links[i]).removeAttr('target');
@@ -25,24 +26,57 @@ $(document).ready(async function () {
 
         for (let i = 0; i < imgs.length; i++) {
 
-            $(imgs[i]).attr('onerror', "picError(this)");
-
-            let temp = 'https://www.shushuo.space/'
-            let temp_str = $(imgs[i]).attr('src').substr(0, temp.length)
-            let temp_pic_zip_dir = '/zipped_pic/'
-
-            $(imgs[i]).after(`<section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section>`);
+            $(imgs[i]).after(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
             $(imgs[i]).hide();
+
+            $(imgs[i]).attr('onerror', 'picError(this)');
+
+            let temp_pic_css = {
+                'user-select': 'none',
+                'cursor': 'zoom-in',
+                'margin': 'auto',
+                'display': 'block',
+                'width': '50%'
+            }
+
+            if (is_small_client) {
+                temp_pic_css = {
+                    'user-select': 'none',
+                    'cursor': 'zoom-in',
+                    'margin': 'auto',
+                    'display': 'block',
+                    'width': '100%'
+                }
+            }
+
+            $(imgs[i]).css(temp_pic_css);
 
             imgs[i].onload = function () {
 
                 $(imgs[i]).siblings('.commentSection_wait').remove();
                 $(imgs[i]).show();
 
+                // 此处仅用于过滤非法第三方图片
+                if (is_third_pic(this)) {
+                    $(this).attr('src', pic_error);
+                    $(this).css({
+                        'max-width': '100px',
+                        'cursor': 'not-allowed'
+                    });
+                    $(imgs[i]).siblings('.commentSection_wait').remove();
+                    $(imgs[i]).show();
+                    $(this).unbind();
+                }
+
+                $(this).removeAttr('onerror');
+                $(this).removeAttr('onload');
+
             }
 
             $(imgs[i]).click(function (e) {
                 e.stopPropagation()
+
+                $(this).css('visibility', 'hidden');
 
                 $('html').css({
                     'overflow': 'hidden',
@@ -93,7 +127,7 @@ $(document).ready(async function () {
 
                 // 点击进行大张图片浏览
                 $('.img_bigshow_part').click(function () {
-                    $(imgs[i]).show();
+                    $(imgs[i]).css('visibility', 'visible');
                     $(this).remove();
                     $('html').css({
                         'overflow': '',
@@ -108,17 +142,26 @@ $(document).ready(async function () {
 
                 $('.img_bigshow_part>img').attr('style', '');
 
-                $('.img_bigshow_part>img').css({
-                    'width': '78%',
+                let temp_pic_big_css = {
+                    'width': '70%',
                     'margin': 'auto',
                     'position': 'absolute',
-                    'top': '0',
-                    'left': '0',
-                    'right': '0',
-                    'bottom': '0',
                     'user-select': 'none',
+                    'inset':'0px',
                     'cursor': 'default'
-                });
+                }
+
+                if (is_small_client) {
+                    temp_pic_big_css = {
+                        'width': '100%',
+                        'margin': 'auto',
+                        'position': 'absolute',
+                        'inset':'0px',
+                        'user-select': 'none'
+                    }
+                }
+                
+                $('.img_bigshow_part>img').css(temp_pic_big_css);
 
                 // 长图片的一些样式适配
                 if ($('.img_bigshow_part>img').height() > $(window).height()) {
@@ -184,7 +227,7 @@ $(document).ready(async function () {
                 //登录成功
                 $('#loginButton').remove();
                 $('#userHead').append(`
-                <img onerror=\'picError(this)\' onclick="window.open('/person?userId=${response.data_id}')" username="${response.userName}" src="/zipped_pic/${response.userHeadimg == "NaN.png" ? "NaN.png" : response.userHeadimg}">
+                <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="window.open('/person?userId=${response.data_id}')" username="${response.userName}" src="${zip_dir}${response.userHeadimg}">
                 `);
             } else {
                 localStorage.clear();
@@ -247,7 +290,7 @@ $(document).ready(async function () {
                                     success: function (response) {
                                         tokenWork_article(response)
                                         if (response.isLogin == true) {
-                                            location.href = window.location.href
+                                            window.location.href = window.location.href
                                         } else {
                                             localStorage.clear();
                                             alert('请仔细验证登录信息')
@@ -266,7 +309,7 @@ $(document).ready(async function () {
                                     success: function (response) {
                                         tokenWork_article(response)
                                         if (response.isLogin == true) {
-                                            location.href = window.location.href
+                                            window.location.href = window.location.href
                                         } else {
                                             localStorage.clear();
                                             alert('请仔细验证登录信息')
@@ -285,7 +328,7 @@ $(document).ready(async function () {
                                     success: function (response) {
                                         tokenWork_article(response)
                                         if (response.isLogin == true) {
-                                            location.href = window.location.href
+                                            window.location.href = window.location.href
                                         } else {
                                             localStorage.clear();
                                             alert('请仔细验证登录信息')
@@ -373,7 +416,7 @@ $(document).ready(async function () {
                 for (let i = 0; i < response.sendData.comments.length; i++) {
                     $('.Comments').append(`
                     <div class="Comments_small">
-                    <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${response.sendData.headImgs[i].headImg == "NaN.png" ? "NaN.png" : response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
+                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
                     <span accountId="${response.sendData.comments[i].accountId}" idname="${response.sendData.comments[i].comUser}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].comUser)}：</span>
                     <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].content)}</div>
                     <div commentId="${response.sendData.comments[i].id}" class="firstComment">
@@ -387,7 +430,7 @@ $(document).ready(async function () {
                         for (let j = 0; j < response.sendData.comments[i].secComments.length; j++) {
                             $('.Comments_small:nth(' + i + ')').append(`
                             <div class="Comments_small_second">
-                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${response.sendData.comments[i].secComments[j].comUserHead == "NaN.png" ? "NaN.png" : response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
+                            <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
                             <span accountId="${response.sendData.comments[i].secComments[j].accountId}" idname="${response.sendData.comments[i].secComments[j].comUserName}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].secComments[j].comUserName)}：</span>
                             <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].secComments[j].content)}</div>
                             <div commentid="${response.sendData.comments[i].secComments[j].id}" class="firstComment">
@@ -413,7 +456,7 @@ $(document).ready(async function () {
                 <div class="contentSmallPart waitAfter">
                         <div class="contentSmallPartTop" articleid="${window.location.search.split('=')[1]}">
                             <div>
-                                <span class="contentSmallPartTopSmall contentSmallPartHead"><a onclick="head_to_detail(this)" id="${response.sendData.writerId}"><img onerror=\'picError(this)\' src="/zipped_pic/${response.sendData.writerHead == "NaN.png" ? "NaN.png" : response.sendData.writerHead}"></a></span>
+                                <span class="contentSmallPartTopSmall contentSmallPartHead"><a onclick="head_to_detail(this)" id="${response.sendData.writerId}"><img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${zip_dir}${response.sendData.writerHead}"></a></span>
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.sendData.writerName)}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.sendData.writerSign}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.sendData.time)}</span>
@@ -460,7 +503,7 @@ $(document).ready(async function () {
                 for (let i = 0; i < response.sendData.comments.length; i++) {
                     $('.Comments').append(`
                     <div class="Comments_small">
-                    <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${response.sendData.headImgs[i].headImg == "NaN.png" ? "NaN.png" : response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
+                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
                     <span accountId="${response.sendData.comments[i].accountId}" idname="${response.sendData.comments[i].comUser}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].comUser)}：</span>
                     <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].content)}</div>
                     <div commentId="${response.sendData.comments[i].id}" class="firstComment">
@@ -475,7 +518,7 @@ $(document).ready(async function () {
 
                             $('.Comments_small:nth(' + i + ')').append(`
                             <div class="Comments_small_second">
-                            <img onerror=\'picError(this)\' onclick="head_to_detail(this)" src="/zipped_pic/${response.sendData.comments[i].secComments[j].comUserHead == "NaN.png" ? "NaN.png" : response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
+                            <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
                             <span accountId="${response.sendData.comments[i].secComments[j].accountId}" idname="${response.sendData.comments[i].secComments[j].comUserName}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].secComments[j].comUserName)}：</span>
                             <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].secComments[j].content)}</div>
                             <div commentid="${response.sendData.comments[i].secComments[j].id}" class="firstComment">

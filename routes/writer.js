@@ -227,14 +227,4 @@ router.post('/getBigModule', async function (req, res, next) {
     })
 });
 
-router.post('/personInfors', async function (req, res, next) {
-    let tokenGet = req.body.token
-    let user = await db.user.findOne({
-        token: tokenGet
-    })
-    res.send({
-        writerHeadimg: user.headImg
-    })
-});
-
 module.exports = router;

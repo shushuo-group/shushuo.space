@@ -40,3 +40,19 @@ for (let i = 0; i < client_screen_data.length; i++) {
 if ('ontouchstart' in window || navigator.msMaxTouchPoints) {
     is_touch_client = true
 }
+
+/**
+ * GIF图片未压缩是因为该类型的图片已由前端进行压缩
+ *
+ * @zip_dir 压缩图片路径(普通图片 GIF图片)
+ * @nozip_dir 未压缩图片路径(普通图片 无GIF图片)
+ */
+let zip_dir = '/zipped_pic/'
+let nozip_dir = '/pic/'
+
+/**
+ * @web_url 网站首页url
+ * @pic_error 网站图片丢失路径
+ */
+let web_url = "https://www.shushuo.space/"
+let pic_error = `${web_url}${zip_dir}/pic_error.png`

@@ -1553,7 +1553,7 @@ pre {
     width: -moz-max-content;
     width: max-content;
     z-index: 2;
-    content: "点击任意空白处即可退出浏览";
+    content: "点击此处即可退出浏览";
     left: 0;
     right: 0;
     margin: auto;
@@ -1569,7 +1569,7 @@ pre {
     width: -moz-max-content;
     width: max-content;
     z-index: 2;
-    content: "点击任意空白处即可退出浏览";
+    content: "点击此处即可退出浏览";
     left: 0;
     right: 0;
     margin: auto;
