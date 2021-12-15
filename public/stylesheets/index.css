@@ -1605,30 +1605,6 @@ pre {
     margin: auto;
 }
 
-.img_bigshow_part_down {
-    position: fixed;
-    left: 10px;
-    top: 10px;
-    z-index: 5;
-}
-
-.img_bigshow_part_down>svg {
-    width: 30px;
-    height: 30px;
-}
-
-.img_bigshow_part_round {
-    position: fixed;
-    left: 10px;
-    top: 50px;
-    z-index: 5;
-}
-
-.img_bigshow_part_round>svg {
-    width: 30px;
-    height: 30px;
-}
-
 .navigation_search {
     font-size: 20px;
     color: black;
@@ -2309,7 +2285,6 @@ span.uiSetFree_buttton_check {
 }
 
 /*内容加载模块*/
-
 
 /* 自适应移动端 */
 @media screen and (max-width:600px) {

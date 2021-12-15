@@ -91,20 +91,6 @@ video {
     box-sizing: border-box;
 }
 
-img {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: zoom-in;
-    /* margin: auto; */
-    position: relative;
-    display: block;
-    left: 0px;
-    right: 0px;
-    width: 50%;
-}
-
 /* blockquote 样式 */
 blockquote {
     display: block;
@@ -1573,28 +1559,4 @@ pre {
     left: 0;
     right: 0;
     margin: auto;
-}
-
-.img_bigshow_part_down {
-    position: fixed;
-    left: 10px;
-    top: 10px;
-    z-index: 5;
-}
-
-.img_bigshow_part_down>svg {
-    width: 30px;
-    height: 30px;
-}
-
-.img_bigshow_part_round {
-    position: fixed;
-    left: 10px;
-    top: 50px;
-    z-index: 5;
-}
-
-.img_bigshow_part_round>svg {
-    width: 30px;
-    height: 30px;
 }

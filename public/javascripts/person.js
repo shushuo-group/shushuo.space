@@ -553,7 +553,7 @@ $(document).ready(function () {
                             $('.AOA-bottom').prepend('<section style="position: absolute;bottom: 30px;" class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>');
                             $.ajax({
                                 type: "post",
-                                url: "https://image.shushuo.space/uploadfile/",
+                                url: "http://localhost:6788/uploadfile/",
                                 data: data,
                                 processData: false,
                                 contentType: false,
