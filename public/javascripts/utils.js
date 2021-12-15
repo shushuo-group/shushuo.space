@@ -517,6 +517,9 @@ function firstFlush_hidden(data) {
 
                 jump_window({}, temp_html)
 
+                $('.img_bigshow_part_round>svg').css('height', `${$('.img_bigshow_part_round').height()}px`);
+                $('.img_bigshow_part_down>svg').css('height', `${$('.img_bigshow_part_down').height()}px`);
+
                 let pic_zip_src = $('.img_bigshow_part_top>img').attr('src')
                 let fin_3_word = pic_zip_src.substr(pic_zip_src.length - 3, pic_zip_src.length)
                 if (fin_3_word === 'gif') {
