@@ -100,7 +100,8 @@
     height: 100%;
     margin: auto;
     position: absolute;
-    inset: 0;
+    left: 0;
+    right: 0;
 }
 
 .img_bigshow_part_bottom_center {
