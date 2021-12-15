@@ -409,6 +409,7 @@ function firstFlush_hidden(data) {
 
         setTimeout(() => {
             $('.contentSmallPart:nth(' + data + ')').find('.card').remove();
+            $('.contentSmallPart:nth(' + data + ')>*').show();
 
             //纯文字的加蒙版模式
             if ($('.contentSmallPart:nth(' + data + ')').find('.innerContent')[0].offsetHeight == 200) {
@@ -447,8 +448,6 @@ function firstFlush_hidden(data) {
                     $('.code_repeat').remove();
                 });
             }
-
-            $('.contentSmallPart:nth(' + data + ')>*').show();
 
         }, 500);
 
