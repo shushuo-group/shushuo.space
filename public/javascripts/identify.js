@@ -54,6 +54,5 @@ let nozip_dir = '/pic/'
  * @web_url 网站首页url
  * @pic_error 网站图片丢失路径
  */
-// let web_url = "https://www.shushuo.space/"
 let web_url = `${window.location.origin}/`
 let pic_error = `${web_url}${zip_dir}/pic_error.png`
