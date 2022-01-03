@@ -2,3 +2,5 @@
 *.jpeg
 *.gif
 *.png
+!pic_error.png
+!NaN.png
