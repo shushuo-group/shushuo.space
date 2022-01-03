@@ -58,7 +58,7 @@ $(document).ready(async function () {
     const E = window.wangEditor
     const editor = new E(".writerInputPart")
     editor.highlight = hljs
-    editor.config.uploadImgMaxSize = 5 * 1024 * 1024
+    editor.config.uploadImgMaxSize = 10 * 1024 * 1024
 
     editor.config.customUploadImg = async function (resultFiles, insertImgFn) {
 
@@ -392,7 +392,7 @@ $(document).ready(async function () {
 
                     }
                 }
-                
+
                 $('#submitButton').click(function (e) {
                     if ($('#dating')[0].checked == false && $('#shudong')[0].checked == false) {
                         alert('请检查发布信息')
