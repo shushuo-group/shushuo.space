@@ -131,6 +131,7 @@ var article = mongoose.model('article', new mongoose.Schema({
         type: Number,
         default: 0
     },
+    completeTime: Number,
     articleID: String,
     isShow: {
         type: Boolean,

@@ -755,11 +755,18 @@ router.post('/hotFlesh', async function (req, res, next) {
                 commentsLength += articles[i].comments[j].secComments.length
             }
         }
-        let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4 //当前分数  写到文章表里
+        //仅由评论点赞的基础分数
+        let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4
+        let tempPass = Math.floor((Date.now() - new Date(articles[i].time).getTime()) / 1000 / 3600) //随时间过去而冷却的小时数
+        let score = (tempNow  + 1) / Math.pow(tempPass + 1, 1.8) //当前分数  写到文章表里
+        //1.8衰减参数，1作者影响因子
+
         await db.article.updateOne({
             _id: articles[i]._id
         }, {
-            scores: tempNow
+            $set: {
+                scores: score,
+            }
         }, function (err, docs) {
             if (err) {
                 write.logerr(err)
@@ -789,7 +796,7 @@ router.post('/hotFlesh', async function (req, res, next) {
             smallname: smallm.name,
             bigmname: bigm.name,
             id: articles[i]._id,
-            order: tempNow
+            order: score
         })
     }
     let data = await db.hotList.find({}).sort({
@@ -823,11 +830,14 @@ async function hot() {
                 commentsLength += articles[i].comments[j].secComments.length
             }
         }
-        let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4 //当前分数  写到文章表里
+        let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4
+        let tempPass = Math.floor((Date.now() - new Date(articles[i].time).getTime()) / 1000 / 3600) //随时间过去而冷却的小时数
+        let score = (tempNow  + 1) / Math.pow(tempPass + 1, 1.8)
+
         db.article.updateOne({
             _id: articles[i]._id
         }, {
-            scores: tempNow
+            scores: score
         }, function (err, docs) {
             if (err) {
                 write.logerr(err)
@@ -852,14 +862,13 @@ async function hot() {
                 name: 1
             })
         }
-        //目前没有进行热度冷却
-        let a = 0.5
+        //目前有进行热度冷却
         db.hotList.create({
             name: articles[i].name,
             smallname: smallm.name,
             bigmname: bigm.name,
             id: articles[i]._id,
-            order: tempNow
+            order: score
         })
     }
 }
