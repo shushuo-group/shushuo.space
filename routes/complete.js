@@ -757,7 +757,7 @@ router.post('/hotFlesh', async function (req, res, next) {
         }
         //仅由评论点赞的基础分数
         let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4
-        let tempPass = Math.floor((Date.now() - new Date(articles[i].time).getTime()) / 1000 / 3600) //随时间过去而冷却的小时数
+        let tempPass = Math.floor((Date.now() - new Date(articles[i].time).getTime()) / 1000 / 3600 / 24) //随时间过去而冷却的天数
         let score = (tempNow  + 1) / Math.pow(tempPass + 1, 1.8) //当前分数  写到文章表里
         //1.8衰减参数，1作者影响因子
 
@@ -831,7 +831,7 @@ async function hot() {
             }
         }
         let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 4
-        let tempPass = Math.floor((Date.now() - new Date(articles[i].time).getTime()) / 1000 / 3600) //随时间过去而冷却的小时数
+        let tempPass = Math.floor((Date.now() - new Date(articles[i].time).getTime()) / 1000 / 3600 / 24) //随时间过去而冷却的天数
         let score = (tempNow  + 1) / Math.pow(tempPass + 1, 1.8)
 
         db.article.updateOne({
