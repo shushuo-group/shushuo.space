@@ -26,7 +26,7 @@ let is_small_client = false,
  * @is_small_client_tag 区分小屏幕设备的参考值
  */
 let client_screen_data = [screen.width, screen.height]
-let is_small_client_tag = 400
+let is_small_client_tag = 600
 for (let i = 0; i < client_screen_data.length; i++) {
     if (client_screen_data[i] < is_small_client_tag) {
         is_small_client = true
