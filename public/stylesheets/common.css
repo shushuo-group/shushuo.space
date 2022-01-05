@@ -75,6 +75,10 @@
     position: absolute;
     background: rgb(133 144 166);
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     width: 70%;
     height: 80%;
     margin: auto;
@@ -110,6 +114,10 @@
     width: -moz-max-content;
     width: max-content;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     height: 70%;
     -webkit-user-select: none;
@@ -131,6 +139,10 @@
 .img_bigshow_part {
     position: fixed;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     background: rgba(18, 18, 18, .65);
     z-index: 2;

@@ -163,6 +163,10 @@ ol {
     opacity: 0.5;
     position: fixed;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     z-index: 1;
 }
 
@@ -187,6 +191,10 @@ ol {
     opacity: 0.5;
     position: fixed;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     z-index: 1;
 }
 
@@ -481,6 +489,10 @@ body {
     background: #bdbdbd;
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     border-radius: 50%;
     overflow: hidden;
@@ -672,6 +684,10 @@ body {
     height: 100%;
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
 }
 
@@ -1262,6 +1278,10 @@ body {
     position: absolute;
     display: block;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     height: 30px;
     font-weight: bold;
 }
@@ -1352,6 +1372,10 @@ body {
     position: absolute;
     display: block;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     height: 30px;
     font-weight: bold;
 }
@@ -1568,6 +1592,10 @@ pre {
 .img_bigshow_part {
     position: fixed;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     background: rgba(18, 18, 18, .65);
     z-index: 2;
@@ -1849,6 +1877,10 @@ pre {
     user-select: none;
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     width: 100%;
 }
@@ -1960,6 +1992,10 @@ pre {
 .noticeDetail {
     position: fixed;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     background: #f1f1f1;
     width: 50%;
@@ -2013,6 +2049,10 @@ pre {
 .noticeDetail_bottm_button>div {
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     width: 130px;
     height: 40px;
@@ -2034,6 +2074,10 @@ pre {
     width: 98%;
     height: 98%;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     position: absolute;
     margin: auto;
     border: 2px solid #000000;
@@ -2584,6 +2628,10 @@ span.uiSetFree_buttton_check {
         display: block;
         position: absolute;
         inset: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         margin: auto;
         font-size: 20px;
         height: 40px;
@@ -2635,6 +2683,10 @@ span.uiSetFree_buttton_check {
     .noticeDetail {
         position: fixed;
         inset: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         margin: auto;
         background: #f1f1f1;
         width: 98%;

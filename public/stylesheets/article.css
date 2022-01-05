@@ -150,6 +150,10 @@ ol {
     background-color: rgba(18, 18, 18, .65);
     opacity: 0.5;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     position: fixed;
     z-index: 1;
 }
@@ -410,6 +414,10 @@ body {
     background: #bdbdbd;
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     border-radius: 50%;
     overflow: hidden;
@@ -1274,6 +1282,10 @@ body {
     position: absolute;
     display: block;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     height: 30px;
     font-weight: bold;
 }
@@ -1364,6 +1376,10 @@ body {
     position: absolute;
     display: block;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     height: 30px;
     font-weight: bold;
 }
@@ -1524,6 +1540,10 @@ pre {
 .img_bigshow_part {
     position: fixed;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     background: rgba(18, 18, 18, .65);
     z-index: 2;

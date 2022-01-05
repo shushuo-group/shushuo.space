@@ -141,6 +141,10 @@ body {
     height: 100%;
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
 }
 
@@ -282,6 +286,10 @@ body {
 .mask {
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     background-color: rgba(18, 18, 18, .65);
     opacity: 0.5;
@@ -296,6 +304,10 @@ body {
     box-sizing: content-box;
     margin: auto;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .AvatarOperationArea::before {
@@ -330,6 +342,10 @@ body {
     height: 85%;
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
 }
 
@@ -344,6 +360,10 @@ body {
     background-color: white;
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     border-radius: 50%;
     overflow: hidden;
@@ -376,6 +396,10 @@ body {
     position: absolute;
     z-index: 2;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     display: none;
 }
@@ -388,6 +412,10 @@ body {
     width: 100%;
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
     z-index: 1;
 }
@@ -433,6 +461,10 @@ body {
     height: 25px;
     position: absolute;
     inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     margin: auto;
 }
 
