@@ -339,9 +339,9 @@ $(document).ready(async function () {
 
 
                 if (response.user.headImg == 'NaN.png') {
-                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="'+ zip_dir + response.user.headImg + '">');
+                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="' + zip_dir + response.user.headImg + '">');
                 } else {
-                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="'+ zip_dir + response.user.headImg + '">');
+                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="' + zip_dir + response.user.headImg + '">');
                 }
 
                 // 登录状态下即会有退出登录按钮
@@ -775,6 +775,13 @@ $(document).ready(async function () {
                 $('head').append(`
                 <style id='free_style'>${escape2Html(response.user.FreeCss)}</style>
                 `);
+
+                // 取消文字变化在小屏幕设备上的应用
+                if (is_small_client) {
+                    let temp_str = $('#free_style').html()
+                    temp_str = temp_str.replace(/font-size/g, 'error')
+                    $('#free_style').html(temp_str)
+                }
 
             } else {
                 // nologin
