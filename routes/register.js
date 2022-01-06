@@ -103,7 +103,7 @@ router.post('/registerCheck', async (req, res) => {
         }, {
             $set: {
                 userNumber: usersNumber,
-                userName: `小树${usersNumber}号`,
+                userName: `${usersAccount}_${random(4)}`,
                 userAccount: usersAccount,
                 userPassword: md5.md1(usersPassword)
             }
