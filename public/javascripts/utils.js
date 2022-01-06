@@ -687,10 +687,7 @@ function readAllButton(e) {
     $('.innerContent').css('max-height', '200px');
     $('.contentExploreButton').show();
     $('.contentExploreMask').show();
-    $('.contentSmallPart').css({
-        'box-sizing': '',
-        'border': ''
-    });
+    $('.contentSmallPart').removeAttr('style');
 
     let scroll01 = $(window).scrollTop()
 
@@ -713,7 +710,7 @@ function readAllButton(e) {
 
     $(e).parents('.contentSmallPart').css({
         'box-sizing': 'content-box',
-        'border': '2px solid #03a9f4'
+        'box-shadow': '0px 0px 1px 2px rgb(3 169 244)'
     });
 
     $(e).hide();
@@ -770,10 +767,7 @@ function readAllButton(e) {
 
 //粗略阅读全文收起事件
 function contentExploreButton_button(e) {
-    $(e).parents('.contentSmallPart').css({
-        'box-sizing': '',
-        'border': ''
-    });
+    $(e).parents('.contentSmallPart').removeAttr('style');
     $(e).parents('.contentSmallPart').find('.contentExploreMask').show()
     $(e).parents('.contentSmallPart').find('.contentExploreButton').show()
     $(e).parents('.contentSmallPart').find('.innerContent').css('max-height', '200px');
