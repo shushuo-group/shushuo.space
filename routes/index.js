@@ -105,7 +105,7 @@ router.post('/isLogin', async function (req, res, next) {
                 let tokenNum = jwt.sign({
                     Email: user.userEmail,
                     buidTime: Date.now(),
-                    tokenKey: "i love cxy forever"
+                    tokenKey: "i love coding forever"
                 }, "www.shushuo.space is built by Mr.Ge")
 
                 //获取个人信息返回客户端

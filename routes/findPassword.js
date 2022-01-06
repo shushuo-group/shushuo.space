@@ -58,7 +58,7 @@ router.post('/Check', async function (req, res, next) {
             let tokenNum = jwt.sign({
                 Email: Emailget,
                 buidTime: Date.now(),
-                tokenKey: "i love cxy forever"
+                tokenKey: "i love coding forever"
             }, "www.shushuo.space is built by Mr.Ge")
             db.user.updateMany({
                 userEmail: Emailget

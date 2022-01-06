@@ -74,7 +74,7 @@ router.post('/registerCheck', async (req, res) => {
         let tokenNum = jwt.sign({
             Email: req.body.userEmail,
             buidTime: Date.now(),
-            tokenKey: "i love cxy forever"
+            tokenKey: "i love coding forever"
         }, "www.shushuo.space is built by Mr.Ge")
         db.user.updateMany({
             userEmail: req.body.userEmail
