@@ -38,10 +38,12 @@ async function commentDelete(articleid, fatherid, seccommentid) {
 
 //获取文章信息
 router.post('/articleDetail', async function (req, res, next) {
+
     let article = await db.article.findOne({
         _id: req.body.articleId,
         isPublic: true
     })
+
     if (article.isOk === false) {
         //此处isOk为false则说明其为被删除的文章
         res.send({
@@ -49,6 +51,7 @@ router.post('/articleDetail', async function (req, res, next) {
         })
         return
     }
+
     //作者信息
     let user = await db.user.findOne({
         userEmail: article.writerEmail
@@ -59,6 +62,7 @@ router.post('/articleDetail', async function (req, res, next) {
         _id: 1,
         word: 1
     })
+
     //浏览者信息
     let userWatch = await db.user.findOne({
         token: req.body.token,
@@ -67,10 +71,12 @@ router.post('/articleDetail', async function (req, res, next) {
         token: 1,
         userEmail: 1
     })
+
     let isLogin = false
     let islike = false
     let isunlike = false
     let iscollect = false
+
     if (userWatch !== null) {
         if (req.body.token == userWatch.token) {
             isLogin = true
@@ -85,6 +91,7 @@ router.post('/articleDetail', async function (req, res, next) {
             iscollect = true
         }
     }
+
     if (article.isShow === true) {
         //非树洞内的文章
         let bigM = await db.largeModule.findOne({
@@ -97,60 +104,21 @@ router.post('/articleDetail', async function (req, res, next) {
         }, {
             name: 1
         })
-        let commentsHead = []
+
+        // 评论计数君
+        let temp_comments_length = 0;
+        temp_comments_length += article.comments.length
         for (let i = 0; i < article.comments.length; i++) {
-            if (article.comments[i].isOK == false) {
-                article.comments[i].content = '/*该评论已删除*/'
+            if (article.comments[i].secComments) {
+                temp_comments_length += article.comments[i].secComments.length
             }
-            let commentsuser = await db.user.findOne({
-                userEmail: article.comments[i].comUser
-            }, {
-                headImg: 1
-            })
-            commentsHead.push({
-                headImg: commentsuser.headImg
-            })
         }
-        let comments = article.comments
-        let commentsNumber = article.comments.length
-        for (let i = 0; i < comments.length; i++) {
-            if (comments[i].secComments) {
-                for (let j = 0; j < comments[i].secComments.length; j++) {
-                    if (comments[i].secComments[j].isOK == false) {
-                        comments[i].secComments[j].content = '/*该评论已删除*/'
-                    }
-                    let secUser = await db.user.findOne({
-                        userEmail: comments[i].secComments[j].comUserEmail
-                    }, {
-                        userAccount: 1,
-                        headImg: 1,
-                        userName: 1
-                    })
-                    delete comments[i].secComments[j].comUserEmail
-                    delete comments[i].secComments[j].isOK
-                    comments[i].secComments[j].user_id = secUser._id
-                    comments[i].secComments[j].accountId = secUser.userAccount
-                    comments[i].secComments[j].comUserHead = secUser.headImg
-                    comments[i].secComments[j].comUserName = secUser.userName
-                }
-                commentsNumber += comments[i].secComments.length
-                comments[i].secComments_number = comments[i].secComments.length
-            }
-            let usercommen = await db.user.findOne({
-                userEmail: comments[i].comUser
-            }, {
-                userName: 1,
-                userAccount: 1
-            })
-            comments[i].comUser = usercommen.userName
-            comments[i].accountId = usercommen.userAccount
-            comments[i].user_id = usercommen._id
-        }
+        let commentsNumber = temp_comments_length
+
         let articleSend = {
             content: article.content,
             title: article.name,
             time: article.time,
-            comments,
             likersNumber: article.likers.length,
             unlikersNumber: article.unlikers.length,
             collectorsNumber: article.collectors.length,
@@ -160,9 +128,9 @@ router.post('/articleDetail', async function (req, res, next) {
             writerId: user._id,
             writerHead: user.headImg,
             writerName: user.userName,
-            writerSign: user.word,
-            headImgs: commentsHead
+            writerSign: user.word
         }
+
         res.send({
             islogin: isLogin,
             isShuDong: false,
@@ -171,68 +139,30 @@ router.post('/articleDetail', async function (req, res, next) {
             isCollect: iscollect,
             isUnlike: isunlike
         })
+
     } else {
         // 树洞内的文章
-        let commentsHead = []
+
+        // 评论计数君
+        let temp_comments_length = 0;
+        temp_comments_length += article.comments.length
         for (let i = 0; i < article.comments.length; i++) {
-            if (article.comments[i].isOK == false) {
-                article.comments[i].content = '/*该评论已删除*/'
+            if (article.comments[i].secComments) {
+                temp_comments_length += article.comments[i].secComments.length
             }
-            let commentsuser = await db.user.findOne({
-                userEmail: article.comments[i].comUser
-            }, {
-                headImg: 1
-            })
-            commentsHead.push({
-                headImg: commentsuser.headImg
-            })
         }
-        let comments = article.comments
-        for (let i = 0; i < comments.length; i++) {
-            if (comments[i].secComments) {
-                for (let j = 0; j < comments[i].secComments.length; j++) {
-                    if (comments[i].secComments[j].isOK == false) {
-                        comments[i].secComments[j].content = '/*该评论已删除*/'
-                    }
-                    let secUser = await db.user.findOne({
-                        userEmail: comments[i].secComments[j].comUserEmail
-                    }, {
-                        userAccount: 1,
-                        headImg: 1,
-                        userName: 1
-                    })
-                    delete comments[i].secComments[j].comUserEmail
-                    delete comments[i].secComments[j].id
-                    delete comments[i].secComments[j].isOK
-                    comments[i].secComments[j].accountId = secUser.userAccount
-                    comments[i].secComments[j].comUserHead = secUser.headImg
-                    comments[i].secComments[j].comUserName = secUser.userName
-                    comments[i].secComments[j].user_id = secUser._id
-                }
-                comments[i].secComments_number = comments[i].secComments.length
-            }
-            let usercommen = await db.user.findOne({
-                userEmail: comments[i].comUser
-            }, {
-                userName: 1,
-                userAccount: 1
-            })
-            comments[i].comUser = usercommen.userName
-            comments[i].accountId = usercommen.userAccount
-            comments[i].user_id = usercommen._id
-        }
+        let commentsNumber = temp_comments_length
+
         let articleSend = {
             content: article.content,
             title: article.name,
             time: article.time,
-            comments,
-            comments: article.comments,
             likersNumber: article.likers.length,
             unlikersNumber: article.unlikers.length,
             collectorsNumber: article.collectors.length,
-            commentsNumber: article.comments.length,
-            headImgs: commentsHead
+            commentsNumber: commentsNumber
         }
+
         res.send({
             islogin: isLogin,
             isShuDong: true,
@@ -241,6 +171,7 @@ router.post('/articleDetail', async function (req, res, next) {
             isCollect: iscollect,
             isUnlike: isunlike
         })
+
     }
 })
 

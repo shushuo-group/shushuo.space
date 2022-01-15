@@ -34,6 +34,7 @@ $(document).ready(function () {
                 alert('权限失效，将为您跳转至首页...')
                 window.location.href = web_url
             }
+            window.localStorage.isLogin = true;
 
             //以区分游客抑或本人
             if (response.isOwn === true) {

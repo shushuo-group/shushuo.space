@@ -859,6 +859,18 @@ body {
     top: 2.5px;
 }
 
+.comment_click::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    bottom: -2px;
+    width: 0px;
+    height: 0px;
+    border-bottom: 4px solid #90ccf7;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+}
+
 .commentOpen_number {
     position: relative;
     left: -1px;

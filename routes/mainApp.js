@@ -545,9 +545,7 @@ router.post('/slideFlush', async function (req, res, next) {
                 if (articles[i].collectors.find((ele) => (ele.name == userSee.userEmail))) {
                     isCollect = true
                 }
-                let articleWriter = await db.user.find({
-                    userEmail: articles[i].writerEmail
-                })
+
                 let commentsNumber = articles[i].comments.length
                 for (let j = 0; j < articles[i].comments.length; j++) {
                     if (articles[i].comments[j].secComments) {

@@ -18,6 +18,7 @@ $(document).ready(async function () {
                 window.location.href = web_url
                 return
             }
+            window.localStorage.isLogin = true;
             $('.headImgPart').html(`<a style="cursor:pointer;" onclick='window.open("/person?userId=${response.data_id}")'><img onerror=\'picError(this)\'  onload=\'pic_load(this)\' class="head" src=${zip_dir}${response.userHeadimg}></a>`);
         }
     });

@@ -42,8 +42,7 @@ $(document).ready(async function () {
                 password: $('#password')[0].value
             },
             success: function (response) {
-                tokenWork(response)
-                                if (response.isCheck == false) {
+                if (response.isCheck == false) {
                     alert('请注意验证码大小写!')
                     return
                 }

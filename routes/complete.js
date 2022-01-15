@@ -499,47 +499,116 @@ router.post('/report', async function (req, res, next) {
 
 //查看评论区事件
 router.post('/commentGet', async function (req, res, next) {
+
     //确定了操作对象后 进行对数据库的操作
     let article = await db.article.findOne({
         _id: req.body.articleId
     }, {
         comments: 1
     })
+
+    // 删除标志符
+    let comment_isdelete = false;
+
+    // 原评论数量(仅一级评论)
+    let comment_length = article.comments.length;
+
+    // 评论数据容器
+    let temp_data = []
+
     let comments = article.comments
+    comments.reverse()
+
+    // 将一级原始数据进行筛选并填充评论数据容器
     for (let i = 0; i < comments.length; i++) {
-        if (comments[i].isOK == false) {
-            comments[i].content = '/*该评论已删除*/'
+
+        // 进行总评论数据量的统计
+        if (comments[i].secComments) {
+            comment_length += comments[i].secComments.length;
         }
+
+        if (comments[i].isOK == false) {
+            comment_isdelete = true
+            continue;
+        } else {
+            temp_data.push({
+                'id': comments[i].id,
+                'content': comments[i].content,
+                'comUser': comments[i].comUser,
+                'secComments': comments[i].secComments,
+                'time': comments[i].time
+            })
+        }
+    }
+
+    // 对数据容器内部数据进行数据处理以及二级评论数据的制作
+    for (let i = 0; i < temp_data.length; i++) {
+
+        // 一级评论数据的人员信息处理
         let smallUser = await db.user.findOne({
-            userEmail: comments[i].comUser
+            userEmail: temp_data[i].comUser
         }, {
             headImg: 1,
             userName: 1
         })
-        comments[i].headimg = smallUser.headImg
-        comments[i].comUser = smallUser.userName
-        comments[i].comUserId = smallUser._id
-        if (comments[i].secComments) {
-            for (let j = 0; j < comments[i].secComments.length; j++) {
-                if (comments[i].secComments[j].isOK == false) {
-                    comments[i].secComments[j].content = '/*该评论已删除*/'
+        temp_data[i].headimg = smallUser.headImg
+        temp_data[i].comUser = smallUser.userName
+        temp_data[i].comUserId = smallUser._id
+
+        // 如果存在二级评论信则进行处理
+        if (temp_data[i].secComments) {
+
+            // 二级评论数据容器
+            let temp_sec_comments = []
+            temp_data[i].secComments.reverse()
+
+            // 将二级评论数据进行筛选以及推送至数据容器内部
+            for (let j = 0; j < temp_data[i].secComments.length; j++) {
+                let temp = temp_data[i].secComments[j]
+                if (temp.isOK === true) {
+                    temp_sec_comments.push({
+                        'id': temp.id,
+                        'content': temp.content,
+                        'comUserEmail': temp.comUserEmail,
+                        'time': temp.time
+                    })
+                } else {
+                    comment_isdelete = true
                 }
+            }
+
+            // 对数据容器内部数据进行数据处理
+            for (let j = 0; j < temp_sec_comments.length; j++) {
+
+                // 二级评论人员信息处理
                 let smallUser = await db.user.findOne({
-                    userEmail: comments[i].secComments[j].comUserEmail
+                    userEmail: temp_sec_comments[j].comUserEmail
                 }, {
                     headImg: 1,
                     userName: 1
                 })
-                comments[i].secComments[j].comUserHead = smallUser.headImg
-                comments[i].secComments[j].comUserName = smallUser.userName
-                comments[i].secComments[j].comUserId = smallUser._id
+                temp_sec_comments[j].comUserHead = smallUser.headImg
+                temp_sec_comments[j].comUserName = smallUser.userName
+                temp_sec_comments[j].comUserId = smallUser._id
+
             }
-            comments[i].secComments_number = comments[i].secComments.length
+
+            // 一级评论下的二级评论数量
+            temp_data[i].secComments_number = temp_sec_comments.length
+
+            // 将二级评论信息赋值于一级评论信息
+            temp_data[i].secComments = temp_sec_comments
+
         }
+
     }
+
     res.send({
-        comment: comments
+        comment: temp_data,
+        comment_isdelete: comment_isdelete,
+        comment_all_length: comment_length
     })
+
 })
 
 //上传评论功能
@@ -758,7 +827,7 @@ router.post('/hotFlesh', async function (req, res, next) {
         //仅由评论点赞的基础分数
         let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 0.5
         let tempPass = Math.floor((Date.now() - new Date(articles[i].time).getTime()) / 1000 / 3600 / 24) //随时间过去而冷却的天数
-        let score = Math.pow(tempNow  + 1, 3) / Math.pow(tempPass + 1, 1.8) //当前分数  写到文章表里
+        let score = Math.pow(tempNow + 1, 3) / Math.pow(tempPass + 1, 1.8) //当前分数  写到文章表里
         //1.8衰减参数，1作者影响因子
 
         await db.article.updateOne({
@@ -832,7 +901,7 @@ async function hot() {
         }
         let tempNow = articles[i].likers.length * 1 + articles[i].unlikers.length * (-1) + articles[i].collectors.length * 2 + commentsLength * 0.5
         let tempPass = Math.floor((Date.now() - new Date(articles[i].time).getTime()) / 1000 / 3600 / 24) //随时间过去而冷却的天数
-        let score = Math.pow(tempNow  + 1, 3) / Math.pow(tempPass + 1, 1.8)
+        let score = Math.pow(tempNow + 1, 3) / Math.pow(tempPass + 1, 1.8)
 
         db.article.updateOne({
             _id: articles[i]._id

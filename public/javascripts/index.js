@@ -30,19 +30,6 @@ $(document).ready(async function () {
     }
 
     if (is_small_client) {
-        $('body').after(`<div id="preventTran" style="position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; overflow: hidden; background-color: rgb(46, 46, 46); text-align: center; z-index: 99999; visibility: hidden;"><img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="data:image/png;base64,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" style="margin: 60px auto 30px;"><p style="width: 100%; height: auto; font-size: 22px; color: rgb(98, 98, 98); line-height: 34px; text-align: center;">为了您的良好体验<br>请将手机竖屏操作</p></div>`);
-        if (window.orientation == 90 || window.orientation == -90) {
-            $('#preventTran').css('visibility', 'visible');
-        } else {
-            $('#preventTran').css('visibility', 'hidden');
-        }
-        window.onorientationchange = function () {
-            if (window.orientation == 90 || window.orientation == -90) {
-                $('#preventTran').css('visibility', 'visible');
-            } else {
-                $('#preventTran').css('visibility', 'hidden');
-            }
-        };
 
         // 搜索按钮的适配
         $('#searchPartInput_search').hide();
@@ -301,6 +288,9 @@ $(document).ready(async function () {
 
         });
 
+        // 对于小屏幕设备直接就把 通知、信箱模块 去除
+        $('.notice,.message').remove();
+
     } else {
         // 退后操作对颜色进行的适配
         if ($("#search_base_value")[0].value !== "") { //没有输入搜索信息
@@ -321,32 +311,41 @@ $(document).ready(async function () {
         },
         success: function (response) {
             if (response.isLogin == true) {
-
                 //登录成功 更新本地资源
+
+                // 上一次登陆时间
                 $('.webInfors').prepend(`<div class="finLogTime"> <span>LAST LOGIN:</span><span class="finLogTime_number">${timeSet(response.user.userFinLog)}</span></div>`);
+
+                // 点赞 收藏 评论 文章 的数据值
                 $('.centerRightTopPart1_number').html(`${numEasy(response.user.number1)}`);
                 $('.centerRightTopPart2_number').html(`${numEasy(response.user.number2)}`);
                 $('.centerRightTopPart3_number').html(`${numEasy(response.user.number3)}`);
                 $('.centerRightTopPart4_number').html(`${numEasy(response.user.number4)}`);
 
+                // 本地 localStorage 的更新
                 window.localStorage.name = response.user.userName
                 window.localStorage.token = response.token
                 window.localStorage.search = JSON.stringify(response.user.userS_H)
+                window.localStorage.isLogin = true
 
-                //头像进行设置
-                $('#loginButton').remove();
-                $('#userHead').prepend(`<a userId="${response.user.id}" userName="${response.user.userName}" class="toPerson" onclick="window.open('/person?userId=${response.user.data_id}')" Id="${response.user.data_id}"></a>`);
+                // 用户头像设置
+                $('#userHead').html(`<a
+                class="toPerson"
+                onclick="window.open('/person?userId=${response.user.data_id}')">
+                <img
+                    class="person_head_pic"
+                    id="${response.user.data_id}"
+                    userId="${response.user.id}"
+                    userName="${response.user.userName}"
+                    style="border: 2px solid green;border-radius: 50%;" 
+                    onerror=\'picError(this)\'
+                    onload=\'pic_load(this)\'
+                    src="${zip_dir + response.user.headImg}">
+                </a>`);
 
-
-                if (response.user.headImg == 'NaN.png') {
-                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="' + zip_dir + response.user.headImg + '">');
-                } else {
-                    $('.toPerson').prepend('<img style="border: 2px solid green;border-radius: 50%;" onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="' + zip_dir + response.user.headImg + '">');
-                }
-
-                // 登录状态下即会有退出登录按钮
-                $('#userHead').after(`
-                <div class="head-part">
+                // 设置退出登陆按钮
+                $('#userHead').after(`<div 
+                class="head-part">
                     <span id="outLogin" class="pcTouch">退 出 登 录</span>
                 </div>
                 `);
@@ -375,6 +374,7 @@ $(document).ready(async function () {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 localStorage.clear();
+                                window.localStorage.isLogin = false;
                                 window.location.href = web_url
                             });
 
@@ -421,6 +421,7 @@ $(document).ready(async function () {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 localStorage.clear();
+                                window.localStorage.isLogin = false;
                                 window.location.href = web_url
                             });
 
@@ -447,6 +448,7 @@ $(document).ready(async function () {
                     e.preventDefault();
                     e.stopPropagation();
                     localStorage.clear();
+                    window.localStorage.isLogin = false;
                     window.location.href = web_url
                 });
 
@@ -763,12 +765,13 @@ $(document).ready(async function () {
                             window.location.href = web_url
                             return
                         }
+                        $('.message').prepend(`
+                        <span id="message_number"></span>
+                        `);
                         if (response.number == 0) {
                             return
                         }
-                        $('.message').prepend(`
-                            <span id="message_number">${numEasy(response.number)}</span>
-                        `);
+                        $('#message_number').html(`${numEasy(response.number)}`);
                     }
                 });
 
@@ -788,6 +791,7 @@ $(document).ready(async function () {
                 // just for pc and ipad ,not support for phone
                 //自动清除本地缓存
                 localStorage.clear();
+                window.localStorage.isLogin = false;
 
                 if (!is_small_client) {
                     $("#search_base_value").focus(function () {
@@ -1311,19 +1315,28 @@ $(document).ready(async function () {
     // 懒加载的实现
     $(window).scroll(function () {
 
+        // 当处于搜索状态时 禁止进行懒加载 这是一个巧妙处理 但是也会对后续设计引发不适的地方
         if ($('.navigation_search').length == 1) {
             return
         }
 
-        TopButtonShowHide()
+        // 上滑顶部图标的出现与消失
+        let scrollt = $(window).scrollTop();
+        if (scrollt > 200) {
+            $(".Totop").fadeIn(400);
+        } else {
+            $(".Totop").stop().fadeOut(400);
+        }
 
+        // 不存在 contentSmallPart 则不进行懒加载事件
         if ($('.contentSmallPart').length == 0) {
-            //一定不进行懒加载事件
             return
         }
 
-        if ($(this).scrollTop() + $(this).height() + 1 >= $(document).height()) {
-            //触底则进行懒加载事件
+        //触底则进行懒加载事件
+        let temp_length = --$('.contentSmallPart').length
+        let target_length = $(document).height() - $('.contentSmallPart:nth(' + temp_length + ')').height()
+        if ($(this).scrollTop() + $(this).height() + 1 >= target_length) {
             switch ($('#square').attr('isactive')) {
                 case 'true':
                     //广场的懒加载
@@ -1449,7 +1462,7 @@ $(document).ready(async function () {
     $('#toWriter').click(function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if ($('#loginButton')[0]) {
+        if (window.localStorage.isLogin == 'false') {
             //未登录
             noLogin()
         } else {

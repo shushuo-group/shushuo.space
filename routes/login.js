@@ -41,6 +41,70 @@ router.post('/loginAcc', async function (req, res, next) {
                     buidTime: Date.now(),
                     tokenKey: "i love coding forever"
                 }, "www.shushuo.space is built by Mr.Ge")
+
+                //获取个人信息返回客户端
+                let userInfor = user
+                let myArticles = await db.article.find({
+                    writerEmail: user.userEmail,
+                    isPublic: true,
+                    isOk: true
+                })
+                let likeArticles = []
+                for (let i = 0; i < userInfor.likeArticles.length; i++) {
+                    likeArticles.push({
+                        articleId: userInfor.likeArticles[i].articleId
+                    })
+                }
+                let unlikeArticles = []
+                for (let i = 0; i < userInfor.unlikeArticles.length; i++) {
+                    unlikeArticles.push({
+                        articleId: userInfor.unlikeArticles[i].articleId
+                    })
+                }
+                let collectArticles = []
+                for (let i = 0; i < userInfor.collectArticles.length; i++) {
+                    collectArticles.push({
+                        articleId: userInfor.collectArticles[i].articleId
+                    })
+                }
+                let number3 = 0
+                for (let i = 0; i < userInfor.commentArticles.length; i++) {
+                    if (userInfor.commentArticles[i].isOK == true) {
+                        number3 += 1
+                    }
+                }
+                let userS_H = []
+                for (let i = 0; i < userInfor.search_history.length; i++) {
+                    if (userInfor.search_history[i].isOk == true) {
+                        userS_H.push({
+                            'name': userInfor.search_history[i].name
+                        })
+                    }
+                }
+                if (userInfor.FreeCss == undefined) {
+                    userInfor.FreeCss = ''
+                }
+                let userInfors = {
+                    FreeCss: userInfor.FreeCss,
+                    headImg: userInfor.headImg,
+                    userName: userInfor.userName,
+                    id: userInfor.userAccount,
+                    data_id: userInfor._id,
+                    userFinLog: userInfor.finLogTime,
+                    userS_H: userS_H,
+                    number1: userInfor.likeArticles.length,
+                    number2: userInfor.collectArticles.length,
+                    number3: number3,
+                    number4: myArticles.length
+                }
+
+                res.send({
+                    type: 'log_password',
+                    token: tokenNum,
+                    user: userInfors,
+                    isLogin: true
+                })
+
                 db.user.updateMany({
                     userAccount: req.body.userName,
                     isRegister: true
@@ -55,12 +119,6 @@ router.post('/loginAcc', async function (req, res, next) {
                         write.logerr(err)
                     }
                 })
-                res.send({
-                    token: tokenNum,
-                    userHeadimg: user.headImg,
-                    userName: user.userName,
-                    isLogin: true
-                })
             } else {
                 res.send({
                     isLogin: false
@@ -70,7 +128,7 @@ router.post('/loginAcc', async function (req, res, next) {
     }
 });
 
-// 邮箱登录
+// 邮箱登录_发送验证码
 router.post('/loginEmail', async function (req, res, next) {
     let user = await db.user.findOne({
         userEmail: req.body.userEmail,
@@ -97,6 +155,7 @@ router.post('/loginEmail', async function (req, res, next) {
                     write.logerr(err)
                 }
             })
+
             res.send({
                 isSend: true
             })
@@ -109,6 +168,7 @@ router.post('/loginEmail', async function (req, res, next) {
     }
 })
 
+// 邮箱登录_确认登陆
 router.post('/loginEmailCheck', async function (req, res, next) {
     let user = await db.user.findOne({
         userEmail: req.body.userEmail,
@@ -129,6 +189,70 @@ router.post('/loginEmailCheck', async function (req, res, next) {
                 buidTime: Date.now(),
                 tokenKey: "i love coding forever"
             }, "www.shushuo.space is built by Mr.Ge")
+
+            //获取个人信息返回客户端
+            let userInfor = user
+            let myArticles = await db.article.find({
+                writerEmail: user.userEmail,
+                isPublic: true,
+                isOk: true
+            })
+            let likeArticles = []
+            for (let i = 0; i < userInfor.likeArticles.length; i++) {
+                likeArticles.push({
+                    articleId: userInfor.likeArticles[i].articleId
+                })
+            }
+            let unlikeArticles = []
+            for (let i = 0; i < userInfor.unlikeArticles.length; i++) {
+                unlikeArticles.push({
+                    articleId: userInfor.unlikeArticles[i].articleId
+                })
+            }
+            let collectArticles = []
+            for (let i = 0; i < userInfor.collectArticles.length; i++) {
+                collectArticles.push({
+                    articleId: userInfor.collectArticles[i].articleId
+                })
+            }
+            let number3 = 0
+            for (let i = 0; i < userInfor.commentArticles.length; i++) {
+                if (userInfor.commentArticles[i].isOK == true) {
+                    number3 += 1
+                }
+            }
+            let userS_H = []
+            for (let i = 0; i < userInfor.search_history.length; i++) {
+                if (userInfor.search_history[i].isOk == true) {
+                    userS_H.push({
+                        'name': userInfor.search_history[i].name
+                    })
+                }
+            }
+            if (userInfor.FreeCss == undefined) {
+                userInfor.FreeCss = ''
+            }
+            let userInfors = {
+                FreeCss: userInfor.FreeCss,
+                headImg: userInfor.headImg,
+                userName: userInfor.userName,
+                id: userInfor.userAccount,
+                data_id: userInfor._id,
+                userFinLog: userInfor.finLogTime,
+                userS_H: userS_H,
+                number1: userInfor.likeArticles.length,
+                number2: userInfor.collectArticles.length,
+                number3: number3,
+                number4: myArticles.length
+            }
+
+            res.send({
+                type: 'log_email',
+                token: tokenNum,
+                user: userInfors,
+                isLogin: true
+            })
+
             db.user.updateMany({
                 userEmail: req.body.userEmail
             }, {
@@ -143,12 +267,7 @@ router.post('/loginEmailCheck', async function (req, res, next) {
                     write.logerr(err)
                 }
             })
-            res.send({
-                token: tokenNum,
-                userHeadimg: user.headImg,
-                userName: user.userName,
-                isLogin: true
-            })
+
         } else {
             res.send({
                 isLogin: false

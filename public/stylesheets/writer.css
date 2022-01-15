@@ -91,7 +91,7 @@ video {
     box-sizing: border-box;
 }
 
-img {
+.writerInput img {
     margin: auto !important;
     display: block;
     left: 0;

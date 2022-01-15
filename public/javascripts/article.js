@@ -243,119 +243,20 @@ $(document).ready(async function () {
                 //登录成功
                 $('#loginButton').remove();
                 $('#userHead').append(`
-                <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="window.open('/person?userId=${response.data_id}')" username="${response.userName}" src="${zip_dir}${response.userHeadimg}">
+                <img
+                    class="person_head_pic"
+                    onerror=\'picError(this)\'
+                    onload=\'pic_load(this)\'
+                    onclick="window.open('/person?userId=${response.data_id}')"
+                    username="${response.userName}"
+                    src="${zip_dir}${response.userHeadimg}">
                 `);
+                window.localStorage.isLogin = true;
             } else {
                 localStorage.clear();
+                window.localStorage.isLogin = false;
                 $('#loginButton').click(function () {
-
                     noLogin()
-
-                    //登录 注册功能切换模块
-                    $('.ChangeButton>div>span:nth-child(1),.ChangeButton>div>span:nth-child(3)').click(function (e) {
-                        switch (this.innerText) {
-                            case '邮箱登录？':
-                                this.innerText = $('.waitChange>div').attr('name')
-                                $('.waitChange>div').remove();
-                                $('.waitChange').prepend('<div class="logByEmail" name="邮箱登录？"><div><div><div class="emailNum"><div>邮&nbsp&nbsp&nbsp箱：</div><div><div><input type="text" id="logEmail"></div></div></div></div><div><div><button id="yanzheng">获取验证码</button></div></div><div><div class="yanzheni"><div>验证码：</div><div><div><input type="text" id="logEmailNum"></div></div></div></div></div></div>');
-                                $('#yanzheng').click(function (e) {
-                                    $.ajax({
-                                        type: "post",
-                                        url: "login/loginEmail",
-                                        data: {
-                                            userEmail: $('#logEmail')[0].value
-                                        },
-                                        success: function (response) {}
-                                    });
-                                });
-                                break;
-                            case '注册？':
-                                this.innerText = $('.waitChange>div').attr('name')
-                                $('.waitChange>div').remove();
-                                $('.waitChange').prepend('<div class="register" name="注册？"><div><div><div class="regemailNum"><div>邮&nbsp&nbsp&nbsp箱：</div><div><div><input type="text" id="email"></div></div></div></div><div><div><button id="regyanzheng">获取验证码</button></div></div><div><div class="regyanzheni"><div>验证码：</div><div><div><input type="text" id="regYanZhen"></div></div></div></div></div></div>');
-                                $('#regyanzheng').click(function (e) {
-                                    $.ajax({
-                                        type: "post",
-                                        url: "register",
-                                        data: {
-                                            email: $('#email')[0].value
-                                        },
-                                        success: function (response) {}
-                                    });
-                                });
-                                break;
-                            case '账号登录？':
-                                this.innerText = $('.waitChange>div').attr('name')
-                                $('.waitChange>div').remove();
-                                $('.waitChange').prepend(`<div class="logByAcc" name="账号登录？"><div><div><div><span>账号：</span><span><div><input type="text" id="userName"></div></span></div></div></div><div><div><div><span>密码：</span><span><div><input type="password" id="passWord"></div></span><a href="/findPassword">忘记密码？</a></div></div></div></div>`);
-                                break;
-                            default:
-                                break;
-                        }
-                    });
-                    $('#logRegButton').click(function (e) {
-                        switch ($('.waitChange>div').attr('name')) {
-                            case "账号登录？":
-                                $.ajax({
-                                    type: "post",
-                                    url: "login/loginAcc",
-                                    data: {
-                                        userName: $('#userName')[0].value,
-                                        passWord: $('#passWord')[0].value
-                                    },
-                                    success: function (response) {
-                                        tokenWork_article(response)
-                                        if (response.isLogin == true) {
-                                            window.location.href = window.location.href
-                                        } else {
-                                            localStorage.clear();
-                                            alert('请仔细验证登录信息')
-                                        }
-                                    }
-                                });
-                                break;
-                            case "注册？":
-                                $.ajax({
-                                    type: "post",
-                                    url: "register/registerCheck",
-                                    data: {
-                                        regYanZhen: $('#regYanZhen')[0].value,
-                                        userEmail: $('#email')[0].value
-                                    },
-                                    success: function (response) {
-                                        tokenWork_article(response)
-                                        if (response.isLogin == true) {
-                                            window.location.href = window.location.href
-                                        } else {
-                                            localStorage.clear();
-                                            alert('请仔细验证登录信息')
-                                        }
-                                    }
-                                });
-                                break;
-                            case "邮箱登录？":
-                                $.ajax({
-                                    type: "post",
-                                    url: "login/loginEmailCheck",
-                                    data: {
-                                        userEmail: $('#logEmail')[0].value,
-                                        logEmailNum: $('#logEmailNum')[0].value
-                                    },
-                                    success: function (response) {
-                                        tokenWork_article(response)
-                                        if (response.isLogin == true) {
-                                            window.location.href = window.location.href
-                                        } else {
-                                            localStorage.clear();
-                                            alert('请仔细验证登录信息')
-                                        }
-                                    }
-                                });
-                                break;
-                            default:
-                                break;
-                        }
-                    });
                     window.event.stopPropagation()
                 });
             }
@@ -414,49 +315,22 @@ $(document).ready(async function () {
                             <div id="share" title="分享" onclick="share(this)" value="">
                                 <svg viewBox="0 0 1024 1024"><path d="M892.7 896.1H131.3c-18.4 0-33.3-14.9-33.3-33.3V696.4c0-18.4 14.9-33.3 33.3-33.3h30c18.4 0 33.3 14.9 33.3 33.3 0 4.5-0.9 8.9-2.6 12.8l-13 64.9c0 18.4 14.9 33.3 33.3 33.3h599.3c18.4 0 33.3-14.9 33.3-33.3l-13-64.9c-1.7-4-2.6-8.3-2.6-12.8 0-18.4 14.9-33.3 33.3-33.3h30c18.4 0 33.3 14.9 33.3 33.3v166.5c0.1 18.3-14.8 33.2-33.2 33.2zM580 582h1l-1 0.9v-0.9z m247.2-228.6l1.6 0.1-234.7 216.4v-2.3h-0.1c-0.3 3.7-3.4 6.7-7.2 6.7-4 0-7.2-3.2-7.2-7.2 0-0.7 0.1-1.3 0.3-1.9V433.3c-11.4-0.7-23-1.1-34.7-1.1-134.7 0-247.2 95.2-273.7 222.1-12.1-18.3-17.1-49.1-17.1-100 0-154.5 125.2-294.1 279.7-294.1 15.8 0 31.1 0.1 45.8 0.4V136.1c-0.2-0.6-0.3-1.2-0.3-1.9 0-4 3.2-7.2 7.2-7.2 3.8 0 6.9 2.9 7.2 6.7h0.1v-1.8L829.6 339h-2.4v0.1c3.7 0.3 6.7 3.4 6.7 7.2 0 3.7-3 6.8-6.7 7.1z" fill="#bfbfbf"></path></svg>
                             </div>
+                            <div id="remark" title="评论一下" class="commentOpen" onclick="remark(this)" isOpen="false">
+                                <svg viewBox="0 0 1024 1024"><path d="M512 67C266.24 67 67 241.33 67 456.37c0 122.9 65.23 232.32 166.87 303.69V957l195-118.3a508.35 508.35 0 0 0 83.17 7c245.77 0 445-174.32 445-389.37S757.77 67 512 67zM289.5 512a55.62 55.62 0 1 1 55.62-55.62A55.62 55.62 0 0 1 289.5 512z m222.5 0a55.62 55.62 0 1 1 55.62-55.62A55.62 55.62 0 0 1 512 512z m222.5 0a55.62 55.62 0 1 1 55.62-55.62A55.62 55.62 0 0 1 734.5 512z" fill="#bfbfbf"></path></svg>
+                                <p class="commentOpen_number">${response.sendData.commentsNumber}</p>
+                            </div>
                             <div id="report" title="举报" onclick="report_person(this)">
                                 <svg viewBox="0 0 1024 1024"><path d="M960.288 787.488c-98.88-154.08-287.36-469.568-385.76-622.912-21.44-27.968-71.872-44-102.88 0L61.504 803.872c-23.36 33.888-23.008 79.872 49.376 82.432h824.64c48.416-2.784 48.416-62.496 24.768-98.816z m-437.44-27.776a47.296 47.296 0 1 1 0-94.592 47.296 47.296 0 0 1 0 94.592z m35.456-165.536c0.448 11.52-10.944 23.68-23.648 23.68h-23.648c-12.672 0-23.2-12.16-23.616-23.68l-23.68-224.64c0-19.552 15.904-35.456 35.488-35.456h47.296c19.584 0 35.456 15.904 35.456 35.488l-23.648 224.64z" fill="#bfbfbf"></path></svg>
                             </div>
                         </div>
-                        <div class="commentSection"><div class="commentSectionArea"><div class="othersComment"><div><span class="othersComment_number">${response.sendData.commentsNumber}</span> 条评论</div><div class="Comments"><div class="commentWhite">空空如也，快来评论吧！</div></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true"  id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit_article(this)">发&nbsp;布</span></div></div></div></div></div>
 
                     </div>
                 `);
 
                 codeRepeat()
 
+                $('#remark').click();
 
-                if (response.sendData.comments.length !== 0) {
-                    $('.commentWhite').html('');
-                }
-                for (let i = 0; i < response.sendData.comments.length; i++) {
-                    $('.Comments').append(`
-                    <div class="Comments_small">
-                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
-                    <span accountId="${response.sendData.comments[i].accountId}" idname="${response.sendData.comments[i].comUser}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].comUser)}：</span>
-                    <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].content)}</div>
-                    <div commentId="${response.sendData.comments[i].id}" class="firstComment">
-                        <span class="Comments_small_comment" onclick="secondComment(this)" style="cursor:pointer;">回复${response.sendData.comments[i].secComments_number == undefined ? '' : '('+response.sendData.comments[i].secComments_number+')'}</span>
-                        <span time=${timeSolve(response.sendData.comments[i].time)} class="Comments_small_time">${timeSet(response.sendData.comments[i].time)}</span>
-                    </div>
-                </div>
-                    `);
-
-                    if (response.sendData.comments[i].secComments) {
-                        for (let j = 0; j < response.sendData.comments[i].secComments.length; j++) {
-                            $('.Comments_small:nth(' + i + ')').append(`
-                            <div class="Comments_small_second">
-                            <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
-                            <span accountId="${response.sendData.comments[i].secComments[j].accountId}" idname="${response.sendData.comments[i].secComments[j].comUserName}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].secComments[j].comUserName)}：</span>
-                            <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].secComments[j].content)}</div>
-                            <div commentid="${response.sendData.comments[i].secComments[j].id}" class="firstComment">
-                            <span time=${timeSolve(response.sendData.comments[i].secComments[j].time)} class="Comments_small_time">${timeSet(response.sendData.comments[i].secComments[j].time)}</span>
-                            </div>
-                            </div>
-                            `)
-                        }
-                    }
-                }
                 if (response.isLike == true) {
                     $('#like').find('path').attr('fill', '#138bfb');
                 }
@@ -466,6 +340,7 @@ $(document).ready(async function () {
                 if (response.isCollect == true) {
                     $('#collect').find('path').attr('fill', '#138bfb');
                 }
+
             } else {
                 //非树洞
                 $('body').append(`
@@ -501,51 +376,22 @@ $(document).ready(async function () {
                             <div id="share" title="分享" onclick="share(this)" value="">
                                 <svg viewBox="0 0 1024 1024"><path d="M892.7 896.1H131.3c-18.4 0-33.3-14.9-33.3-33.3V696.4c0-18.4 14.9-33.3 33.3-33.3h30c18.4 0 33.3 14.9 33.3 33.3 0 4.5-0.9 8.9-2.6 12.8l-13 64.9c0 18.4 14.9 33.3 33.3 33.3h599.3c18.4 0 33.3-14.9 33.3-33.3l-13-64.9c-1.7-4-2.6-8.3-2.6-12.8 0-18.4 14.9-33.3 33.3-33.3h30c18.4 0 33.3 14.9 33.3 33.3v166.5c0.1 18.3-14.8 33.2-33.2 33.2zM580 582h1l-1 0.9v-0.9z m247.2-228.6l1.6 0.1-234.7 216.4v-2.3h-0.1c-0.3 3.7-3.4 6.7-7.2 6.7-4 0-7.2-3.2-7.2-7.2 0-0.7 0.1-1.3 0.3-1.9V433.3c-11.4-0.7-23-1.1-34.7-1.1-134.7 0-247.2 95.2-273.7 222.1-12.1-18.3-17.1-49.1-17.1-100 0-154.5 125.2-294.1 279.7-294.1 15.8 0 31.1 0.1 45.8 0.4V136.1c-0.2-0.6-0.3-1.2-0.3-1.9 0-4 3.2-7.2 7.2-7.2 3.8 0 6.9 2.9 7.2 6.7h0.1v-1.8L829.6 339h-2.4v0.1c3.7 0.3 6.7 3.4 6.7 7.2 0 3.7-3 6.8-6.7 7.1z" fill="#bfbfbf"></path></svg>
                             </div>
+                            <div id="remark" title="评论一下" class="commentOpen" onclick="remark(this)" isOpen="false">
+                                <svg viewBox="0 0 1024 1024"><path d="M512 67C266.24 67 67 241.33 67 456.37c0 122.9 65.23 232.32 166.87 303.69V957l195-118.3a508.35 508.35 0 0 0 83.17 7c245.77 0 445-174.32 445-389.37S757.77 67 512 67zM289.5 512a55.62 55.62 0 1 1 55.62-55.62A55.62 55.62 0 0 1 289.5 512z m222.5 0a55.62 55.62 0 1 1 55.62-55.62A55.62 55.62 0 0 1 512 512z m222.5 0a55.62 55.62 0 1 1 55.62-55.62A55.62 55.62 0 0 1 734.5 512z" fill="#bfbfbf"></path></svg>
+                                <p class="commentOpen_number">${response.sendData.commentsNumber}</p>
+                            </div>
                             <div id="report" title="举报" onclick="report_person(this)">
                                 <svg viewBox="0 0 1024 1024"><path d="M960.288 787.488c-98.88-154.08-287.36-469.568-385.76-622.912-21.44-27.968-71.872-44-102.88 0L61.504 803.872c-23.36 33.888-23.008 79.872 49.376 82.432h824.64c48.416-2.784 48.416-62.496 24.768-98.816z m-437.44-27.776a47.296 47.296 0 1 1 0-94.592 47.296 47.296 0 0 1 0 94.592z m35.456-165.536c0.448 11.52-10.944 23.68-23.648 23.68h-23.648c-12.672 0-23.2-12.16-23.616-23.68l-23.68-224.64c0-19.552 15.904-35.456 35.488-35.456h47.296c19.584 0 35.456 15.904 35.456 35.488l-23.648 224.64z" fill="#bfbfbf"></path></svg>
                             </div>
                         </div>
-                        <div class="commentSection"><div class="commentSectionArea"><div class="othersComment"><div><span class="othersComment_number">${response.sendData.commentsNumber}</span> 条评论</div><div class="Comments"><div class="commentWhite">空空如也，快来评论吧！</div></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true"  id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit_article(this)">发&nbsp;布</span></div></div></div></div></div>
 
                     </div>
                 `);
 
                 codeRepeat()
 
+                $('#remark').click();
 
-                if (response.sendData.comments.length !== 0) {
-                    $('.commentWhite').html('');
-                }
-                for (let i = 0; i < response.sendData.comments.length; i++) {
-                    $('.Comments').append(`
-                    <div class="Comments_small">
-                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${response.sendData.headImgs[i].headImg}" id="${response.sendData.comments[i].user_id}" class="Comments_small_head">
-                    <span accountId="${response.sendData.comments[i].accountId}" idname="${response.sendData.comments[i].comUser}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].comUser)}：</span>
-                    <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].content)}</div>
-                    <div commentId="${response.sendData.comments[i].id}" class="firstComment">
-                        <span class="Comments_small_comment" onclick="secondComment(this)" style="cursor:pointer;">回复${response.sendData.comments[i].secComments_number == undefined ? '' : '('+response.sendData.comments[i].secComments_number+')'}</span>
-                        <span time="${timeSolve(response.sendData.comments[i].time)}" class="Comments_small_time">${timeSet(response.sendData.comments[i].time)}</span>
-                    </div>
-                </div>
-                    `);
-
-                    if (response.sendData.comments[i].secComments) {
-                        for (let j = 0; j < response.sendData.comments[i].secComments.length; j++) {
-
-                            $('.Comments_small:nth(' + i + ')').append(`
-                            <div class="Comments_small_second">
-                            <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${response.sendData.comments[i].secComments[j].comUserHead}" id="${response.sendData.comments[i].secComments[j].user_id}" class="Comments_small_head">
-                            <span accountId="${response.sendData.comments[i].secComments[j].accountId}" idname="${response.sendData.comments[i].secComments[j].comUserName}" class="Comments_small_name">${xssFilter(response.sendData.comments[i].secComments[j].comUserName)}：</span>
-                            <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(response.sendData.comments[i].secComments[j].content)}</div>
-                            <div commentid="${response.sendData.comments[i].secComments[j].id}" class="firstComment">
-                            <span time=${timeSolve(response.sendData.comments[i].secComments[j].time)} class="Comments_small_time">${timeSet(response.sendData.comments[i].secComments[j].time)}</span>
-                            </div>
-                            </div>
-                            `)
-                        }
-                    }
-
-                }
                 if (response.isLike == true) {
                     $('#like').find('path').attr('fill', '#138bfb');
                 }
@@ -555,6 +401,7 @@ $(document).ready(async function () {
                 if (response.isCollect == true) {
                     $('#collect').find('path').attr('fill', '#138bfb');
                 }
+
             }
 
             let hlp = $('span[idname=' + window.localStorage.name + ']')

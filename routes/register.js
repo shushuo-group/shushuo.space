@@ -98,12 +98,13 @@ router.post('/registerCheck', async (req, res) => {
         let usersNumber = users.length
         let usersAccount = users.length + 10000
         let usersPassword = random(6)
+        let username = `${usersAccount}_${random(4)}`
         db.user.updateOne({
             userEmail: req.body.userEmail
         }, {
             $set: {
                 userNumber: usersNumber,
-                userName: `${usersAccount}_${random(4)}`,
+                userName: username,
                 userAccount: usersAccount,
                 userPassword: md5.md1(usersPassword)
             }
@@ -112,9 +113,31 @@ router.post('/registerCheck', async (req, res) => {
                 write.logerr(err)
             }
         })
+
         sendEmail(req.body.userEmail, '注册成功', '恭喜您注册成功,您的账号为' + usersAccount + ',初始密码为' + usersPassword + ',为了您的账户安全 请及时修改密码')
+
+        let userInfor = await db.user.findOne({
+            userAccount: usersAccount,
+            isRegister: true
+        })
+
+        let userInfors = {
+            FreeCss: '',
+            headImg: userInfor.headImg,
+            userName: userInfor.userName,
+            id: userInfor.userAccount,
+            data_id: userInfor._id,
+            userFinLog: '--',
+            number1: 0,
+            number2: 0,
+            number3: 0,
+            number4: 0
+        }
+
         res.send({
+            type: 'register',
             token: tokenNum,
+            user: userInfors,
             isReg: true
         })
     }

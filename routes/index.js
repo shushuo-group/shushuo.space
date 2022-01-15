@@ -163,6 +163,7 @@ router.post('/isLogin', async function (req, res, next) {
                     number3: number3,
                     number4: myArticles.length
                 }
+
                 res.send({
                     //token登录成功
                     token: tokenNum,
@@ -186,6 +187,7 @@ router.post('/isLogin', async function (req, res, next) {
                         write.logerr(err)
                     }
                 })
+
             } else {
                 //使用token登录失败
                 res.send({
