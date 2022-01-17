@@ -182,7 +182,9 @@ $(document).ready(async function () {
 
                     let temp_css = {
                         'width': '50%',
-                        'height': 'max-content'
+                        'height': 'max-content',
+                        'height': '-moz-max-content',
+                        'height': '-webkit-max-content'
                     }
                     if (is_small_client) {
                         temp_css = {
