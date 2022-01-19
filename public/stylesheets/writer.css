@@ -222,7 +222,7 @@ input {
     background-color: #ffffff;
     border-radius: 50%;
     margin: auto;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -687,7 +687,7 @@ code {
     border: 2px solid #d6d3d3;
     box-shadow: 0 4px 6px rgb(0, 0, 0, 0.12);
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -697,7 +697,7 @@ code {
 .loading_content {
     padding: 2rem 1.8rem;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;

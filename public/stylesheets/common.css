@@ -74,7 +74,7 @@
 .img_bigshow_part_part {
     position: absolute;
     background: rgb(133 144 166);
-    inset: 0;
+
     top: 0;
     left: 0;
     bottom: 0;
@@ -85,8 +85,13 @@
     display: flex;
     flex-direction: column;
     border-radius: 13px;
-    box-shadow: 0 0 0px 3px white;
     overflow: hidden;
+}
+
+@media screen and (max-width: 600px) {
+    .img_bigshow_part_part {
+        width: 100%;
+    }
 }
 
 .img_bigshow_part_top {
@@ -101,11 +106,25 @@
 }
 
 .img_bigshow_part_top>img {
+    visibility: hidden;
+}
+
+.img_bigshow_part_top_x {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.img_bigshow_part_top_img_x {
     height: 100%;
-    margin: auto;
-    position: absolute;
-    left: 0;
-    right: 0;
+}
+
+.img_bigshow_part_top_y {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.img_bigshow_part_top_img_y {
+    width: 100%;
 }
 
 .img_bigshow_part_bottom_center {
@@ -113,7 +132,7 @@
     width: -webkit-max-content;
     width: -moz-max-content;
     width: max-content;
-    inset: 0;
+
     top: 0;
     left: 0;
     bottom: 0;
@@ -134,18 +153,6 @@
     width: max-content;
     display: inline-block;
     cursor: pointer;
-}
-
-.img_bigshow_part {
-    position: fixed;
-    inset: 0;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    background: rgba(18, 18, 18, .65);
-    z-index: 2;
 }
 
 .img_bigshow_part_bottom_center>a>svg {
@@ -173,6 +180,34 @@
 
 .img_bigshow_part_bottom_center>.img_bigshow_part_hight:hover {
     color: #138bfb;
+}
+
+.img_open {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background: rgba(18, 18, 18, .65);
+    z-index: 2;
+}
+
+.img_open::before {
+    color: #959c9b;
+    font-size: 15px;
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    z-index: 2;
+    content: "点击此处即可退出浏览";
+    left: 0;
+    right: 0;
+    margin: auto;
 }
 
 /* 打开图片 */

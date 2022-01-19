@@ -140,7 +140,7 @@ body {
     width: 100%;
     height: 100%;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -285,7 +285,7 @@ body {
 
 .mask {
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -303,7 +303,7 @@ body {
     border: 1px solid black;
     box-sizing: content-box;
     margin: auto;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -341,7 +341,7 @@ body {
     width: 90%;
     height: 85%;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -359,7 +359,7 @@ body {
     height: 110px;
     background-color: white;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -395,7 +395,7 @@ body {
     background-color: rgba(0, 0, 0, .5);
     position: absolute;
     z-index: 2;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -411,7 +411,7 @@ body {
 .ATLP-Basic>img {
     width: 100%;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -460,7 +460,7 @@ body {
     width: 80px;
     height: 25px;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;

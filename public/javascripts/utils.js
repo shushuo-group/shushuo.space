@@ -456,131 +456,11 @@ function firstFlush_hidden(data) {
 
             $(imgs[i]).css(temp_pic_css);
 
-            //图片点击事件绑定
-            $(imgs[i]).click(function (e) {
-
-                e.stopPropagation()
-
-                $(this).css('visibility', 'hidden');
-
-                $('html').css({
-                    'overflow': 'hidden',
-                    'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
-                });
-
-                let temp_html = `
-                    <div class="img_bigshow_part">
-                        <div class="img_bigshow_part_part">
-                            <div class="img_bigshow_part_top">
-                                ${$(imgs[i])[0].outerHTML}
-                            </div>
-                            <div class="img_bigshow_part_bottom">
-                                <div class="img_bigshow_part_bottom_center">
-                                    <a class="img_bigshow_part_down" href="${$(imgs[i]).attr('src')}" download>
-                                        <svg t="1621226978872" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1902" width="200" height="200"><path d="M1024 645.248v330.752a48 48 0 0 1-48 48H48a48 48 0 0 1-48-48v-330.752a48 48 0 0 1 96 0V928h832v-282.752a48 48 0 0 1 96 0z m-545.152 145.984a47.936 47.936 0 0 0 67.904 0l299.904-299.84a48 48 0 1 0-67.968-67.904l-217.792 217.856V48a48.064 48.064 0 0 0-96.064 0v593.472L246.912 423.552a48 48 0 1 0-67.904 67.904l299.84 299.776z" p-id="1903" fill="#f1f3f4"></path></svg>
-                                    </a>
-                                    <a class="img_bigshow_part_round">
-                                        <svg t="1638070345436" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2306" width="200" height="200"><path d="M482.773333 66.517333l148.181334 151.168a21.333333 21.333333 0 0 1 0 29.866667l-147.84 150.826667a21.333333 21.333333 0 0 1-28.16 2.090666l-2.346667-2.090666-27.050667-27.605334a21.333333 21.333333 0 0 1 0-29.866666l69.888-71.338667a304.64 304.64 0 1 0 318.421334 352.682667l1.024-6.826667c0.170667-1.408 0.426667-3.285333 0.64-5.632a21.333333 21.333333 0 0 1 22.314666-19.114667l42.666667 2.261334a21.333333 21.333333 0 0 1 20.224 22.4l-0.085333 1.024-1.194667 10.496A389.973333 389.973333 0 1 1 484.821333 184.746667l-59.306666-60.458667a21.333333 21.333333 0 0 1 0-29.866667l27.093333-27.605333a21.333333 21.333333 0 0 1 30.165333-0.298667z" p-id="2307" fill="#f1f3f4"></path></svg>
-                                    </a>
-                                    <a class="img_bigshow_part_hight">
-                                        查看原图
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    `
-
-                jump_window({}, temp_html)
-
-                $('.img_bigshow_part_round>svg').css('height', `${$('.img_bigshow_part_round').height()}px`);
-                $('.img_bigshow_part_down>svg').css('height', `${$('.img_bigshow_part_down').height()}px`);
-
-                let pic_zip_src = $('.img_bigshow_part_top>img').attr('src')
-                let fin_3_word = pic_zip_src.substr(pic_zip_src.length - 3, pic_zip_src.length)
-                if (fin_3_word === 'gif') {
-                    $('.img_bigshow_part_hight').css('cursor', 'not-allowed');
-                } else {
-                    $('.img_bigshow_part_hight').click(function () {
-                        let temp_src = pic_zip_src.replace(zip_dir, nozip_dir)
-                        $('.img_bigshow_part_top>img').attr('src', temp_src);
-                    });
-                }
-
-
-                $('.img_bigshow_part_top>img').attr('style', '');
-
-                //防止点击按钮造成页面弹出
-                $('.img_bigshow_part_part').click(function () {
-                    window.event.stopPropagation()
-                });
-
-                //图片旋转函数
-                let temp_degree = 0
-                $('.img_bigshow_part_round').click(function () {
-                    temp_degree += 90
-                    $(this).parents('.img_bigshow_part_part').find('img').css('transform',
-                        `rotate(${temp_degree}deg)`);
-                });
-
-                $('.img_bigshow_part_down').hover(function () {
-                    // over
-                    $('.img_bigshow_part_down').find('path').attr('fill', '#03a9f4');
-                }, function () {
-                    // out
-                    $('.img_bigshow_part_down').find('path').attr('fill', '#f1f3f4');
-                });
-
-                $('.img_bigshow_part_round').hover(function () {
-                    // over
-                    $('.img_bigshow_part_round').find('path').attr('fill', '#03a9f4');
-                }, function () {
-                    // out
-                    $('.img_bigshow_part_round').find('path').attr('fill', '#f1f3f4');
-                });
-
-                // 点击进行大张图片浏览
-                $('.img_bigshow_part').click(function () {
-                    $(imgs[i]).css('visibility', 'visible');
-                    $(this).remove();
-                    $('html').css({
-                        'overflow': '',
-                        'margin-right': ''
-                    });
-                });
-
-                if (is_small_client) {
-                    $('.img_bigshow_part_part').css('width', '95%');
-                    $('.img_bigshow_part_top>img').css({
-                        'height': 'unset',
-                        'width': '100%'
-                    });
-                }
-
-                // 竖直图片的一些样式适配
-                if ($(this).height() > $(this).width()) {
-
-                    $('.img_bigshow_part').addClass('img_bigshow_part_long');
-
-                    let temp_css = {
-                        'width': '50%',
-                        'height': 'max-content',
-                        'height': '-moz-max-content',
-                        'height': '-webkit-max-content'
-                    }
-                    if (is_small_client) {
-                        temp_css = {
-                            'width': '80%'
-                        }
-                    }
-                    $('.img_bigshow_part_top>img').css(temp_css);
-
-                    $('.img_bigshow_part_top').css('overflow-y', 'auto');
-                } else {
-                    $('.img_bigshow_part_top').css('overflow-x', 'auto');
-                }
-
-            });
+            // 图片放大浏览
+            imgs[i].onclick = function () {
+                window.event.stopPropagation()
+                pic_read(this)
+            }
 
             imgs[i].onload = function () {
 
@@ -654,6 +534,135 @@ function firstFlush_hidden(data) {
         }
 
     }
+}
+
+/**
+ * 
+ * @param {pic_read} 公共放大图片浏览
+ */
+function pic_read(e) {
+
+    /**
+     * this_pic_unclear@指代本次的模糊图片操作对象
+     */
+    let this_pic_unclear = e
+    $(this_pic_unclear).css('visibility', 'hidden');
+
+    $('html').css({
+        'overflow': 'hidden',
+        'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
+    });
+
+    let temp_html = `
+        <div class="img_bigshow_part">
+            <div class="img_bigshow_part_part">
+                <div class="img_bigshow_part_top">
+                    ${$(this_pic_unclear)[0].outerHTML}
+                </div>
+                <div class="img_bigshow_part_bottom">
+                    <div class="img_bigshow_part_bottom_center">
+                        <a class="img_bigshow_part_down" href="${$(this_pic_unclear).attr('src')}" download>
+                            <svg t="1621226978872" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1902" width="200" height="200"><path d="M1024 645.248v330.752a48 48 0 0 1-48 48H48a48 48 0 0 1-48-48v-330.752a48 48 0 0 1 96 0V928h832v-282.752a48 48 0 0 1 96 0z m-545.152 145.984a47.936 47.936 0 0 0 67.904 0l299.904-299.84a48 48 0 1 0-67.968-67.904l-217.792 217.856V48a48.064 48.064 0 0 0-96.064 0v593.472L246.912 423.552a48 48 0 1 0-67.904 67.904l299.84 299.776z" p-id="1903" fill="#f1f3f4"></path></svg>
+                        </a>
+                        <a class="img_bigshow_part_round">
+                            <svg t="1638070345436" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2306" width="200" height="200"><path d="M482.773333 66.517333l148.181334 151.168a21.333333 21.333333 0 0 1 0 29.866667l-147.84 150.826667a21.333333 21.333333 0 0 1-28.16 2.090666l-2.346667-2.090666-27.050667-27.605334a21.333333 21.333333 0 0 1 0-29.866666l69.888-71.338667a304.64 304.64 0 1 0 318.421334 352.682667l1.024-6.826667c0.170667-1.408 0.426667-3.285333 0.64-5.632a21.333333 21.333333 0 0 1 22.314666-19.114667l42.666667 2.261334a21.333333 21.333333 0 0 1 20.224 22.4l-0.085333 1.024-1.194667 10.496A389.973333 389.973333 0 1 1 484.821333 184.746667l-59.306666-60.458667a21.333333 21.333333 0 0 1 0-29.866667l27.093333-27.605333a21.333333 21.333333 0 0 1 30.165333-0.298667z" p-id="2307" fill="#f1f3f4"></path></svg>
+                        </a>
+                        <a class="img_bigshow_part_hight">
+                            查看原图
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `
+
+    jump_window({}, temp_html, () => {
+
+        $('#jump_window').addClass('img_open');
+
+        $('.img_bigshow_part').click(function (e) {
+            e.stopPropagation()
+        });
+
+        $('#jump_window').click(function () {
+            $('#jump_window').removeClass('img_open');
+            $('#jump_window').attr('style', '');
+            $('#jump_window').html('');
+            $('#jump_window').unbind();
+            $('body').unbind();
+
+            $(this_pic_unclear).css('visibility', 'visible');
+            $('html').css({
+                'overflow': 'unset',
+                'margin-right': 'unset'
+            });
+
+        });
+    })
+
+    // 进行 gif图片 的查看原图功能的取消
+    let pic_zip_src = $(this_pic_unclear).attr('src')
+    let fin_3_word = pic_zip_src.substr(pic_zip_src.length - 3, pic_zip_src.length)
+    if (fin_3_word === 'gif') {
+        $('.img_bigshow_part_hight').css('cursor', 'not-allowed');
+    } else {
+        $('.img_bigshow_part_hight').click(function () {
+            let temp_src = pic_zip_src.replace(zip_dir, nozip_dir)
+            $('.img_bigshow_part_top>img').attr('src', temp_src);
+        });
+    }
+
+    // 清楚图片原有自带html的属性样式
+    $('.img_bigshow_part_top>img').attr('style', '');
+
+    //图片旋转功能
+    let temp_degree = 0
+    $('.img_bigshow_part_round').click(function () {
+        temp_degree += 90
+        $(this).parents('.img_bigshow_part_part').find('img').css('transform',`rotate(${temp_degree}deg)`);
+    });
+
+    // 俩个按钮的 hover 效果
+    $('.img_bigshow_part_down').hover(function () {
+        // over
+        $('.img_bigshow_part_down').find('path').attr('fill', '#03a9f4');
+    }, function () {
+        // out
+        $('.img_bigshow_part_down').find('path').attr('fill', '#f1f3f4');
+    });
+    $('.img_bigshow_part_round').hover(function () {
+        // over
+        $('.img_bigshow_part_round').find('path').attr('fill', '#03a9f4');
+    }, function () {
+        // out
+        $('.img_bigshow_part_round').find('path').attr('fill', '#f1f3f4');
+    });
+
+    /**
+     * container_x_y@图片容器的宽高比
+     * pic_x_y@实际图片的宽高比
+     */
+    let container_x_y = $('.img_bigshow_part_top').width() / $('.img_bigshow_part_top').height()
+    let pic_x_y = $('.img_bigshow_part_top > img').width() / $('.img_bigshow_part_top > img').height()
+
+    // 进行图片类型判定 以决定具体的图片展示方式
+    if (container_x_y > pic_x_y) {
+        // 瘦高形图片
+        $('.img_bigshow_part_top').addClass('img_bigshow_part_top_y');
+        $('.img_bigshow_part_top>img').addClass('img_bigshow_part_top_img_y');
+    } else {
+        // 矮胖形图片
+        $('.img_bigshow_part_top').addClass('img_bigshow_part_top_x');
+        $('.img_bigshow_part_top>img').addClass('img_bigshow_part_top_img_x');
+    }
+
+    // 定位后 进行图片的显示 避免闪烁
+    $('.img_bigshow_part_top>img').css('visibility', 'visible');
+
+    // 适配俩个按钮对于safari无法显示的情景
+    $('.img_bigshow_part_round>svg').css('height', `${$('.img_bigshow_part_round').height()}px`);
+    $('.img_bigshow_part_down>svg').css('height', `${$('.img_bigshow_part_down').height()}px`);
+
 }
 
 //粗略阅读全文事件
@@ -4578,6 +4587,7 @@ function jump_window(cssObj, html, callback = () => {}) {
         window.event.stopPropagation()
         $('#jump_window').attr('style', '');
         $('#jump_window').html('');
+        $('#jump_window').unbind();
         $('body').unbind();
     });
 

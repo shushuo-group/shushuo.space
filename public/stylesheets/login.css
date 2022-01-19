@@ -56,7 +56,7 @@
 .logByAcc>div>div {
     height: 60px;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -68,7 +68,7 @@
     width: 320px;
     height: 50px;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -132,7 +132,7 @@
     height: 40px;
     background-color: #03a9f4;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -164,7 +164,7 @@
 
 .logByEmail>div>div>div {
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -176,7 +176,7 @@
 
 #yanzheng {
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -191,7 +191,7 @@
 
 .logByEmail>div>div:nth-child(2)>div>div {
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -280,7 +280,7 @@
 
 .register>div>div>div {
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -292,7 +292,7 @@
 
 #regyanzheng {
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -307,7 +307,7 @@
 
 .register>div>div:nth-child(2)>div>div {
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -386,7 +386,7 @@
     width: 290px;
     height: 25px;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -408,7 +408,7 @@
 .ChangeButton>div>span:nth-child(2) {
     width: 10px;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;

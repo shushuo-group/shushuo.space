@@ -161,7 +161,7 @@ blockquote {
     background-color: rgba(18, 18, 18, 1.8);
     opacity: 0.5;
     position: fixed;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -189,7 +189,7 @@ blockquote {
     cursor: pointer;
     opacity: 0.5;
     position: fixed;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -487,7 +487,7 @@ body {
     height: 41px;
     background: #bdbdbd;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -682,7 +682,7 @@ body {
 .centerLeftTopButtonAdd>svg {
     height: 100%;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -1287,7 +1287,7 @@ body {
     margin: auto;
     position: absolute;
     display: block;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -1381,7 +1381,7 @@ body {
     margin: auto;
     position: absolute;
     display: block;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -1597,50 +1597,6 @@ pre {
     top: 0;
     color: #ce0d0d;
     cursor: pointer;
-}
-
-.img_bigshow_part {
-    position: fixed;
-    inset: 0;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    background: rgba(18, 18, 18, .65);
-    z-index: 2;
-}
-
-.img_bigshow_part::before {
-    color: #959c9b;
-    font-size: 15px;
-    font-weight: bold;
-    position: fixed;
-    top: 0;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    z-index: 2;
-    content: "点击此处即可退出浏览";
-    left: 0;
-    right: 0;
-    margin: auto;
-}
-
-.img_bigshow_part_long::before {
-    color: #959c9b;
-    font-size: 15px;
-    font-weight: bold;
-    position: fixed;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    z-index: 2;
-    content: "点击此处即可退出浏览";
-    left: 0;
-    right: 0;
-    top: 0;
-    margin: auto;
 }
 
 .navigation_search {
@@ -1886,7 +1842,7 @@ pre {
     -ms-user-select: none;
     user-select: none;
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -2001,7 +1957,7 @@ pre {
 
 .noticeDetail {
     position: fixed;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -2058,7 +2014,7 @@ pre {
 
 .noticeDetail_bottm_button>div {
     position: absolute;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -2083,7 +2039,7 @@ pre {
 .noticeDetail_bottm_inner {
     width: 98%;
     height: 98%;
-    inset: 0;
+    
     top: 0;
     left: 0;
     bottom: 0;
@@ -2637,7 +2593,7 @@ span.uiSetFree_buttton_check {
         width: 94%;
         display: block;
         position: absolute;
-        inset: 0;
+        
         top: 0;
         left: 0;
         bottom: 0;
@@ -2692,7 +2648,7 @@ span.uiSetFree_buttton_check {
 
     .noticeDetail {
         position: fixed;
-        inset: 0;
+        
         top: 0;
         left: 0;
         bottom: 0;
