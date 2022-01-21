@@ -73,8 +73,6 @@
 /* 打开图片 */
 .img_bigshow_part_part {
     position: absolute;
-    background: rgb(133 144 166);
-
     top: 0;
     left: 0;
     bottom: 0;
@@ -84,43 +82,34 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-    border-radius: 13px;
-    overflow: hidden;
 }
 
-@media screen and (max-width: 600px) {
-    .img_bigshow_part_part {
-        width: 100%;
-    }
-}
+
 
 .img_bigshow_part_top {
     flex: 9;
     position: relative;
+    font-size: 0;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background: rgb(133 144 166);
+    overflow: auto;
 }
 
 .img_bigshow_part_bottom {
     flex: 1;
     background: rgb(96 114 151);
     position: relative;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 
 .img_bigshow_part_top>img {
     visibility: hidden;
 }
 
-.img_bigshow_part_top_x {
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
 .img_bigshow_part_top_img_x {
     height: 100%;
-}
-
-.img_bigshow_part_top_y {
-    overflow-y: auto;
-    overflow-x: hidden;
 }
 
 .img_bigshow_part_top_img_y {
@@ -211,3 +200,9 @@
 }
 
 /* 打开图片 */
+
+@media screen and (max-width: 600px) {
+    .img_bigshow_part_part {
+        width: 100%;
+    }
+}
