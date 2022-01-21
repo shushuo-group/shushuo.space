@@ -84,8 +84,6 @@
     flex-direction: column;
 }
 
-
-
 .img_bigshow_part_top {
     flex: 9;
     position: relative;
@@ -118,10 +116,6 @@
 
 .img_bigshow_part_bottom_center {
     position: absolute;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-
     top: 0;
     left: 0;
     bottom: 0;
@@ -132,39 +126,39 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
 }
 
 .img_bigshow_part_bottom_center>a {
-    margin: 0 10px;
-    height: 100%;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    display: inline-block;
+    margin: 0 20px;
     cursor: pointer;
+    display: inline-block;
+    height: 100%;
+}
+
+.img_bigshow_part_bottom_center>.img_bigshow_part_hight {
+    background: #fafafa;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin: 0;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 0;
+    font-weight: bold;
+    border-radius: 5px;
+    color: #106ba3;
+    font-size: larger;
 }
 
 .img_bigshow_part_bottom_center>a>svg {
     height: 100%;
     width: 50px;
-}
-
-.img_bigshow_part_bottom_center>.img_bigshow_part_hight {
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    height: -webkit-max-content;
-    height: -moz-max-content;
-    height: max-content;
-    font-weight: bold;
-    font-size: 18px;
-    background: #f1f3f4;
-    box-shadow: inset 0 0 0 3px #f1f3f4;
-    border-radius: 5px;
-    position: absolute;
-    bottom: 0;
-    color: #6f6f6f;
-    padding: 0 5px;
 }
 
 .img_bigshow_part_bottom_center>.img_bigshow_part_hight:hover {
@@ -173,7 +167,6 @@
 
 .img_open {
     position: fixed;
-
     top: 0;
     left: 0;
     bottom: 0;
@@ -202,7 +195,116 @@
 /* 打开图片 */
 
 @media screen and (max-width: 600px) {
+
+    /* 打开图片 */
     .img_bigshow_part_part {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 80%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .img_bigshow_part_top {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .img_bigshow_part_bottom {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 50px;
+        background: black;
+    }
+
+    .img_bigshow_part_top>img {
+        visibility: hidden;
+    }
+
+    .img_bigshow_part_top_img_x {
+        height: 100%;
+    }
+
+    .img_bigshow_part_top_img_y {
         width: 100%;
     }
+
+    .img_bigshow_part_bottom_center {
+        margin: auto;
+        background: black;
+        left: unset;
+        top: unset;
+        right: 0;
+        height: -webkit-fit-content;
+        height: -moz-fit-content;
+        height: fit-content;
+        bottom: 0;
+    }
+
+    .img_bigshow_part_bottom_center>a {
+        margin: 0 10px;
+    }
+
+    .img_bigshow_part_bottom_small {
+        color: #106ba3;
+        font-size: initial;
+        position: relative;
+        padding: 0px 5px;
+        top: -10px;
+        background: unset;
+        border-radius: 5px;
+    }
+
+    .img_bigshow_part_bottom_center>.img_bigshow_part_hight {
+        background: unset;
+        color: #106ba3;
+        font-size: initial;
+        position: relative;
+        padding: 0px 5px;
+        top: -10px;
+    }
+
+    .img_bigshow_part_bottom_center>a>svg {
+        height: 100%;
+        width: 40px;
+    }
+
+    .img_bigshow_part_bottom_center>.img_bigshow_part_hight:hover {
+        color: #138bfb;
+    }
+
+    .img_open {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        background: rgba(18, 18, 18, .65);
+        z-index: 2;
+    }
+
+    .img_open::before {
+        color: #959c9b;
+        font-size: 15px;
+        font-weight: bold;
+        position: fixed;
+        top: 0;
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
+        z-index: 2;
+        content: "点击此处即可退出浏览";
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    /* 打开图片 */
 }
