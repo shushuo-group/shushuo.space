@@ -629,9 +629,7 @@ body {
 
 .contentSmallPartHead>a>img {
 
-    height: 25px;
-
-    width: 25px;
+    width: 40px;
 
     border-radius: 5px;
 
@@ -1137,6 +1135,10 @@ body {
     audio,
     video {
         -webkit-tap-highlight-color: transparent;
+    }
+
+    .contentSmallPartHead>a>img {
+        width: 30px;
     }
 
     .top>span:nth-child(1) {

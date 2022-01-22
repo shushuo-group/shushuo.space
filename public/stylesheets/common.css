@@ -82,6 +82,7 @@
     margin: auto;
     display: flex;
     flex-direction: column;
+    cursor: default;
 }
 
 .img_bigshow_part_top {
@@ -174,6 +175,7 @@
     margin: auto;
     background: rgba(18, 18, 18, .65);
     z-index: 2;
+    cursor: pointer;
 }
 
 .img_open::before {
