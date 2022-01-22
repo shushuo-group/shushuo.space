@@ -19,7 +19,15 @@ $(document).ready(async function () {
                 return
             }
             window.localStorage.isLogin = true;
-            $('.headImgPart').html(`<a style="cursor:pointer;" onclick='window.open("/person?userId=${response.data_id}")'><img onerror=\'picError(this)\'  onload=\'pic_load(this)\' class="head" src=${zip_dir}${response.userHeadimg}></a>`);
+            $('.headImgPart').html(`
+            <a
+            style="cursor:pointer;"
+            onclick='window.open("/person?userId=${response.data_id}")'>
+                <img
+                onerror=\'picError(this)\'
+                class="head"
+                src=${pic_src_solve(zip_dir + response.userHeadimg)}>
+            </a>`);
         }
     });
 

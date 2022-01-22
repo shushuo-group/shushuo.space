@@ -192,7 +192,10 @@ $(document).ready(async function () {
                         <div class="user_small_main">
                             <span>
                                 <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${response.user_search[i].headImg}" class="user_small_main_img">
+                                    <img
+                                    onerror=\'picError(this)\'
+                                    src="${pic_src_solve(zip_dir + response.user_search[i].headImg)}"
+                                    class="user_small_main_img">
                                 </a>
                             </span>
                             <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -228,7 +231,7 @@ $(document).ready(async function () {
                             <div>
                                 <span id="6097c9f92347ed2f9cdd4d18">
                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
+                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='"+pic_src_solve(zip_dir + a(i))+"'>"}
                                     </a>
                                 </span>
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
@@ -339,8 +342,7 @@ $(document).ready(async function () {
                     userName="${response.user.userName}"
                     style="border: 2px solid green;border-radius: 50%;" 
                     onerror=\'picError(this)\'
-                    onload=\'pic_load(this)\'
-                    src="${zip_dir + response.user.headImg}">
+                    src="${pic_src_solve(zip_dir + response.user.headImg)}">
                 </a>`);
 
                 // 设置退出登陆按钮
@@ -597,7 +599,10 @@ $(document).ready(async function () {
                                         <div class="user_small_main">
                                             <span>
                                                 <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${response.user_search[i].headImg}" class="user_small_main_img">
+                                                    <img
+                                                    onerror=\'picError(this)\'
+                                                    src="${pic_src_solve(zip_dir + response.user_search[i].headImg)}"
+                                                    class="user_small_main_img">
                                                 </a>
                                             </span>
                                             <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -633,7 +638,7 @@ $(document).ready(async function () {
                                             <div>
                                                 <span id="6097c9f92347ed2f9cdd4d18">
                                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
+                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  src='"+ pic_src_solve(zip_dir + a(i)) +"'>"}
                                                     </a>
                                                 </span>
                                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
@@ -874,7 +879,10 @@ $(document).ready(async function () {
                                         <div class="user_small_main">
                                             <span>
                                                 <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${response.user_search[i].headImg}" class="user_small_main_img">
+                                                    <img
+                                                    onerror=\'picError(this)\'
+                                                    src="${pic_src_solve(zip_dir + response.user_search[i].headImg)}"
+                                                    class="user_small_main_img">
                                                 </a>
                                             </span>
                                             <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -910,7 +918,7 @@ $(document).ready(async function () {
                                             <div>
                                                 <span id="6097c9f92347ed2f9cdd4d18">
                                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
+                                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\' src='"+ pic_src_solve(zip_dir + a(i)) +"'>"}
                                                     </a>
                                                 </span>
                                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
@@ -1079,7 +1087,10 @@ $(document).ready(async function () {
                     <div class="user_small_main">
                         <span>
                             <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${response.user_search[i].headImg}" class="user_small_main_img">
+                                <img
+                                onerror=\'picError(this)\'
+                                src="${pic_src_solve(zip_dir + response.user_search[i].headImg)}"
+                                class="user_small_main_img">
                             </a>
                         </span>
                         <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -1115,7 +1126,7 @@ $(document).ready(async function () {
                         <div>
                             <span id="6097c9f92347ed2f9cdd4d18">
                                 <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                   ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
+                                   ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\' src='"+ pic_src_solve(zip_dir + a(i)) +"'>"}
                                 </a>
                             </span>
                             <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>

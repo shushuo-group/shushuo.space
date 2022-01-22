@@ -436,6 +436,16 @@ function firstFlush_hidden(data) {
             // 此处仅用于本站丢失图片
             $(imgs[i]).attr('onerror', 'picError(this)');
 
+            // 给文章内的图片添加上时间戳
+            let temp_src = $(imgs[i]).attr('src')
+            if (is_third_pic(imgs[i])) {
+                // 非本站存储图片
+                $(imgs[i]).attr('src', 'illeagal_picture_2022_01_23');
+            } else {
+                // 本站存储图片
+                $(imgs[i]).attr('src', pic_src_solve(temp_src));
+            }
+
             let temp_pic_css = {
                 'user-select': 'none',
                 'cursor': 'zoom-in',
@@ -461,6 +471,9 @@ function firstFlush_hidden(data) {
             // 图片放大浏览
             imgs[i].onclick = function () {
                 window.event.stopPropagation()
+                if ($(this).attr('pic_bad') === 'true') {
+                    return
+                }
                 pic_read(this)
             }
 
@@ -517,19 +530,6 @@ function firstFlush_hidden(data) {
                     }, 500);
 
                 }
-
-                // 此处仅用于过滤非法第三方图片
-                if (is_third_pic(this)) {
-                    $(this).attr('src', pic_error);
-                    $(this).css({
-                        'max-width': '100px',
-                        'cursor': 'not-allowed'
-                    });
-                    $(this).unbind();
-                }
-
-                $(this).removeAttr('onerror');
-                $(this).removeAttr('onload');
 
             }
 
@@ -785,7 +785,15 @@ function square_smallPart_create(i, response, i2) {
     $('.centerLeftBottom').append(`<div class="contentSmallPart">
                         <div class="contentSmallPartTop" articleId="${response.articles[i].articleId}">
                             <div>
-                                <span id="${response.articles[i].writerId}" class="contentSmallPartTopSmall contentSmallPartHead" onclick="toUserMainPage(this)"><img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${zip_dir}${response.articles[i].writerHead}" alt=""></span>
+                                <span 
+                                id="${response.articles[i].writerId}" 
+                                class="contentSmallPartTopSmall contentSmallPartHead" 
+                                onclick="toUserMainPage(this)">
+                                    <img
+                                    onerror=\'picError(this)\'
+                                    src="${pic_src_solve(zip_dir + response.articles[i].writerHead)}"
+                                    >
+                                </span>
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.articles[i].writerName)}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.articles[i].writerWord}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.articles[i].articleTime)}</span>
@@ -1176,7 +1184,12 @@ async function remark(e) {
                 for (let i = 0; i < data.comment.length; i++) {
                     $(e).parents('.contentSmallPart').find('.Comments').append(`
                     <div class="Comments_small">
-                        <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${data.comment[i].headimg}" id="${data.comment[i].comUserId}" class="Comments_small_head">
+                        <img
+                        onerror=\'picError(this)\'
+                        onclick="head_to_detail(this)"
+                        src="${pic_src_solve(zip_dir + data.comment[i].headimg)}"
+                        id="${data.comment[i].comUserId}"
+                        class="Comments_small_head">
                         <span class="Comments_small_name">${xssFilter(data.comment[i].comUser)}：</span>
                         <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(data.comment[i].content)}</div>
                         <div commentId="${data.comment[i].id}" class="firstComment">
@@ -1191,7 +1204,12 @@ async function remark(e) {
                         for (let j = 0; j < data.comment[i].secComments.length; j++) {
                             $(e).parents('.contentSmallPart').find('.Comments_small:nth(' + i + ')').append(`
                             <div class="Comments_small_second">
-                            <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' onclick="head_to_detail(this)" src="${zip_dir}${data.comment[i].secComments[j].comUserHead}" id="${data.comment[i].secComments[j].comUserId}" class="Comments_small_head">
+                            <img
+                            onerror=\'picError(this)\'
+                            onclick="head_to_detail(this)"
+                            src="${pic_src_solve(zip_dir + data.comment[i].secComments[j].comUserHead)}"
+                            id="${data.comment[i].secComments[j].comUserId}"
+                            class="Comments_small_head">
                             <span class="Comments_small_name">${xssFilter(data.comment[i].secComments[j].comUserName)}：</span>
                             <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(data.comment[i].secComments[j].content)}</div>
                             <div commentid="${data.comment[i].secComments[j].id}" class="firstComment">
@@ -1284,7 +1302,10 @@ function commmentSubmit(e) {
                 }
                 $(e).parents('.commentSectionArea').find('.Comments').append(`
                 <div class="Comments_small">
-                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${$('.person_head_pic').attr('src')}" class="Comments_small_head">
+                    <img
+                    onerror=\'picError(this)\'
+                    src="${pic_src_solve($('.person_head_pic').attr('src'))}"
+                    class="Comments_small_head">
                     <span class="Comments_small_name">${xssFilter($('.person_head_pic').attr('userName'))}：</span>
                     <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subcontent)}</div>
                     <div commentId="${response.commentId}" class="firstComment">
@@ -1551,7 +1572,10 @@ function secCommmentSubmit(e) {
             if (response.isSuccess == true) {
                 $(e).parents('.commentSectionArea').find('.Comments_small_comment[is_chosen="true"]').parents('.Comments_small').append(`
                 <div class="Comments_small_second">
-                        <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${zip_dir}${response.comUserHead}" class="Comments_small_head">
+                        <img
+                        onerror=\'picError(this)\'
+                        src="${pic_src_solve(zip_dir + response.comUserHead)}"
+                        class="Comments_small_head">
                         <span class="Comments_small_name">${xssFilter(response.comUserName)}：</span>
                         <div style="white-space: pre-line;margin-left: 20px;">${xssFilter(subContent)}</div>
                         <div commentid="${response.id}" class="firstComment">
@@ -1717,7 +1741,10 @@ function search_history(e) {
                         <div class="user_small_main">
                             <span>
                                 <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${zip_dir}${response.user_search[i].headImg}" class="user_small_main_img">
+                                    <img
+                                    onerror=\'picError(this)\'
+                                    src="${pic_src_solve(zip_dir + response.user_search[i].headImg)}"
+                                    class="user_small_main_img">
                                 </a>
                             </span>
                             <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -1752,7 +1779,7 @@ function search_history(e) {
                             <div>
                                 <span id="6097c9f92347ed2f9cdd4d18">
                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${response.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+response.article_search[i].writerId+''}>
-                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src='"+zip_dir+a(i)+"'>"}
+                                       ${response.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\' src='"+ pic_src_solve(zip_dir + a(i)) +"'>"}
                                     </a>
                                 </span>
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.article_search[i].writerName)}</span>
@@ -2740,8 +2767,7 @@ function noLogin_then(e) {
                         id="${DATA.user.data_id}"
                         style="border: 2px solid green;border-radius: 50%;"
                         onerror=\'picError(this)\'
-                        onload=\'pic_load(this)\'
-                        src="${zip_dir + DATA.user.headImg}">
+                        src="${pic_src_solve(zip_dir + DATA.user.headImg)}">
                     </a>`);
 
                     // 设置退出登陆按钮
@@ -2998,7 +3024,10 @@ function noLogin_then(e) {
                                         <div class="user_small_main">
                                             <span>
                                                 <a id ='${DATA.user_search[i].id}' onclick="head_to_detail(this)">
-                                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${DATA.user_search[i].headImg}" class="user_small_main_img">
+                                                    <img
+                                                    onerror=\'picError(this)\'
+                                                    src="${pic_src_solve(zip_dir + DATA.user_search[i].headImg)}"
+                                                    class="user_small_main_img">
                                                 </a>
                                             </span>
                                             <span class="user_small_main_name">${searchHlt(DATA.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -3034,7 +3063,7 @@ function noLogin_then(e) {
                                             <div>
                                                 <span id="6097c9f92347ed2f9cdd4d18">
                                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${DATA.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+DATA.article_search[i].writerId+''}>
-                                                       ${DATA.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
+                                                       ${DATA.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\' src='"+ pic_src_solve(zip_dir + a(i)) +"'>"}
                                                     </a>
                                                 </span>
                                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(DATA.article_search[i].writerName)}</span>
@@ -3215,9 +3244,8 @@ function noLogin_then(e) {
                         userName="${DATA.user.userName}"
                         style="border: 2px solid green;border-radius: 50%;"
                         onerror=\'picError(this)\'
-                        onload=\'pic_load(this)\'
                         username='${DATA.user.userName}'
-                        src="${zip_dir + DATA.user.headImg}">
+                        src="${pic_src_solve(zip_dir + DATA.user.headImg)}">
                     </a>`);
 
                     break;
@@ -3259,8 +3287,7 @@ function noLogin_then(e) {
                         userName="${DATA.user.userName}"
                         style="border: 2px solid green;border-radius: 50%;" 
                         onerror=\'picError(this)\'
-                        onload=\'pic_load(this)\'
-                        src="${zip_dir + DATA.user.headImg}">
+                        src="${pic_src_solve(zip_dir + DATA.user.headImg)}">
                     </a>`);
 
                     // 设置退出登陆按钮
@@ -3517,7 +3544,10 @@ function noLogin_then(e) {
                                         <div class="user_small_main">
                                             <span>
                                                 <a id ='${DATA.user_search[i].id}' onclick="head_to_detail(this)">
-                                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${DATA.user_search[i].headImg}" class="user_small_main_img">
+                                                    <img
+                                                    onerror=\'picError(this)\'
+                                                    src="${pic_src_solve(zip_dir + DATA.user_search[i].headImg)}"
+                                                    class="user_small_main_img">
                                                 </a>
                                             </span>
                                             <span class="user_small_main_name">${searchHlt(DATA.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -3553,7 +3583,7 @@ function noLogin_then(e) {
                                             <div>
                                                 <span id="6097c9f92347ed2f9cdd4d18">
                                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${DATA.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+DATA.article_search[i].writerId+''}>
-                                                       ${DATA.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
+                                                       ${DATA.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\' src='"+ pic_src_solve(zip_dir + a(i)) +"'>"}
                                                     </a>
                                                 </span>
                                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(DATA.article_search[i].writerName)}</span>
@@ -3734,9 +3764,8 @@ function noLogin_then(e) {
                         userName="${DATA.user.userName}"
                         style="border: 2px solid green;border-radius: 50%;"
                         onerror=\'picError(this)\'
-                        onload=\'pic_load(this)\'
                         username='${DATA.user.userName}'
-                        src="${zip_dir + DATA.user.headImg}">
+                        src="${pic_src_solve(zip_dir + DATA.user.headImg)}">
                     </a>`);
 
                     break;
@@ -3776,8 +3805,7 @@ function noLogin_then(e) {
                         id="${DATA.user.data_id}">
                         style="border: 2px solid green;border-radius: 50%;"
                         onerror=\'picError(this)\'
-                        onload=\'pic_load(this)\'
-                        src="${zip_dir + DATA.user.headImg}">
+                        src="${pic_src_solve(zip_dir + DATA.user.headImg)}">
                     </a>`);
 
                     // 设置退出登陆按钮
@@ -4034,7 +4062,10 @@ function noLogin_then(e) {
                                         <div class="user_small_main">
                                             <span>
                                                 <a id ='${DATA.user_search[i].id}' onclick="head_to_detail(this)">
-                                                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src="${zip_dir}${DATA.user_search[i].headImg}" class="user_small_main_img">
+                                                    <img
+                                                    onerror=\'picError(this)\'
+                                                    src="${pic_src_solve(zip_dir + DATA.user_search[i].headImg)}"
+                                                    class="user_small_main_img">
                                                 </a>
                                             </span>
                                             <span class="user_small_main_name">${searchHlt(DATA.user_search[i].userName,$('#search_base_value').val())}</span>
@@ -4070,7 +4101,7 @@ function noLogin_then(e) {
                                             <div>
                                                 <span id="6097c9f92347ed2f9cdd4d18">
                                                     <a target="_blank" class="contentSmallPartTopSmall contentSmallPartHead" ${DATA.article_search[i].writerName == "匿名" ?'':'href=/person?userId='+DATA.article_search[i].writerId+''}>
-                                                       ${DATA.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  src='"+zip_dir+a(i)+"'>"}
+                                                       ${DATA.article_search[i].writerName == "匿名" ? '<svg class="anonymity" viewBox="0 0 1024 1024"> <path d="M512 538.1c130.9 0 237-106.1 237-237s-106.1-237-237-237-237 106.1-237 237 106.1 237 237 237z m0 110.6c-218.2 0-395.1 69.7-395.1 155.6S293.8 960 512 960s395.1-69.7 395.1-155.6S730.2 648.7 512 648.7z" fill="#707070"></path> </svg>' : "<img onerror=\'picError(this)\' src='"+ pic_src_solve(zip_dir + a(i)) +"'>"}
                                                     </a>
                                                 </span>
                                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(DATA.article_search[i].writerName)}</span>
@@ -4250,9 +4281,8 @@ function noLogin_then(e) {
                         userName="${DATA.user.userName}"
                         style="border: 2px solid green;border-radius: 50%;"
                         onerror=\'picError(this)\'
-                        onload=\'pic_load(this)\'
                         username='${DATA.user.userName}'
-                        src="${zip_dir + DATA.user.headImg}">
+                        src="${pic_src_solve(zip_dir + DATA.user.headImg)}">
                     </a>`);
 
                     break;
@@ -4348,7 +4378,10 @@ function searchCommen(i) {
             //有图（显示第一张图片即可）
             $('.article_small_color:nth(' + i + ')').find('.article_small').html(`
                 <div class="article_small_imgpart">
-                    <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  class="article_small_imgpart_img" src="${$('.article_small_color:nth(' + i + ')').find('img')[1].src}">
+                    <img
+                    onerror=\'picError(this)\'
+                    class="article_small_imgpart_img"
+                    src="${pic_src_solve($('.article_small_color:nth(' + i + ')').find('img')[1].src)}">
                 </div>
                 <div class="article_small_wordpart">
                     ${xssFilter($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText)}
@@ -4370,7 +4403,10 @@ function searchCommen(i) {
             }
             $('.article_small_color:nth(' + i + ')').find('.article_small').html(`
     <div class="article_small_imgpart">
-        <img onerror=\'picError(this)\'  onload=\'pic_load(this)\'  class="article_small_imgpart_img" src="${$('.article_small_color:nth(' + i + ')').find('img')[0].src}">
+        <img
+        onerror=\'picError(this)\'
+        class="article_small_imgpart_img"
+        src="${pic_src_solve($('.article_small_color:nth(' + i + ')').find('img')[0].src)}">
     </div>
     <div class="article_small_wordpart">
         ${xssFilter($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText)}
@@ -4410,25 +4446,13 @@ function jump_window(cssObj, html, callback = () => {}) {
 //图片加载失败的方法
 function picError(e) {
     e.src = pic_error
-    // 去除掉使用js绑定的鼠标点击事件，故以后迭代需要注意不要直接在img上添加点击事件
+    $(e).attr('pic_bad', 'true');
     $(e).unbind('click');
     $(e).removeAttr('onerror');
-    $(e).removeAttr('onload');
     $(e).css({
         'max-width': '100px',
         'cursor': 'not-allowed'
     });
-}
-
-//合法图片加载中的验证
-function pic_load(e) {
-
-    if (is_third_pic(e)) {
-        $(e).attr('src', picError);
-        $(e).removeAttr('onerror');
-        $(e).removeAttr('onload');
-    }
-
 }
 
 /**
@@ -4444,4 +4468,10 @@ function is_third_pic(e) {
     } else {
         return false
     }
+}
+
+// 图片路径处理
+function pic_src_solve(e) {
+    let temp = e
+    return temp + '?v=2022_01_22_3'
 }

@@ -29,7 +29,18 @@ $(document).ready(async function () {
             $(imgs[i]).after(`<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>`);
             $(imgs[i]).hide();
 
+            // 此处仅用于本站丢失图片
             $(imgs[i]).attr('onerror', 'picError(this)');
+
+            // 给文章内的图片添加上时间戳
+            let temp_src = $(imgs[i]).attr('src')
+            if (is_third_pic(imgs[i])) {
+                // 非本站存储图片
+                $(imgs[i]).attr('src', 'illeagal_picture_2022_01_23');
+            } else {
+                // 本站存储图片
+                $(imgs[i]).attr('src', pic_src_solve(temp_src));
+            }
 
             let temp_pic_css = {
                 'user-select': 'none',
@@ -56,26 +67,14 @@ $(document).ready(async function () {
                 $(imgs[i]).siblings('.commentSection_wait').remove();
                 $(imgs[i]).show();
 
-                // 此处仅用于过滤非法第三方图片
-                if (is_third_pic(this)) {
-                    $(this).attr('src', pic_error);
-                    $(this).css({
-                        'max-width': '100px',
-                        'cursor': 'not-allowed'
-                    });
-                    $(imgs[i]).siblings('.commentSection_wait').remove();
-                    $(imgs[i]).show();
-                    $(this).unbind();
-                }
-
-                $(this).removeAttr('onerror');
-                $(this).removeAttr('onload');
-
             }
 
             // 图片放大浏览
             imgs[i].onclick = function () {
                 window.event.stopPropagation()
+                if ($(this).attr('pic_bad') === 'true') {
+                    return
+                }
                 pic_read(this)
             }
 
@@ -127,10 +126,9 @@ $(document).ready(async function () {
                 <img
                     class="person_head_pic"
                     onerror=\'picError(this)\'
-                    onload=\'pic_load(this)\'
                     onclick="window.open('/person?userId=${response.data_id}')"
                     username="${response.userName}"
-                    src="${zip_dir}${response.userHeadimg}">
+                    src="${pic_src_solve(zip_dir + response.userHeadimg)}">
                 `);
                 window.localStorage.isLogin = true;
             } else {
@@ -224,7 +222,13 @@ $(document).ready(async function () {
                 <div class="contentSmallPart waitAfter">
                         <div class="contentSmallPartTop" articleid="${window.location.search.split('=')[1]}">
                             <div>
-                                <span class="contentSmallPartTopSmall contentSmallPartHead"><a onclick="head_to_detail(this)" id="${response.sendData.writerId}"><img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${zip_dir}${response.sendData.writerHead}"></a></span>
+                                <span class="contentSmallPartTopSmall contentSmallPartHead">
+                                    <a onclick="head_to_detail(this)" id="${response.sendData.writerId}">
+                                        <img 
+                                        onerror=\'picError(this)\'
+                                        src="${pic_src_solve(zip_dir + response.sendData.writerHead)}">
+                                    </a>
+                                </span>
                                 <span class="contentSmallPartTopSmall contentSmallPartID">${xssFilter(response.sendData.writerName)}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDsign">${response.sendData.writerSign}</span>
                                 <span class="contentSmallPartTopSmall contentSmallPartIDtime">${timeSet(response.sendData.time)}</span>

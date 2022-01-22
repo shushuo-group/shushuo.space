@@ -64,11 +64,8 @@ $(document).ready(function () {
                         $('.headpicSvg').hide();
                     }
                 })
-                if (response.user.headImg == 'NaN.png') {
-                    $('.headpic').append('<img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="' + zip_dir + response.user.headImg + '">');
-                } else {
-                    $('.headpic').append(`<img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${zip_dir}${response.user.headImg}">`);
-                }
+
+                $('.headpic').append(`<img onerror=\'picError(this)\' src="${pic_src_solve(zip_dir + response.user.headImg)}">`);
 
                 $('.articles').addClass('select');
 
@@ -254,8 +251,8 @@ $(document).ready(function () {
 
                     let temp_html = `
                     <div class="mask"></div>
-                    <div class="AvatarOperationArea"><div class="AOA-top"><div class="AOA-top-left"><div class="AOA-top-left-part"><div class="ATLP-Basic"><div class="ATLP-Basic-mask"></div><img src="">
-                    </div></div></div><span class="AOA-top-line"></span><div class="AOA-top-right"><div class="AOA-top-right-part"><div class="ATRP-container"><img src=""></div></div></div></div><div class="AOA-bottom"><div class="AOA-bottom-left"><button class="AOA-bottom-left-bottom">选择图片</button><input class="AOA-bottom-left-input" type="file" accept="image/png" style="display: none;"></div><div class="AOA-bottom-right"><input class="AOA-bottom-right-input" type="submit"></div></div></div>
+                    <div class="AvatarOperationArea"><div class="AOA-top"><div class="AOA-top-left"><div class="AOA-top-left-part"><div class="ATLP-Basic"><div class="ATLP-Basic-mask"></div><img>
+                    </div></div></div><span class="AOA-top-line"></span><div class="AOA-top-right"><div class="AOA-top-right-part"><div class="ATRP-container"><img></div></div></div></div><div class="AOA-bottom"><div class="AOA-bottom-left"><button class="AOA-bottom-left-bottom">选择图片</button><input class="AOA-bottom-left-input" type="file" accept="image/png" style="display: none;"></div><div class="AOA-bottom-right"><input class="AOA-bottom-right-input" type="submit"></div></div></div>
                     `
 
                     jump_window({}, temp_html)
@@ -280,7 +277,7 @@ $(document).ready(function () {
                         reader.onload = function () {
                             //数据读取后
                             if (!$('.ATLP-Basic-cut')[0]) {
-                                $('.ATLP-Basic').prepend('<div class="ATLP-Basic-cut"><img class="ATLP-Basic-cut-copy" src=""></div>');
+                                $('.ATLP-Basic').prepend('<div class="ATLP-Basic-cut"><img class="ATLP-Basic-cut-copy"></div>');
                             }
                             $('.ATLP-Basic>img')[0].src = this.result
                             $('.ATRP-container>img')[0].src = this.result
@@ -578,7 +575,11 @@ $(document).ready(function () {
                                             'z-index': '5',
                                             'background-color': 'rgba(0,0,0,.5)'
                                         });
-                                        $('.headpic').append(`<img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="${zip_dir}${response.path}">`);
+                                        $('.headpic').append(`
+                                        <img
+                                        onerror=\'picError(this)\'
+                                        src="${pic_src_solve(zip_dir + response.path)}"
+                                        >`);
                                         $('.headpic').hover(function () {
                                             // over
                                             if ($('.headpic>img')[0]) {
@@ -1041,7 +1042,11 @@ $(document).ready(function () {
                         userId: window.location.search.split('=')[1]
                     },
                     success: function (response) {
-                        $('.headpic').append('<img onerror=\'picError(this)\'  onload=\'pic_load(this)\' src="' + zip_dir + response + '">');
+                        $('.headpic').append(`
+                        <img
+                        onerror=\'picError(this)\'
+                        src="${pic_src_solve(zip_dir + response)}"
+                        >`);
                     }
                 });
 
