@@ -598,15 +598,6 @@ function pic_read(e) {
             });
         });
 
-        if (is_small_client) {
-            $('.img_bigshow_part_round').html('旋转').addClass('img_bigshow_part_bottom_small');
-            $('.img_bigshow_part_down').html('下载').addClass('img_bigshow_part_bottom_small');
-        }
-
-        // 适配俩个按钮对于safari无法显示的情景
-        $('.img_bigshow_part_round>svg').css('height', `${$('.img_bigshow_part_round').height()}px`);
-        $('.img_bigshow_part_down>svg').css('height', `${$('.img_bigshow_part_down').height()}px`);
-
         // 清除图片原有自带html的属性样式
         $('.img_bigshow_part_top>img').attr('style', '');
 

@@ -158,7 +158,7 @@
 
 .img_bigshow_part_bottom_center>a>svg {
     height: 100%;
-    width: 50px;
+    width: unset;
 }
 
 .img_bigshow_part_bottom_center>.img_bigshow_part_hight:hover {
@@ -262,7 +262,7 @@
     }
 
     .img_bigshow_part_bottom_center>.img_bigshow_part_hight {
-        background: unset;
+        background: #ffffff;
         color: #106ba3;
         font-size: initial;
         position: relative;
@@ -271,8 +271,8 @@
     }
 
     .img_bigshow_part_bottom_center>a>svg {
-        height: 100%;
-        width: 40px;
+        height: 40px;
+        width: unset;
     }
 
     .img_bigshow_part_bottom_center>.img_bigshow_part_hight:hover {
