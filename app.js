@@ -30,8 +30,7 @@ app.use(compression());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 var options = {
-    maxAge: '365d',
-    lastModified: true
+    maxAge: '365d'
 }
 
 app.use(express.static(path.join(__dirname, 'public'),options));
