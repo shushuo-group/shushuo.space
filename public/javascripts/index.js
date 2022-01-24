@@ -1359,20 +1359,20 @@ $(document).ready(async function () {
                             slideFlushBytime('squareMway')
                             break;
                         case false:
-                            switch ($('.navigation-smallM')[0].innerText.length == 0) {
-                                case true:
+                            switch ( $('.navigation').attr('slide_way') ) {
+                                case 'big_part':
                                     //大模块的刷新
                                     if ($('.centerLeftBottom>.commentSection_wait')[0]) {
                                         return
                                     }
-                                    slideFlushBytime('bigMway', $('.navigation-bigM').attr('bigmid'), $('.navigation-smallM').attr('smallmid'))
+                                    slideFlushBytime('bigMway', $('.navigation').attr('big_part_id'), '')
                                     break;
-                                case false:
+                                case 'small_part':
                                     //小模块的刷新
                                     if ($('.centerLeftBottom>.commentSection_wait')[0]) {
                                         return
                                     }
-                                    slideFlushBytime('smallMway', $('.navigation-bigM').attr('bigmid'), $('.navigation-smallM').attr('smallmid'))
+                                    slideFlushBytime('smallMway', $('.navigation').attr('big_part_id'), $('.navigation').attr('small_part_id'))
                                     break;
                                 default:
                                     break;

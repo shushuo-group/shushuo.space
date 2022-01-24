@@ -11,28 +11,31 @@ function centerLeftTopButtonAdd(e) {
         return
     }
     $('body').after('<div class="mask"></div>');
-    $('.mask').after(`<div class="addsmallM_part">
-    <div class="addsmallM_part_article">
-        <div class="addsmallM_part_article_part">
-            <div id="bigM" bigMid="${$(e).parents('.centerLeftTopButton').attr('bigmid')}">大模块名称：</div>
-            <div id="bigMName">${$(e).parents('.centerLeftTopButton').find('.bigMname').text()}</div>
+    $('.mask').after(`
+    <div class="addsmallM_part">
+        <div class="addsmallM_part_article">
+            <div class="addsmallM_part_article_part">
+                <div id="bigM" bigMid="${$(e).parents('.centerLeftTopButton').attr('bigmid')}">大模块名称：</div>
+                <div id="bigMName">${$(e).parents('.centerLeftTopButton').find('.bigMname').text()}</div>
+            </div>
+            <div class="addsmallM_part_article_part">
+                <div id="smallM" articleid="undefined">小模块名称：</div>
+                <div id="smallMName">
+                    <input maxlength="5">
+                </div>
+            </div>
         </div>
-    <div class="addsmallM_part_article_part">
-            <div id="smallM" articleid="undefined">小模块名称：</div>
-            <div id="smallMName">
-<input maxlength="5">
-</div>
-        </div></div>
-    <div class="addsmallM_part_reason">
-        <div class="addsmallM_part_reason_part">
-            <span id="reason">申请原因：(如审核通过，默认您为管理员)</span>
-            <div id="reasonPart" onpaste="pasteRemoveCss(this)" contenteditable="true"></div>
+        <div class="addsmallM_part_reason">
+            <div class="addsmallM_part_reason_part">
+                <span id="reason">申请原因：(如审核通过，默认您为管理员)</span>
+                <div id="reasonPart" onpaste="pasteRemoveCss(this)" contenteditable="true"></div>
+            </div>
+        </div>
+        <div class="addsmallM_part_submit">
+            <button id="addsmallM_submit">确认发送</button>
         </div>
     </div>
-    <div class="addsmallM_part_submit">
-        <button id="addsmallM_submit">确认发送</button>
-    </div>
-</div>`);
+    `);
     $('html').css({
         'overflow': 'hidden',
         'margin-right': window.innerWidth - $('body')[0].offsetWidth + 'px'
@@ -92,76 +95,70 @@ function bigPart(e) {
     window.event.stopPropagation()
 
     $('.centerLeftBottom').html('');
-
-    $('.centerLeftTopButton>div:nth-child(2)').hide();
-
-    if (!$('.navigation')[0]) {
-        //不存在navigation
-        if (is_touch_client) {
-            // 触屏设备
-            $('.centerLeftTop').after(`<div style="background: #fdfdfd;padding: 2px;border-radius: 3px;width: 98%;margin: auto;position: sticky;top: 80px;z-index: 2;white-space: nowrap;overflow-x: scroll;" class="navigation"><span style="border-radius: 5px;background: #e7f9f5;color: #138bfb;margin: 3px 2px;padding: 0 5px;" bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span></div>`);
-            //进行小模块的搜索请求
-            let data = $('.navigation-bigM').text()
-
-            $.ajax({
-                type: "post",
-                url: "/smallModulesGet",
-                data: {
-                    name: data
-                },
-                success: function (response) {
-                    for (let i = 0; i < response.length; i++) {
-                        $('.navigation-bigM').after(`
-                        <span onclick="smp(this)" style="border-radius: 5px;background: #ededed;color: #2a4d6d;margin: 3px 2px;padding: 0 5px;" class="navigation-smallM" id="${response[i].id}">${response[i].name}</span>
-                        `);
-                    }
-                }
-            });
-
-        } else {
-            // 非触屏设备
-            $('.centerLeftTop').append(`<div style="margin: 0 3px;" class="navigation"><span bigMid="${$(e).attr('bigmid')}" class="navigation-bigM">${$(e).find('.bigMname').text()}</span>><span class="navigation-smallM"></span></div>`);
-        }
-    } else {
-        //存在navigation
-        if (is_touch_client) {
-            // 触屏设备
-            $('.navigation-smallM').remove();
-            $('.navigation-bigM').text($(e).find('.bigMname').text()).attr('bigMid', $(e).attr('bigmid'));
-            //进行小模块的搜索请求
-
-            let data = $('.navigation-bigM').text()
-
-            $.ajax({
-                type: "post",
-                url: "/smallModulesGet",
-                data: {
-                    name: data
-                },
-                success: function (response) {
-                    for (let i = 0; i < response.length; i++) {
-                        $('.navigation-bigM').after(`
-                        <span onclick="smp(this)" style="border-radius: 5px;background: #ededed;color: #2a4d6d;margin: 3px 2px;padding: 0 5px;" class="navigation-smallM" id='${response[i].id}'>${response[i].name}</span>
-                        `);
-                    }
-                }
-            });
-        } else {
-            // 非触屏设备
-            $('.navigation-bigM').attr('bigMid', `${$(e).attr('bigmid')}`);
-            $('.navigation-bigM').html(`${$(e).find('.bigMname').text()}`);
-            $('.navigation-smallM').html(``);
-        }
-    }
-
+    $(window).scrollTop('0px')
+    $('.navigation').remove();
+    $('.addArticle').remove();
     $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
+
+    $(e).find('.centerLeftTopButton_smallbuttons').hide();
+
+    if (is_touch_client) {
+        // 触屏设备
+
+        $('.centerLeftTop').after(`
+        <div
+        style="background: #fdfdfd;padding: 2px;border-radius: 3px;width: 98%;margin: auto;position: sticky;top: 80px;z-index: 2;white-space: nowrap;overflow-x: scroll;"
+        class="navigation"
+        slide_way="big_part"
+        big_part_id="${$(e).attr('bigmid')}"
+        >
+            <span
+            style="border-radius: 5px;background: #e7f9f5;color: #138bfb;margin: 3px 2px;padding: 0 5px;"
+            class="navigation-bigM"
+            >
+            ${$(e).find('.bigMname').text()}
+            </span>
+        </div>
+        `);
+
+        let temp_data = $(e).find('.smp')
+
+        for (let i = 0; i < temp_data.length; i++) {
+            $('.navigation-bigM').after(`
+            <span
+            onclick="smp(this)"
+            style="border-radius: 5px;background: #ededed;color: #2a4d6d;margin: 3px 2px;padding: 0 5px;"
+            class="navigation-smallM"
+            small_part_id="${$(temp_data[i]).attr('id')}">${$(temp_data[i]).text()}</span>
+            `);
+        }
+
+    } else {
+        // 非触屏设备
+
+        $('.centerLeftTop').append(`
+        <div
+        style="margin: 0 3px;"
+        class="navigation"
+        slide_way="big_part"
+        big_part_id="${$(e).attr('bigmid')}"
+        >
+            <span
+            class="navigation-bigM">
+            ${$(e).find('.bigMname').text()}
+            </span>
+            >
+        </div>
+        `);
+
+    }
 
     $.ajax({
         type: "post",
         url: "mainApp/bigModule",
         data: {
             token: window.localStorage.token,
-            bigModuleId: $(e).attr('bigmid'),
+            bigModuleId: $('.navigation').attr('big_part_id'),
         },
         success: function (response) {
             $('.commentSection_wait').remove();
@@ -178,7 +175,6 @@ function bigPart(e) {
                 });
                 return
             }
-            $(window).scrollTop('0px')
             for (let i = 0; i < response.articles.length; i++) {
                 square_smallPart_create(i, response, i)
             }
@@ -192,96 +188,86 @@ function bigPart(e) {
 //小模块点击事件
 function smp(e) {
     window.event.stopPropagation()
+
+    $('.centerLeftBottom').html('');
+    $(window).scrollTop('0px')
+    $('.addArticle').remove();
+    $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
+
     if (is_touch_client) {
         // 触屏设备
-        $('.smallm_chosen').css('color', '#2a4d6d');
+        $('.navigation-smallM').css('color', '#2a4d6d');
         $(e).css('color', '#ff7272');
-        $(e).addClass('smallm_chosen');
-        $('.centerLeftBottom').html('');
-        $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
-        $.ajax({
-            type: "post",
-            url: "mainApp/smallModule",
-            data: {
-                bigModuleId: $('.navigation-bigM').attr('bigmid'),
-                smallModuleId: e.id,
-                token: window.localStorage.token
-            },
-            success: function (response) {
-                $('.commentSection_wait').remove();
-                if (response.articles.length == 0) {
-                    $('.navigation').after(`<div class="addArticle"><a class="addArticle-a"><div class="addArticle-word">空空如也，来添加第一篇文章吧</div><svg class="addArticle-icon" t="1617944956553" viewBox="0 0 1147 1024" version="1.1"  p-id="4251" width="200" height="200"><path fill="#707070" d="M0 956.865864 1146.877993 956.865864 1146.877993 1020.7232 0 1020.7232 0 956.865864ZM0 912.775537 300.529213 827.452006 85.868257 614.103613 0 912.775537ZM802.673951 328.370422 588.010209 115.019284 115.744481 584.378491 330.405437 797.708861 802.673951 328.370422ZM902.442885 149.154775 768.272343 15.818629C746.042941-6.277693 708.804076-5.074616 685.091594 18.484019L620.682076 82.476319 835.34721 295.826104 899.75255 231.814349C923.465032 208.254362 924.668109 171.253883 902.442885 149.154775Z" p-id="4252"></path></svg></a></div>`);
-                    // 进行创作中心入口的提示用户登录操作
-                    $('.addArticle').click(function (e) {
-                        if (window.localStorage.isLogin == 'false') {
-                            //未登录
-                            noLogin()
-                        } else {
-                            window.location.href = `${web_url}writer`
-                        }
-                    });
-                    return
-                }
-                $(window).scrollTop('0px')
-                for (let i = 0; i < response.articles.length; i++) {
-                    square_smallPart_create(i, response, i)
-                }
-                //首次刷新的时候加上一个待接点
-                $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
-            }
-        });
-        return
+        $('.navigation').attr('small_part_id', $(e).attr('small_part_id'));
+        $('.navigation').attr('slide_way', 'small_part');
     } else {
         // 非触屏设备
-        $('.centerLeftTopButton_smallbuttons').hide();
         $('.navigation').remove();
-
-        $('.centerLeftTop').append(`
-        <div style="margin: 0 3px;" class="navigation">
-            <span bigmid="${$(e).parents('.centerLeftTopButton').attr('bigmid')}" class="navigation-bigM">${$(e).parents('.centerLeftTopButton').find('.bigMname').text()}</span>
-            >
-            <span smallMId="${$(e).attr('id')}" class="navigation-smallM">${$(e).text()}</span>
-        </div>
-        `);
-
         $('.centerLeftBottom').html('');
         $('.backPast').hide();
-
-        $('.centerLeftBottom').append('<section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>')
-
-        $.ajax({
-            type: "post",
-            url: "mainApp/smallModule",
-            data: {
-                bigModuleId: $(e).parents('.centerLeftTopButton').attr('bigmid'),
-                smallModuleId: e.id,
-                token: window.localStorage.token
-            },
-            success: function (response) {
-                $('.commentSection_wait').remove();
-                if (response.articles.length == 0) {
-                    $('.navigation').after(`<div class="addArticle"><a class="addArticle-a"><div class="addArticle-word">空空如也，来添加第一篇文章吧</div><svg class="addArticle-icon" t="1617944956553" viewBox="0 0 1147 1024" version="1.1"  p-id="4251" width="200" height="200"><path fill="#707070" d="M0 956.865864 1146.877993 956.865864 1146.877993 1020.7232 0 1020.7232 0 956.865864ZM0 912.775537 300.529213 827.452006 85.868257 614.103613 0 912.775537ZM802.673951 328.370422 588.010209 115.019284 115.744481 584.378491 330.405437 797.708861 802.673951 328.370422ZM902.442885 149.154775 768.272343 15.818629C746.042941-6.277693 708.804076-5.074616 685.091594 18.484019L620.682076 82.476319 835.34721 295.826104 899.75255 231.814349C923.465032 208.254362 924.668109 171.253883 902.442885 149.154775Z" p-id="4252"></path></svg></a></div>`);
-                    // 进行创作中心入口的提示用户登录操作
-                    $('.addArticle').click(function (e) {
-                        if (window.localStorage.isLogin == 'false') {
-                            //未登录
-                            noLogin()
-                        } else {
-                            window.location.href = `${web_url}writer`
-                        }
-                    });
-                    return
-                }
-                $(window).scrollTop('0px')
-                for (let i = 0; i < response.articles.length; i++) {
-                    square_smallPart_create(i, response, i)
-                }
-                //首次刷新的时候加上一个待接点
-                $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
-            }
-        });
+        $(e).parents('.centerLeftTopButton_smallbuttons').hide();
+        $('.centerLeftTop').append(`
+        <div
+        style="margin: 0 3px;"
+        class="navigation"
+        slide_way="small_part"
+        big_part_id="${$(e).parents('.centerLeftTopButton').attr('bigmid')}"
+        small_part_id="${$(e).attr('id')}"
+        >
+            <span
+            class="navigation-bigM"
+            >
+            ${$(e).parents('.centerLeftTopButton').find('.bigMname').text()}
+            </span>
+            >
+            <span
+            class="navigation-smallM"
+            >
+            ${$(e).text()}
+            </span>
+        </div>
+        `);
     }
 
+    $.ajax({
+        type: "post",
+        url: "mainApp/smallModule",
+        data: {
+            bigModuleId: $('.navigation').attr('big_part_id'),
+            smallModuleId: $('.navigation').attr('small_part_id'),
+            token: window.localStorage.token
+        },
+        success: function (response) {
+            $('.commentSection_wait').remove();
+            if (response.articles.length == 0) {
+                $('.navigation').after(`
+                <div
+                class="addArticle">
+                    <a
+                    class="addArticle-a">
+                        <div class="addArticle-word">空空如也，来添加第一篇文章吧</div>
+                        <svg class="addArticle-icon" t="1617944956553" viewBox="0 0 1147 1024" version="1.1"  p-id="4251" width="200" height="200"><path fill="#707070" d="M0 956.865864 1146.877993 956.865864 1146.877993 1020.7232 0 1020.7232 0 956.865864ZM0 912.775537 300.529213 827.452006 85.868257 614.103613 0 912.775537ZM802.673951 328.370422 588.010209 115.019284 115.744481 584.378491 330.405437 797.708861 802.673951 328.370422ZM902.442885 149.154775 768.272343 15.818629C746.042941-6.277693 708.804076-5.074616 685.091594 18.484019L620.682076 82.476319 835.34721 295.826104 899.75255 231.814349C923.465032 208.254362 924.668109 171.253883 902.442885 149.154775Z" p-id="4252"></path></svg>
+                    </a>
+                </div>
+                `);
+                // 进行创作中心入口的提示用户登录操作
+                $('.addArticle').click(function () {
+                    if (window.localStorage.isLogin == 'false') {
+                        //未登录
+                        noLogin()
+                    } else {
+                        window.location.href = `${web_url}writer`
+                    }
+                });
+                return
+            }
+            for (let i = 0; i < response.articles.length; i++) {
+                square_smallPart_create(i, response, i)
+            }
+            //首次刷新的时候加上一个待接点
+            $('.contentSmallPart:nth(' + ($(".contentSmallPart").length - 1) + ')').addClass('waitAfter');
+        }
+    });
 
 }
 
