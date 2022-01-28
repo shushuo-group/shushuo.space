@@ -135,6 +135,7 @@
 .img_bigshow_part_bottom_center_button {
     display: inline-block;
     height: 100%;
+    cursor: pointer;
 }
 
 .img_bigshow_part_bottom_center_button>a {

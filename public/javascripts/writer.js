@@ -170,7 +170,6 @@ $(document).ready(async function () {
         'quote',
         'image',
         'table',
-        'list',
         'code',
         'splitLine',
         'undo',

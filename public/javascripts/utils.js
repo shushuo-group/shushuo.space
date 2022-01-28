@@ -376,7 +376,14 @@ function firstFlush_hidden(data) {
 
             //纯文字的加蒙版模式
             if ($('.contentSmallPart:nth(' + data + ')').find('.innerContent')[0].offsetHeight == 200) {
-                $('.contentSmallPart:nth(' + data + ')').find('.innerContent').after(`<div class="contentExploreMask"></div><div class="contentExploreButton" onclick="readAllButton(this)">阅读全文</div>`);
+                $('.contentSmallPart:nth(' + data + ')').find('.innerContent').after(`
+                <div
+                class="contentExploreMask"
+                onclick="readAllButton(this)"
+                >
+                    <div class="contentExploreButton">阅读全文</div>
+                </div>
+                `);
             }
 
             //对代码块进行数字标识
@@ -477,7 +484,14 @@ function firstFlush_hidden(data) {
                         //携带图片的增加蒙版模式
 
                         if ($('.contentSmallPart:nth(' + data + ')').find('.innerContent').height() == 200) {
-                            $('.contentSmallPart:nth(' + data + ')').find('.innerContent').after('<div class="contentExploreMask"></div><div class="contentExploreButton" onclick="readAllButton(this)">阅读全文</div>');
+                            $('.contentSmallPart:nth(' + data + ')').find('.innerContent').after(`
+                            <div
+                            class="contentExploreMask"
+                            onclick="readAllButton(this)"
+                            >
+                                <div class="contentExploreButton">阅读全文</div>
+                            </div>
+                            `);
                         }
 
                         //对代码块进行数字标识
@@ -693,7 +707,6 @@ function readAllButton(e) {
     });
 
     $(e).hide();
-    $(e).siblings('.contentExploreMask').hide();
     $(e).siblings('.innerContent').css('max-height', 'unset');
     $(e).parents('.contentSmallPart').find('.contentMoveArea').append('<div onclick="contentExploreButton_button(this)" class="contentExploreButton_close">收起</div>')
 
@@ -748,7 +761,6 @@ function readAllButton(e) {
 function contentExploreButton_button(e) {
     $(e).parents('.contentSmallPart').removeAttr('style');
     $(e).parents('.contentSmallPart').find('.contentExploreMask').show()
-    $(e).parents('.contentSmallPart').find('.contentExploreButton').show()
     $(e).parents('.contentSmallPart').find('.innerContent').css('max-height', '200px');
     $(e).remove();
     $(window).scrollTop(window.localStorage.scrollTop)
@@ -3212,7 +3224,14 @@ function noLogin_then(e) {
                     let temp_innerContents = $('.innerContent')
                     for (let i = 0; i < temp_innerContents.length; i++) {
                         if ($(temp_innerContents[i]).height() == 200) {
-                            $(temp_innerContents[i]).after('<div class="contentExploreMask"></div><div class="contentExploreButton" onclick="readAllButton(this)">阅读全文</div>');
+                            $(temp_innerContents[i]).after(`
+                            <div
+                            class="contentExploreMask"
+                            onclick="readAllButton(this)"
+                            >
+                                <div class="contentExploreButton">阅读全文</div>
+                            </div>
+                            `);
                         }
                     }
 
@@ -3732,7 +3751,14 @@ function noLogin_then(e) {
                     let temp_innerContents = $('.innerContent')
                     for (let i = 0; i < temp_innerContents.length; i++) {
                         if ($(temp_innerContents[i]).height() == 200) {
-                            $(temp_innerContents[i]).after('<div class="contentExploreMask"></div><div class="contentExploreButton" onclick="readAllButton(this)">阅读全文</div>');
+                            $(temp_innerContents[i]).after(`
+                            <div
+                            class="contentExploreMask"
+                            onclick="readAllButton(this)"
+                            >
+                                <div class="contentExploreButton">阅读全文</div>
+                            </div>
+                            `);
                         }
                     }
 
@@ -4250,7 +4276,14 @@ function noLogin_then(e) {
                     let temp_innerContents = $('.innerContent')
                     for (let i = 0; i < temp_innerContents.length; i++) {
                         if ($(temp_innerContents[i]).height() == 200) {
-                            $(temp_innerContents[i]).after('<div class="contentExploreMask"></div><div class="contentExploreButton" onclick="readAllButton(this)">阅读全文</div>');
+                            $(temp_innerContents[i]).after(`
+                            <div
+                            class="contentExploreMask"
+                            onclick="readAllButton(this)"
+                            >
+                                <div class="contentExploreButton">阅读全文</div>
+                            </div>
+                            `);
                         }
                     }
 
