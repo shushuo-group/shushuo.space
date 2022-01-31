@@ -66,7 +66,7 @@ $(document).ready(async function () {
     // 创建富文本编辑器
     const E = window.wangEditor
     const editor = new E(".writerInputPart")
-    // editor.highlight = hljs
+    editor.highlight = hljs
     editor.config.uploadImgMaxSize = 10 * 1024 * 1024
 
     editor.config.customUploadImg = async function (resultFiles, insertImgFn) {
