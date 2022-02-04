@@ -72,7 +72,7 @@
 .CommentInputArea {
     width: 100%;
     overflow: hidden;
-    min-height: 25px;
+    min-height: 26px;
     font-size: 0;
     display: flex;
 }
@@ -84,27 +84,24 @@
 
 .CommentInputArea>div:nth-child(1) {
     font-size: 12px;
+    padding-left: 1px;
 }
 
 .CommentInputArea>div:nth-child(1)>span {
     display: block;
-    width: 99%;
-    margin: 2px auto;
+    padding: 0 2px;
     border: 1px solid #138bfb;
 }
 
 .CommentInputArea>div:nth-child(1)>span>span {
     display: block;
     outline: 0;
-    width: 99%;
-    margin: 0 auto;
     font-size: 20px;
-    line-height: 1.5;
 }
 
 .CommentInputArea>div:nth-child(2) {
     font-size: 12px;
-    max-width: 100px;
+    max-width: 60px;
     position: relative;
 }
 
@@ -117,7 +114,7 @@
     bottom: 0;
     width: 100%;
     height: 25px;
-    margin: 0 auto;
+    padding: 0 2px;
 }
 
 .CommentInputArea>div:nth-child(2)>div>span {
@@ -125,14 +122,11 @@
     text-align: center;
     background-color: #03a9f4;
     display: block;
-    width: 45px;
-    height: 18px;
-    line-height: 18px;
+    height: 100%;
+    line-height: 25px;
     color: #fff;
-    margin: 0 auto;
-    position: relative;
-    top: 3.5px;
     border-radius: 3px;
+    font-size: large;
     cursor: pointer;
 }
 

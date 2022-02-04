@@ -1170,7 +1170,33 @@ async function remark(e) {
         });
 
         setTimeout(() => {
-            $(e).parents('.contentSmallPart').find('.commentSectionArea').html(`<div class="othersComment"><div><span class="othersComment_number">0</span> 条评论</div><div class="Comments"><section class="commentSection_wait"><span class="commentSection_wait_loader"> </span></section></div></div><div class="CommentInputArea"><div><span><span onpaste="pasteRemoveCss(this)" contenteditable="true" id="commentContent"></span></span></div><div><div><span class="commentSubmit" onclick="commmentSubmit(this)">发&nbsp布</span></div></div></div>`)
+            $(e).parents('.contentSmallPart').find('.commentSectionArea').html(`
+            <div class="othersComment">
+                <div>
+                    <span class="othersComment_number">0</span>
+                     条评论
+                </div>
+                <div class="Comments">
+                    <section class="commentSection_wait"><span class="commentSection_wait_loader"></span></section>
+                </div>
+            </div>
+            <div class="CommentInputArea">
+                <div>
+                    <span>
+                        <span onpaste="pasteRemoveCss(this)" contenteditable="true" id="commentContent"></span>
+                    </span>
+                </div>
+                <div>
+                    <div class="commentSubmit_father">
+                        <span class="commentSubmit" onclick="commmentSubmit(this)">发&nbsp布</span>
+                    </div>
+                </div>
+            </div>`)
+
+            // 设置按钮的样式
+            let temp_height = $(e).parents('.contentSmallPart').find('.CommentInputArea').height()
+            $(e).parents('.contentSmallPart').find('.commentSubmit_father').css('height', `${temp_height}px`);
+            $(e).parents('.contentSmallPart').find('.commentSubmit').css('line-height', `${temp_height}px`);
 
             $(e).parents('.contentSmallPart').find('#commentContent').keydown(function (e) {
                 if (e.keyCode === 13) {
@@ -1252,6 +1278,7 @@ async function remark(e) {
 
             // 去除缓存特效
             $(e).parents('.contentSmallPart').find('.commentSection_wait').remove();
+
         }, 200);
 
     } else {
@@ -4499,5 +4526,5 @@ function is_third_pic(e) {
 // 图片路径处理
 function pic_src_solve(e) {
     let temp = e
-    return temp + '?v=2022_01_22_3'
+    return temp
 }
