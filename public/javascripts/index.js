@@ -104,7 +104,6 @@ $(document).ready(async function () {
                 e.preventDefault();
                 e.stopPropagation();
 
-
                 if ($('#search_base_value').val().trim().length == 0) {
                     alert('请输入有效信息')
                     return
@@ -296,9 +295,9 @@ $(document).ready(async function () {
 
     } else {
         // 退后操作对颜色进行的适配
-        if ($("#search_base_value")[0].value !== "") { //没有输入搜索信息
+        if ($("#search_base_value")[0].value !== "") {
+            //没有输入搜索信息
             $(".searchPartInputIconKEY").attr('fill', "#2680F0");
-
             $('.searchPartInput>span').css({
                 "border-color": "rgb(3, 169, 244)"
             });
@@ -512,6 +511,7 @@ $(document).ready(async function () {
                         $(window).keydown(function (event) {
                             event.stopPropagation()
                             if (event.keyCode == '13') {
+
                                 if ($('#search_base_value').val().trim().length == 0) {
                                     alert('请输入有效信息')
                                     return
@@ -590,29 +590,30 @@ $(document).ready(async function () {
 
                                         if (response.user_search.length !== 0) {
                                             $('.navigation').after(`
-                                <div class="centerLeftBottom_user_line">用户</div>
-                                `);
+                                            <div class="centerLeftBottom_user_line">用户</div>
+                                            `);
                                             for (let i = 0; i < response.user_search.length; i++) {
                                                 $('.centerLeftBottom_user_line').after(`
-                                    <div class="contentSmallPart user_small">
-                                    <div>
-                                        <div class="user_small_main">
-                                            <span>
-                                                <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
-                                                    <img
-                                                    onerror=\'picError(this)\'
-                                                    src="${pic_src_solve(zip_dir + response.user_search[i].headImg)}"
-                                                    class="user_small_main_img">
-                                                </a>
-                                            </span>
-                                            <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
-                                            <span class="user_small_main_word">${response.user_search[i].word}</span>
-                                            <span class="user_small_main_commentNum">评论(${response.user_search[i].commentsNum>99?'99+':response.user_search[i].commentsNum})</span>
-                                            <span class="user_small_main_articleNum">文章(${response.user_search[i].articleNum>99?'99+':response.user_search[i].articleNum})</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                    `);
+                                                <div class="contentSmallPart user_small">
+                                                    <div>
+                                                        <div class="user_small_main">
+                                                            <span>
+                                                                <a id ='${response.user_search[i].id}' onclick="head_to_detail(this)">
+                                                                    <img
+                                                                    onerror=\'picError(this)\'
+                                                                    src="${pic_src_solve(zip_dir + response.user_search[i].headImg)}"
+                                                                    class="user_small_main_img"
+                                                                    >
+                                                                </a>
+                                                            </span>
+                                                            <span class="user_small_main_name">${searchHlt(response.user_search[i].userName,$('#search_base_value').val())}</span>
+                                                            <span class="user_small_main_word">${response.user_search[i].word}</span>
+                                                            <span class="user_small_main_commentNum">评论(${response.user_search[i].commentsNum>99?'99+':response.user_search[i].commentsNum})</span>
+                                                            <span class="user_small_main_articleNum">文章(${response.user_search[i].articleNum>99?'99+':response.user_search[i].articleNum})</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                `);
                                             }
                                         }
 
@@ -1359,7 +1360,7 @@ $(document).ready(async function () {
                             slideFlushBytime('squareMway')
                             break;
                         case false:
-                            switch ( $('.navigation').attr('slide_way') ) {
+                            switch ($('.navigation').attr('slide_way')) {
                                 case 'big_part':
                                     //大模块的刷新
                                     if ($('.centerLeftBottom>.commentSection_wait')[0]) {
