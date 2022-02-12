@@ -113,13 +113,11 @@ video {
 
 .web-font {
     font-family: "webfont" !important;
-    font-size: 16px;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: 0.2px;
     -moz-osx-font-smoothing: grayscale;
     font-size: 28px;
-    margin-left: 5px;
 }
 
 
@@ -137,29 +135,26 @@ input {
 }
 
 .top {
-    height: 50px;
+    padding: 0 5px;
 }
 
 .web-font>a {
     text-decoration: none;
-    line-height: 50px;
     color: green;
 }
 
 .mainTopUser {
     height: 40PX;
     display: flex;
-    padding-bottom: 5px;
+    padding: 0 5px;
 }
 
 .mainTopUserLeft {
     flex: 1;
     position: relative;
     display: flex;
-}
-
-.mainTopUserLeft>div {
-    height: 35px;
+    font-size: 0;
+    height: 100%;
 }
 
 .title {
@@ -188,15 +183,12 @@ input {
 }
 
 .titlePart {
-    font-size: 0px;
-    position: relative;
-    left: 5px;
     height: 100%;
-    display: flex;
     border: 2px solid black;
+    border-right: 0;
     background-color: white;
-    flex-direction: row;
-    line-height: 31px;
+    position: relative;
+    overflow: hidden;
 }
 
 .titlePart>span {
@@ -206,10 +198,13 @@ input {
 }
 
 .titlePart>input {
-    flex: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
     font-size: 16px;
     font-weight: bold;
-    padding: 0;
+    padding: 2px;
 }
 
 .mainTopUserRight {
@@ -218,11 +213,11 @@ input {
 }
 
 .headImgPart {
-    width: 35px;
+    width: 40px;
+    height: 40px;
     background-color: #ffffff;
     border-radius: 50%;
     margin: auto;
-    
     top: 0;
     left: 0;
     bottom: 0;
@@ -246,17 +241,8 @@ input {
 }
 
 .writerInput {
-    width: 100%;
     background-color: #c5eef3;
     position: relative;
-    box-shadow: 0px 10px 0px 0px #c5eef3;
-}
-
-.writerInputPart {
-    width: 98%;
-    /* min-height: 342px; */
-    /* padding: 10px 0; */
-    margin: 0 auto;
 }
 
 .writerInputPart-part {
@@ -274,32 +260,16 @@ input {
     background-color: gainsboro;
 }
 
-.writePart {
-    /* padding-bottom: 5px; */
-}
-
 .writePart-select {
-    border-top: 1px solid #000;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
 }
 
-.writePart-select-part {
-    width: 98%;
-    margin: 5px auto;
-}
-
-.subWays {
-    height: 35px;
-}
-
 .subWays>div {
-    width: 85%;
-    height: 100%;
-    margin: 0 auto;
     display: flex;
+    margin: 5px;
 }
 
 .subWaysSelect {
@@ -308,9 +278,7 @@ input {
 }
 
 .subWaysSelect>div {
-    margin-left: 25px;
     display: inline-block;
-    height: 80%;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -331,76 +299,68 @@ input {
 
 .subWaysSelect>div>input {
     display: inline-block;
-    position: relative;
-    top: 4px;
+    margin: auto;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    bottom: 2px;
 }
 
 .subWaysSelect>div>div {
-    display: inline-block;
-    position: relative;
-    top: 3px;
-    font-size: 15px;
+    position: absolute;
+    bottom: 0;
+    margin-left: 20px;
     font-weight: 700;
-}
-
-.datingSelectPart {
-    height: 35px;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
 }
 
 .datingSelectPart>div {
-    width: 85%;
-    height: 100%;
-    margin: 0 auto;
     display: flex;
+    margin: 5px;
 }
 
 .subWays-part {
-    min-width: 97px;
-    flex: 2;
-    line-height: 35px;
     font-weight: bold;
     font-size: 18px;
 }
 
 .datingSelect {
-    flex: 8;
     position: relative;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
 }
 
 .datingSelect>div {
-    margin-left: 25px;
     display: inline-block;
-    height: 80%;
-    position: absolute;
+    height: 25px;
     top: 0;
     bottom: 0;
     margin: auto;
-}
-
-.datingSelect>div:nth-child(1) {
-    margin-left: 0;
-}
-
-.datingSelect>div:nth-child(2) {
-    left: 108px;
+    margin-right: 5px;
 }
 
 .datingSelect>div>div {
     position: relative;
-    top: 3px;
+    top: 0;
+    bottom: 0;
     display: inline-block;
-    font-size: 13px;
     font-weight: bold;
+    margin: auto;
+    height: 100%;
+    line-height: 25px;
 }
 
 .datingSelect>div>select {
     position: relative;
-    top: 2px;
-    left: 3px;
-    display: inline-block;
-    font-size: 12px;
     font-weight: bold;
-    width: 60px;
+    margin: auto;
+    margin-left: 5px;
+    top: 0;
+    bottom: 0;
+    display: inline-block;
 }
 
 .yingsiOr {
@@ -549,21 +509,8 @@ input {
         -webkit-tap-highlight-color: transparent;
     }
 
-    .top {
-        height: -webkit-max-content;
-        height: -moz-max-content;
-        height: max-content;
-    }
-
     .time {
         display: none !important;
-    }
-
-    .web-font>a {
-        text-decoration: none;
-        line-height: unset;
-        color: green;
-        font-size: 30px;
     }
 
     input {
@@ -575,31 +522,13 @@ input {
         width: unset;
     }
 
-    .mainTopUserLeft>div {
-        bottom: unset;
-        margin: auto;
-        flex: unset;
-    }
-
-    .writeDraft,
-    .submitButton {
-        max-width: unset;
-        margin-right: 5px;
-        margin-left: 5px;
-    }
-
     .titlePart {
-        left: 2px;
-        width: 100%;
         border: 1px solid black;
+        border-right: 0;
     }
 
     .titlePart>span {
         padding-left: 2px;
-    }
-
-    .titlePart>input {
-        width: 110px;
     }
 
     .writePart-select-part {
@@ -608,10 +537,6 @@ input {
 
     .writerInputPart {
         width: 100%;
-    }
-
-    .subWays-part {
-        font-size: 16px;
     }
 
     .w-e-panel-container {
@@ -687,7 +612,7 @@ code {
     border: 2px solid #d6d3d3;
     box-shadow: 0 4px 6px rgb(0, 0, 0, 0.12);
     position: absolute;
-    
+
     top: 0;
     left: 0;
     bottom: 0;
@@ -697,7 +622,7 @@ code {
 .loading_content {
     padding: 2rem 1.8rem;
     position: absolute;
-    
+
     top: 0;
     left: 0;
     bottom: 0;

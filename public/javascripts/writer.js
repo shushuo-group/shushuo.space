@@ -186,7 +186,7 @@ $(document).ready(async function () {
     }
     $('.w-e-text-container').css('height', temp_height);
 
-    titleMaxNumber = $('#title').attr('maxlength')
+    let titleMaxNumber = $('#title').attr('maxlength')
 
     // “发布路径” 的 “大厅” 点击事件
     $('#dating').click(async function () {
