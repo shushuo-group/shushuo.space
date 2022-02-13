@@ -1211,6 +1211,20 @@ async function remark(e) {
                 }
             });
 
+            // 仅当 删除标志 为true 时 才进行已删除提示
+            if (data.comment_isdelete === true) {
+                $(e).parents('.contentSmallPart').find('.othersComment').append(`
+                <span style="
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: #9f1d1d;
+                font-style: italic;
+                font-weight: bold;
+                ">部分评论已删除</span>
+                `);
+            }
+
             if (data.comment.length == 0) {
                 //评论数为0
                 $(e).parents('.contentSmallPart').find('.Comments').prepend(`<div class="commentWhite">空空如也，快来评论吧！</div>`);
@@ -1265,20 +1279,6 @@ async function remark(e) {
                 // 实时生成实际评论数量结构
                 $(e).parents('.contentSmallPart').find('.othersComment_number').html(`${commen_length}`);
                 $(e).parents('.contentSmallPart').find('.commentOpen_number').html(`${data.comment_all_length}`);
-
-                // 仅当 删除标志 为true 时 才进行已删除提示
-                if (data.comment_isdelete === true) {
-                    $(e).parents('.contentSmallPart').find('.othersComment').append(`
-                    <span style="
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    color: #9f1d1d;
-                    font-style: italic;
-                    font-weight: bold;
-                    ">部分评论已删除</span>
-                    `);
-                }
 
             }
 
