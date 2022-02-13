@@ -675,6 +675,12 @@ function pic_read(e) {
 //粗略阅读全文事件
 function readAllButton(e) {
 
+    // 应对登陆引起的多次点击阅读全文bug
+    if ($(e).parents('.content').find('.contentExploreMask').length == 2) {
+        let temp_target = $(e).parents('.content').find('.contentExploreMask')
+        $(temp_target[0]).remove();
+    }
+
     //存在过被打开的文章    之后需要对模块进行初始化
     $('.contentExploreButton_close').remove();
     $('.innerContent').css('max-height', '200px');
