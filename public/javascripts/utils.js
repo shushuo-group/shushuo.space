@@ -1397,7 +1397,6 @@ function getDetail(e) {
 function draftBoxDelete(e) {
     if ($(e).attr('isopen') == 'true') {
         //进行关闭
-        $(e).css('color', '');
         $(e).find('.actionPart').remove();
         $(e).attr('isopen', 'false')
     } else {
@@ -1408,7 +1407,6 @@ function draftBoxDelete(e) {
         </div>
         `);
         $(e).attr('isopen', 'true')
-        $(e).css('color', '#59bdfa');
     }
     window.event.stopPropagation()
 }
@@ -1443,7 +1441,6 @@ function draftBox_delete(e) {
 function articleaction(e) {
     if ($(e).attr('isopen') == 'true') {
         //进行关闭
-        $(e).css('color', '');
         $(e).find('.actionPart').remove();
         $(e).attr('isopen', 'false')
     } else {
@@ -1455,7 +1452,6 @@ function articleaction(e) {
         </div>
         `);
         $(e).attr('isopen', 'true')
-        $(e).css('color', '#59bdfa');
     }
     window.event.stopPropagation()
 }
@@ -1490,7 +1486,6 @@ function articleaction_delete(e) {
 function commentaction(e) {
     if ($(e).attr('isopen') == 'true') {
         //进行关闭
-        $(e).css('color', '');
         $(e).find('.actionPart').remove();
         $(e).attr('isopen', 'false')
     } else {
@@ -1501,7 +1496,6 @@ function commentaction(e) {
         </div>
         `);
         $(e).attr('isopen', 'true')
-        $(e).css('color', '#59bdfa');
     }
     window.event.stopPropagation()
 }

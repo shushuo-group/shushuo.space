@@ -522,6 +522,10 @@ body {
     color: #909090;
 }
 
+.innercontent_action>span:hover {
+    color: #138bfb;
+}
+
 .innercontent_action>span {
     display: block;
     width: 100%;

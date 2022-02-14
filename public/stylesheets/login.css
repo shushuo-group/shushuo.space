@@ -42,83 +42,50 @@
     font-weight: bold;
 }
 
-.logByAcc {
-    min-height: 150px;
-    display: flex;
-    flex-direction: column;
-}
-
-.logByAcc>div {
-    flex: 1;
+.logByAcc>div>div {
     position: relative;
 }
 
-.logByAcc>div>div {
-    height: 60px;
-    position: absolute;
-    
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-}
-
+.logByEmail>div>div>div,
+.register>div>div>div,
 .logByAcc>div>div>div {
-    width: 320px;
-    height: 50px;
-    position: absolute;
-    
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
+    width: 300px;
+    display: flex;
+    margin: 10px auto;
+    position: relative;
 }
 
 .logByAcc>div>div>div>span {
-    display: block;
-    float: left;
-    height: 100%;
+    line-height: 50px;
     position: relative;
 }
 
-.logByAcc>div>div>div>span:nth-child(1) {
-    font-size: 20px;
-    text-align: right;
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
-    line-height: 50px;
-}
-
 .logByAcc>div>div>div>span:nth-child(2) {
-    width: 190px;
+    flex: 1;
+    max-width: 180px;
 }
 
 .logByAcc>div>div>div>a:nth-child(3) {
     font-size: 12px;
     position: absolute;
-    bottom: 10px;
-    right: 5px;
+    bottom: 8px;
+    right: 10px;
 }
 
 .logByAcc>div>div>div>span>div {
-    height: 40px;
     position: absolute;
-    bottom: 10px;
+    bottom: 9px;
     width: 100%;
     border-bottom: 1px solid black;
 }
 
 .logByAcc>div>div>div>span>div>input {
-    height: 25px;
-    width: 97%;
+    height: 30px;
+    width: 100%;
     position: absolute;
-    bottom: 1px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+    bottom: 0px;
+    margin: 0;
+    padding: 0;
     font-size: 20px;
 }
 
@@ -132,7 +99,6 @@
     height: 40px;
     background-color: #03a9f4;
     position: absolute;
-    
     top: 0;
     left: 0;
     bottom: 0;
@@ -144,54 +110,8 @@
     font-size: 25px;
 }
 
-.logByEmail {
-    min-height: 200px;
-    display: flex;
-}
-
-.logByEmail>div {
-    display: flex;
-    width: 100%;
-    height: 170px;
-    margin: auto;
-    flex-direction: column;
-}
-
-.logByEmail>div>div {
-    flex: 1;
-    position: relative;
-}
-
-.logByEmail>div>div>div {
-    position: absolute;
-    
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 40px;
-    width: 290px;
-    margin: auto;
-}
-
-#yanzheng {
-    position: absolute;
-    
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    height: 35px;
-    width: 50%;
-    border-radius: 7px;
-    font-size: 18px;
-    cursor: pointer;
-}
-
 .logByEmail>div>div:nth-child(2)>div>div {
     position: absolute;
-    
     top: 0;
     left: 0;
     bottom: 0;
@@ -205,101 +125,25 @@
     border-radius: 5px;
 }
 
-
-.yanzheni>div {
-    float: left;
-}
-
-.yanzheni>div:nth-child(1) {
-    text-align: right;
-    line-height: 40px;
-    width: 70px;
-}
-
-.yanzheni>div:nth-child(2) {
-    width: 180px;
-}
-
-.yanzheni>div:nth-child(2)>div {
-    position: relative;
-    top: 7px;
-    border-bottom: 1px solid #000;
-}
-
-.yanzheni>div:nth-child(2)>div>input {
-    height: 23px;
-    width: 100%;
-    font-size: 22px;
-}
-
-.emailNum>div {
-    float: left;
-    width: 20px;
-    height: 100%;
-}
-
-.emailNum>div:nth-child(1) {
-    text-align: right;
-    line-height: 40px;
-    width: 70px;
-}
-
-.emailNum>div:nth-child(2) {
-    width: 180px;
-}
-
 .emailNum>div:nth-child(2)>div {
     position: relative;
-    top: 6px;
     border-bottom: 1px solid #000;
 }
 
-.emailNum>div:nth-child(2)>div>input {
-    height: 23px;
-    width: 100%;
-    font-size: 22px;
-}
-
-.register {
-    min-height: 200px;
-    display: flex;
-}
-
+.logByEmail>div,
 .register>div {
     display: flex;
-    width: 100%;
-    height: 170px;
-    margin: auto;
     flex-direction: column;
 }
 
+.logByEmail>div>div,
 .register>div>div {
-    flex: 1;
     position: relative;
 }
 
-.register>div>div>div {
-    position: absolute;
-    
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    height: 40px;
-    width: 290px;
-    margin: auto;
-}
-
+#yanzheng,
 #regyanzheng {
-    position: absolute;
-    
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
     margin: auto;
-    height: 35px;
-    width: 50%;
     border-radius: 7px;
     font-size: 18px;
     cursor: pointer;
@@ -307,7 +151,6 @@
 
 .register>div>div:nth-child(2)>div>div {
     position: absolute;
-    
     top: 0;
     left: 0;
     bottom: 0;
@@ -321,80 +164,67 @@
     border-radius: 5px;
 }
 
-
-.regyanzheni>div {
-    float: left;
-}
-
+.yanzheni>div:nth-child(1),
 .regyanzheni>div:nth-child(1) {
-    text-align: right;
-    line-height: 40px;
-    width: 70px;
+    line-height: 50px;
+    text-align: left;
 }
 
+.yanzheni>div:nth-child(2),
 .regyanzheni>div:nth-child(2) {
     width: 180px;
-}
-
-.regyanzheni>div:nth-child(2)>div {
     position: relative;
-    top: 5px;
-    border-bottom: 1px solid #000;
 }
 
-.regyanzheni>div:nth-child(2)>div>input {
-    height: 23px;
+.yanzheni>div:nth-child(2)>div,
+.regyanzheni>div:nth-child(2)>div {
+    position: absolute;
+    bottom: 9px;
     width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.yanzheni>div:nth-child(2)>div>input,
+.regyanzheni>div:nth-child(2)>div>input {
+    height: 30px;
+    width: 100%;
+    padding: 0;
     font-size: 20px;
 }
 
-.regemailNum>div {
-    float: left;
-    width: 20px;
-    height: 100%;
-}
-
+.emailNum>div:nth-child(1),
 .regemailNum>div:nth-child(1) {
-    text-align: right;
-    line-height: 40px;
-    width: 70px;
+    line-height: 50px;
 }
 
+.emailNum>div:nth-child(2),
 .regemailNum>div:nth-child(2) {
     width: 180px;
+    position: relative;
 }
 
+.emailNum>div:nth-child(2)>div,
 .regemailNum>div:nth-child(2)>div {
-    position: relative;
-    top: 5px;
-    border-bottom: 1px solid #000;
-}
-
-.regemailNum>div:nth-child(2)>div>input {
-    height: 23px;
-    font-size: 20px;
+    position: absolute;
+    bottom: 9px;
     width: 100%;
+    border-bottom: 1px solid black;
 }
 
-.ChangeButton {
-    position: relative;
-    min-height: 30px;
-    border-top: 1px dotted black;
+.emailNum>div:nth-child(2)>div>input,
+.regemailNum>div:nth-child(2)>div>input {
+    height: 30px;
+    width: 100%;
+    padding: 0;
+    font-size: 20px;
 }
 
 .ChangeButton>div {
-    width: 290px;
-    height: 25px;
-    position: absolute;
-    
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-    font-size: 0;
     display: flex;
     cursor: pointer;
+    margin: 5px 0;
+    position: relative;
+    border-top: 1px dotted black;
 }
 
 .ChangeButton>div>span {
@@ -408,7 +238,6 @@
 .ChangeButton>div>span:nth-child(2) {
     width: 10px;
     position: absolute;
-    
     top: 0;
     left: 0;
     bottom: 0;
