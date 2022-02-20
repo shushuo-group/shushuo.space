@@ -437,56 +437,6 @@ router.post('/slideFlush', async function (req, res, next) {
         let userSee = await db.user.findOne({
             token: req.body.token
         })
-        if (userSee !== null) {
-            let article = []
-            let articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
-            for (let i = 0; i < articles.length; i++) {
-                //验证用户是否点赞过
-                let isLike = false
-                if (articles[i].likers.find((ele) => (ele.name == userSee.userEmail))) {
-                    isLike = true
-                }
-                //验证用户是否踩一踩过
-                let isunLike = false
-                if (articles[i].unlikers.find((ele) => (ele.name == userSee.userEmail))) {
-                    isunLike = true
-                }
-                //验证用户是否收藏过
-                let isCollect = false
-                if (articles[i].collectors.find((ele) => (ele.name == userSee.userEmail))) {
-                    isCollect = true
-                }
-                let articleWriter = await db.user.find({
-                    userEmail: articles[i].writerEmail
-                })
-                let commentsNumber = articles[i].comments.length
-                for (let j = 0; j < articles[i].comments.length; j++) {
-                    if (articles[i].comments[j].secComments) {
-                        commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
-                    }
-                }
-                article.push({
-                    articleComNumber: commentsNumber,
-                    articleContent: articles[i].content,
-                    articleName: articles[i].name,
-                    articleId: articles[i]._id,
-                    articleTime: articles[i].time,
-                    like: articles[i].likers.length,
-                    unlike: articles[i].unlikers.length,
-                    writerHead: articleWriter[0].headImg,
-                    writerName: articleWriter[0].userName,
-                    writerId: articleWriter[0]._id,
-                    writerWord: articleWriter[0].word,
-                    islike: isLike,
-                    isunlike: isunLike,
-                    iscollect: isCollect,
-                })
-            }
-            res.send({
-                articles: article
-            })
-            return
-        }
         let article = []
         let articles = data.slice(req.body.number * 10, req.body.number * 10 + 10)
         for (let i = 0; i < articles.length; i++) {
@@ -499,7 +449,14 @@ router.post('/slideFlush', async function (req, res, next) {
                     commentsNumber = commentsNumber + articles[i].comments[j].secComments.length
                 }
             }
+
+            let small = await db.smallModule.findOne({
+                _id: articles[i].smallmid
+            })
+
             article.push({
+                small_name: small.name,
+                big_name: small.father,
                 articleComNumber: commentsNumber,
                 articleContent: articles[i].content,
                 articleName: articles[i].name,
