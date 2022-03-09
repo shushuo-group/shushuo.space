@@ -2302,8 +2302,9 @@ figcaption {
 figcaption>input {
     width: 100%;
     text-align: center;
-    color: #8f979d;
+    color: #000000;
     font-weight: bold;
+    font-size: medium;
 }
 
 /* 自适应移动端 */

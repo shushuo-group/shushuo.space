@@ -68,7 +68,6 @@ $(document).ready(async function () {
     const editor = new E(".writerInputPart")
     editor.highlight = hljs
     editor.config.uploadImgMaxSize = 10 * 1024 * 1024
-
     editor.config.customUploadImg = async function (resultFiles, insertImgFn) {
 
         if (resultFiles[0].type == 'image/gif') {
@@ -288,7 +287,7 @@ $(document).ready(async function () {
 
                         if ($(imgs[i]).parent().find("figcaption").length == 0) {
                             // 图片无注释
-                            let temp = $(imgs[i]).parent().html()
+                            let temp = $(imgs[i])[0].outerHTML
                             $(imgs[i]).parent().html(`
                             <figure contenteditable="false">
                                 ${temp}
@@ -429,7 +428,7 @@ $(document).ready(async function () {
 
                         if ($(imgs[i]).parent().find("figcaption").length == 0) {
                             // 图片无注释
-                            let temp = $(imgs[i]).parent().html()
+                            let temp = $(imgs[i])[0].outerHTML
                             $(imgs[i]).parent().html(`
                             <figure contenteditable="false">
                                 ${temp}
