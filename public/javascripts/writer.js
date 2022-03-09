@@ -286,6 +286,25 @@ $(document).ready(async function () {
                         $(imgs[i]).siblings('div').remove();
                         $(imgs[i]).show();
 
+                        if ($(imgs[i]).parent().find("figcaption").length == 0) {
+                            // 图片无注释
+                            let temp = $(imgs[i]).parent().html()
+                            $(imgs[i]).parent().html(`
+                            <figure contenteditable="false">
+                                ${temp}
+                                <figcaption
+                                >
+                                    <input
+                                    onfocus="this.placeholder=''"
+                                    onblur="up_pic_detail(this)"
+                                    placeholder="添加注释(可选)"
+                                    />
+                                </figcaption>
+                            </figure>
+                            </br>
+                            `);
+                        }
+
                         // 此处仅用于过滤非法第三方图片
                         if (is_third_pic(this)) {
                             $('.writePart-select-part').css('position', 'relative').addClass('pic_3rd');
@@ -407,6 +426,25 @@ $(document).ready(async function () {
 
                         $(imgs[i]).siblings('div').remove();
                         $(imgs[i]).show();
+
+                        if ($(imgs[i]).parent().find("figcaption").length == 0) {
+                            // 图片无注释
+                            let temp = $(imgs[i]).parent().html()
+                            $(imgs[i]).parent().html(`
+                            <figure contenteditable="false">
+                                ${temp}
+                                <figcaption
+                                >
+                                    <input
+                                    onfocus="this.placeholder=''"
+                                    onblur="up_pic_detail(this)"
+                                    placeholder="添加注释(可选)"
+                                    />
+                                </figcaption>
+                            </figure>
+                            </br>
+                            `);
+                        }
 
                         // 此处仅用于过滤非法第三方图片
                         if (is_third_pic(this)) {
