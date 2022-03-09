@@ -709,3 +709,11 @@ code {
     content: "不允许加入第三方图片";
     right: 0;
 }
+
+figcaption>input {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    color: #8f979d;
+    font-weight: bold;
+}

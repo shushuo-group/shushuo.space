@@ -99,17 +99,21 @@ $(document).ready(async function () {
                         processData: false,
                         contentType: false,
                         success: function (response) {
-                            insertImgFn(`${zip_dir}${response.path}`)
-
+                            editor.cmd.do('insertHTML', `
+                            <figure contenteditable="false">
+                                <img src="${zip_dir}${response.path}"/>
+                                <figcaption
+                                >
+                                    <input
+                                    onfocus="this.placeholder=''"
+                                    onblur="up_pic_detail(this)"
+                                    placeholder="添加注释(可选)"
+                                    />
+                                </figcaption>
+                            </figure>
+                            </br>
+                            `)
                             $('.commentSection_wait').remove();
-
-                            $('img[src="/pic/' + response.path + '"]').css({
-                                'margin': '0 auto',
-                                'margin-top': '10px',
-                                'display': 'block'
-                            });
-                            $('img[src="/pic/' + response.path + '"]').attr('width', '50%');
-                            editor.txt.append('<p><br></p>')
                         }
                     });
                 }
@@ -142,22 +146,27 @@ $(document).ready(async function () {
                 processData: false,
                 contentType: false,
                 success: function (response) {
-                    insertImgFn(`${zip_dir}${response.path}`)
-
+                    editor.cmd.do('insertHTML', `
+                    <figure contenteditable="false">
+                        <img src="${zip_dir}${response.path}"/>
+                        <figcaption
+                        >
+                            <input
+                            onfocus="this.placeholder=''"
+                            onblur="up_pic_detail(this)"
+                            placeholder="添加注释(可选)"
+                            />
+                        </figcaption>
+                    </figure>
+                    </br>
+                    `)
                     $('.commentSection_wait').remove();
-
-                    $('img[src="/pic/' + response.path + '"]').css({
-                        'margin': '0 auto',
-                        'margin-top': '10px',
-                        'display': 'block'
-                    });
-                    $('img[src="/pic/' + response.path + '"]').attr('width', '50%');
-                    editor.txt.append('<p><br></p>')
                 }
             });
         })
 
     }
+
     editor.config.showLinkImg = false
     editor.config.uploadImgMaxLength = 1
     editor.config.menus = [
@@ -265,7 +274,7 @@ $(document).ready(async function () {
                 $('#submitButton').attr('articleId', `${response.id}`);
 
                 var imgs = $('.w-e-text').find('img')
-                $('.w-e-text').find('img').hide();
+                imgs.hide();
                 for (let i = 0; i < imgs.length; i++) {
 
                     $(imgs[i]).attr('onerror', 'picError(this)');
@@ -287,6 +296,16 @@ $(document).ready(async function () {
                         }
 
                     }
+                }
+
+                // 恢复图片注释行为
+                var up_img_details = $('.w-e-text').find('figcaption>input')
+                for (let i = 0; i < up_img_details.length; i++) {
+                    $(up_img_details[i]).attr({
+                        "onfocus": "this.placeholder=''",
+                        "onblur": "up_pic_detail(this)",
+                        "placeholder": "添加注释(可选)"
+                    });
                 }
 
                 $('#submitButton').click(async function () {
@@ -377,7 +396,7 @@ $(document).ready(async function () {
                 $('#submitButton').attr('articleId', `${response.id}`);
 
                 var imgs = $('.w-e-text').find('img')
-                $('.w-e-text').find('img').hide();
+                imgs.hide();
                 for (let i = 0; i < imgs.length; i++) {
 
                     $(imgs[i]).attr('onerror', 'picError(this)');
@@ -399,6 +418,16 @@ $(document).ready(async function () {
                         }
 
                     }
+                }
+
+                // 恢复图片注释行为
+                var up_img_details = $('.w-e-text').find('figcaption>input')
+                for (let i = 0; i < up_img_details.length; i++) {
+                    $(up_img_details[i]).attr({
+                        "onfocus": "this.placeholder=''",
+                        "onblur": "up_pic_detail(this)",
+                        "placeholder": "添加注释(可选)"
+                    });
                 }
 
                 $('#submitButton').click(function (e) {

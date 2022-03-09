@@ -7,6 +7,11 @@ $(document).ready(async function () {
     //代码块复制及编辑以及增加了左侧序号
     function codeRepeat() {
 
+        let img_details = $('.innerContent').find('figcaption>input')
+        for (let i=0; i< img_details.length; i++) {
+            $(img_details[i]).attr('disabled', true);
+        }
+
         //增加蒙版的限制 需要在每篇文章内的图片均加载完成才进行增加蒙版的判断
         var imgs = $('.innerContent').find('img')
 

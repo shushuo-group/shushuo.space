@@ -1548,3 +1548,14 @@ pre {
     display: flex;
     font-family: unset;
 }
+
+figcaption {
+    font-size: 0;
+}
+
+figcaption>input {
+    width: 100%;
+    text-align: center;
+    color: #8f979d;
+    font-weight: bold;
+}

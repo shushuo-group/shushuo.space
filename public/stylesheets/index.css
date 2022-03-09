@@ -2295,6 +2295,17 @@ span.uiSetFree_buttton_check {
 
 /*内容加载模块*/
 
+figcaption {
+    font-size: 0;
+}
+
+figcaption>input {
+    width: 100%;
+    text-align: center;
+    color: #8f979d;
+    font-weight: bold;
+}
+
 /* 自适应移动端 */
 @media screen and (max-width:600px) {
 

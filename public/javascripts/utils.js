@@ -349,6 +349,11 @@ function firstFlush_hidden(data) {
     </div>
     `)
 
+    let img_details = $('.contentSmallPart:nth(' + data + ')').find('figcaption>input')
+    for (let i=0; i< img_details.length; i++) {
+        $(img_details[i]).attr('disabled', true);
+    }
+
     //增加蒙版的限制 需要在每篇文章内的图片均加载完成才进行增加蒙版的判断
     let imgs = $('.contentSmallPart:nth(' + data + ')').find('.innerContent').find('img')
 
@@ -3973,4 +3978,10 @@ function is_third_pic(e) {
 function pic_src_solve(e) {
     let temp = e
     return temp
+}
+
+//创作图片注释
+function up_pic_detail(e) {
+    $(e).attr('placeholder', "添加注释(可选)");
+    $(e).attr('value', e.value);
 }
