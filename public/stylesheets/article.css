@@ -679,6 +679,9 @@ body {
     line-height: 2;
 }
 
+.innerContent br {
+    display: none;
+}
 
 .innerContent img {
     margin: auto;

@@ -812,6 +812,10 @@ body {
     line-height: 2;
 }
 
+.innerContent br {
+    display: none;
+}
+
 .contentExploreMask {
     cursor: pointer;
     text-align: center;
