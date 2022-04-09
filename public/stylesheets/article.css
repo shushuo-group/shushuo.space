@@ -679,6 +679,10 @@ body {
     line-height: 2;
 }
 
+.innerContent>p {
+    height: 0;
+}
+
 .innerContent img {
     margin: auto;
 }
