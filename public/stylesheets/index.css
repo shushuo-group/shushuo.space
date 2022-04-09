@@ -111,10 +111,6 @@ blockquote {
     margin: 0 25px;
 }
 
-.innerContent>p {
-    height: 0;
-}
-
 .pcTouch:hover {
     background: #d8edf7;
 }
