@@ -27,20 +27,14 @@ app.set('view engine', 'html');
 app.use(express.json());
 app.use(compression());
 
-app.use(express.urlencoded({
-  extended: false
-}));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// var options = {
-//     maxAge: '365d'
-// }
+var options = {
+    maxAge: '365d'
+}
 
-app.use(express.static(path.join(__dirname, 'public'), {
-  maxAge: 1000 * 60 * 60
-}));
-app.use(express.static(path.join(__dirname, 'upload'), {
-  maxAge: 1000 * 60 * 60
-}));
+app.use(express.static(path.join(__dirname, 'public'),options));
+app.use(express.static(path.join(__dirname, 'upload'),options));
 
 
 app.use('/', indexRouter);
@@ -56,12 +50,12 @@ app.use('/uploadMedia', uploadMediaRouter);
 app.use('/article', articleRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
