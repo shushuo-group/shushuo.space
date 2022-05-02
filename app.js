@@ -19,6 +19,10 @@ var articleRouter = require('./routes/article');
 
 
 var app = express();
+
+app.disable('x-powered-by');
+app.disable('server');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.engine('html', ejs.__express);
@@ -35,9 +39,6 @@ var options = {
 
 app.use(express.static(path.join(__dirname, 'public'),options));
 app.use(express.static(path.join(__dirname, 'upload'),options));
-
-app.disable('x-powered-by');
-
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
