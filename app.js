@@ -36,6 +36,8 @@ var options = {
 app.use(express.static(path.join(__dirname, 'public'),options));
 app.use(express.static(path.join(__dirname, 'upload'),options));
 
+app.disable('x-powered-by');
+
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
