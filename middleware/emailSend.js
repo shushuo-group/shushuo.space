@@ -15,6 +15,8 @@ module.exports = function sendEmail(receiver, subject, html) {
         subject: subject,
         html: html
     }, (err, info) => {
+        write.logsee(err)
+        write.logsee(info)
         if (err) {
             write.logerr(err)
         }
