@@ -5,7 +5,7 @@ const transporter = nodemailer.createTransport({
     service: 'qq',
     auth: {
         user: 'shushuo9527@qq.com',
-        pass: 'hjtjlyjpejliicjd'
+        pass: 'zdtrosnxhuuehgcf'
     }
 });
 module.exports = function sendEmail(receiver, subject, html) {
