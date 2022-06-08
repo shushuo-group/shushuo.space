@@ -74,7 +74,7 @@ var timeGap = 1000 * 60 * 60 * 4
 
 sendEmail('1109189702@qq.com', '邮箱功能验证',
     `
-    当前邮件发送时间：${date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')}
+    hi,当前邮件发送时间：${date.format(new Date(), 'YYYY-MM-DD HH:mm:ss')}
     <br>
     邮件验证功能开始执行时间：${timeAbs/1000/60/60}后
     <br>
