@@ -642,12 +642,22 @@ router.post('/search', async function (req, res, next) {
     })
     // 文章
     let result02 = await db.article.find({
-        "name": {
-            $regex: key,
-            $options: 'i'
-        },
-        "isOk": true,
-        "isPublic": true,
+        $and: [{
+            $or: [{
+                "name": {
+                    $regex: key,
+                    $options: 'i'
+                }
+            }, {
+                "content": {
+                    $regex: key,
+                    $options: 'i'
+                }
+            }]
+        }, {
+            "isOk": true,
+            "isPublic": true,
+        }]
     })
     // user
     let data01 = []

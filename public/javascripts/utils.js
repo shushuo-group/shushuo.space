@@ -1677,13 +1677,9 @@ function backRemove(e) {
 //搜索过程对搜索结果的高亮
 function searchHlt(goal, target) {
     let a = xssFilter(goal)
-    a = a.replace(/>/g, "&gt;")
-
     let t = xssFilter(target)
-    t = t.replace(/>/g, "&gt;")
-
     let reg = new RegExp(`${t}`, 'gi')
-    a = xssFilter(a).replace(reg, search => {
+    a = a.replace(reg, search => {
         return `<span style="color:red">${search}</span>`
     })
     return a
@@ -3874,7 +3870,7 @@ function searchCommen(i) {
                 $('.article_small_color:nth(' + i + ')').find('.article_small').html(`
                     <div style="width:0;"  class="article_small_imgpart"></div>
                     <div style="width:100%;" class="article_small_wordpart">
-                        ${xssFilter($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText)}
+                        ${searchHlt($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText,$('#search_base_value').val())}
                     </div>
                     `);
                 break
@@ -3888,7 +3884,7 @@ function searchCommen(i) {
                     src="${pic_src_solve($('.article_small_color:nth(' + i + ')').find('img')[1].src)}">
                 </div>
                 <div class="article_small_wordpart">
-                    ${xssFilter($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText)}
+                    ${searchHlt($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText,$('#search_base_value').val())}
                 </div>
             `);
 
@@ -3900,7 +3896,7 @@ function searchCommen(i) {
                     <div style="width:0;" class="article_small_imgpart">
                     </div>
                     <div style="width:100%;" class="article_small_wordpart">
-                        ${xssFilter($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText)}
+                        ${searchHlt($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText,$('#search_base_value').val())}
                     </div>
                 `);
                 break
@@ -3913,7 +3909,7 @@ function searchCommen(i) {
         src="${pic_src_solve($('.article_small_color:nth(' + i + ')').find('img')[0].src)}">
     </div>
     <div class="article_small_wordpart">
-        ${xssFilter($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText)}
+        ${searchHlt($('.article_small_color:nth(' + i + ')').find('.article_small')[0].innerText,$('#search_base_value').val())}
     </div>
 `);
 
