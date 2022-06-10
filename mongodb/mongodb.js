@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://shushuoadmin:fzugjj11192039lalala2333GJJ@localhost:27017/shushuo';
+var mongoDB = 'mongodb://localhost:27017/shushuo';
 mongoose.connect(mongoDB, {
     useUnifiedTopology: true,
     useNewUrlParser: true
