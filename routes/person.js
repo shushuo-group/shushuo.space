@@ -188,6 +188,9 @@ router.post('/comment_travel', async function (req, res, next) {
     }
     let article = []
     for (let i = 0; i < user.commentArticles.length; i++) {
+        if(user.commentArticles[i].isOK == false) {
+            continue
+        }
         let articles = await db.article.findOne({
             _id: user.commentArticles[i].articleId,
             isOk: true,
